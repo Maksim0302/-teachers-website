@@ -16,7 +16,7 @@ const Hero = () => {
           <div className="hero__content__items">
             <div className="hero__text">
               <h1 className="hero__text__title">{t('title')}</h1>
-              <p className="hero__text__description">{t('description')}</p>
+              <p className="hero__text__description">«{t('description')}»</p>
             </div>
             <div className="hero__button">
               <Link href="/about" className="hero__button__link">

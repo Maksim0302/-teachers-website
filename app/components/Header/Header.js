@@ -25,10 +25,16 @@ const Header = forwardRef((props, ref) => {
   const locale = /^[a-z]{2}$/.test(maybeLocale) ? maybeLocale : null
   const homePath = locale ? `/${locale}` : '/'
 
-  const isHome = pathname === '/' || (locale && pathname === `/${locale}`)
+  const normalizedPath = pathname.replace(/\/$/, '') || '/'
+  const isHome =
+    normalizedPath === '/' ||
+    (locale && normalizedPath === `/${locale}`)
 
   return (
-    <header ref={ref} className="header">
+    <header
+      ref={ref}
+      className={`header${isHome ? '' : ' header--no-nav'}`}
+    >
       <div className="container">
         <div className="header__content">
           <Link href={homePath} className="logo">
@@ -40,29 +46,22 @@ const Header = forwardRef((props, ref) => {
             />
           </Link>
 
-          <div className="navigation">
-            <nav className="navigation__menu">
-              {navItems.map((item) => {
-                const label = t(`nav.${item.key}`)
+          {isHome && (
+            <div className="navigation">
+              <nav className="navigation__menu">
+                {navItems.map((item) => {
+                  const label = t(`nav.${item.key}`)
+                  const href = item.id === null ? homePath : `#${item.id}`
 
-                if (item.id === null) {
                   return (
-                    <Link key={item.key} href={homePath}>
+                    <Link key={item.key} href={href}>
                       {label}
                     </Link>
                   )
-                }
-
-                const href = isHome ? `#${item.id}` : `${homePath}#${item.id}`
-
-                return (
-                  <Link key={item.key} href={href}>
-                    {label}
-                  </Link>
-                )
-              })}
-            </nav>
-          </div>
+                })}
+              </nav>
+            </div>
+          )}
 
           <div className="header__actions">
             <LangSwitcher />

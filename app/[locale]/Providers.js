@@ -20,9 +20,11 @@ export default function Providers({ children, locale, messages, timeZone }) {
       <LanguageProvider>
         <SelectedImageProvider>
           <LinksProvider>
-            <Header ref={headerRef} />
-            <main>{children}</main>
-            <Footer />
+            <div className="site-layout">
+              <Header ref={headerRef} />
+              <main>{children}</main>
+              <Footer />
+            </div>
           </LinksProvider>
         </SelectedImageProvider>
       </LanguageProvider>

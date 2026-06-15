@@ -75,11 +75,17 @@ body {
   padding: 0 15px;
 }
 
+.site-layout {
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
 main {
+  flex: 1 0 auto;
   padding-top: var(--header-height, 60px);
   padding-bottom: 50px;
-  height: auto;
-  flex: 0 0 auto;
 }
 
 html {

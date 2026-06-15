@@ -4,9 +4,16 @@ import './Footer.scss'
 import { useTranslations } from 'next-intl'
 
 const Footer = () => {
-  const t = useTranslations('Footer')
-
-  return <section className="footer"></section>
+  return (
+    <section className="footer" id="contact">
+      <div className="container">
+        <div className="footer__content"></div>
+        <span>
+          &copy; {new Date().getFullYear()} My Company. All rights reserved.
+        </span>
+      </div>
+    </section>
+  )
 }
 
 export default Footer

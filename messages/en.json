@@ -11,8 +11,91 @@
   },
   "Hero": {
     "title": "Welcome to Our Website",
-    "description": "We provide the best services for your needs",
+    "description": "Learning is inspiring new discoveries",
     "button": "Get Started",
     "imageAlt": "Hero image"
+  },
+  "AssessmentMethodology": {
+    "title": "Assessment Methodology",
+    "cards": {
+      "card1": {
+        "title": "Evaluation Criteria",
+        "description": "Clear and understandable criteria help students understand what is being assessed and how to achieve better results."
+      },
+      "card2": {
+        "title": "Process Transparency",
+        "description": "Every stage of assessment is open to students and parents — without hidden requirements or subjective decisions."
+      },
+      "card3": {
+        "title": "Feedback",
+        "description": "Regular and constructive feedback motivates students to improve their knowledge and skills."
+      }
+    }
+  },
+  "AdvancedTraining": {
+    "title": "Advanced Training",
+    "button": "Learn More",
+    "imageAlt": "Advanced training section image",
+    "items": {
+      "item1": {
+        "title": "Professional Courses",
+        "description": "Modern training programs that help teachers master new methodologies and improve the quality of education."
+      },
+      "item2": {
+        "title": "Seminars and Workshops",
+        "description": "Hands-on sessions for sharing experience, where educators refine their skills and discover new ideas for lessons."
+      },
+      "item3": {
+        "title": "Mentoring",
+        "description": "Individual support from experienced colleagues that helps teachers adapt faster and grow in their profession."
+      },
+      "item4": {
+        "title": "Certification",
+        "description": "Official confirmation of professional level that opens new opportunities for career growth."
+      }
+    }
+  },
+  "SchoolEvents": {
+    "title": "School Events",
+    "button": "Read more",
+    "tabs": {
+      "all": "All",
+      "competitions": "Competitions",
+      "excursions": "Excursions",
+      "holidays": "Holidays",
+      "projects": "Projects"
+    },
+    "items": {
+      "all": {
+        "event1": { "title": "Open Day at the Lyceum", "date": "September 1, 2025" },
+        "event2": { "title": "Parent-Teacher Meeting", "date": "October 15, 2025" },
+        "event3": { "title": "Science Fair", "date": "November 20, 2025" },
+        "event4": { "title": "End of Year Ceremony", "date": "May 30, 2026" }
+      },
+      "competitions": {
+        "event1": { "title": "Mathematics Olympiad", "date": "February 10, 2026" },
+        "event2": { "title": "English Language Contest", "date": "March 5, 2026" },
+        "event3": { "title": "Sports Tournament", "date": "April 12, 2026" },
+        "event4": { "title": "Art Competition", "date": "May 8, 2026" }
+      },
+      "excursions": {
+        "event1": { "title": "Museum of Natural History", "date": "October 3, 2025" },
+        "event2": { "title": "City Observatory Visit", "date": "November 14, 2025" },
+        "event3": { "title": "Botanical Garden Trip", "date": "April 18, 2026" },
+        "event4": { "title": "Historical Center Tour", "date": "May 22, 2026" }
+      },
+      "holidays": {
+        "event1": { "title": "Knowledge Day Celebration", "date": "September 1, 2025" },
+        "event2": { "title": "Teacher's Day Concert", "date": "October 5, 2025" },
+        "event3": { "title": "New Year Performance", "date": "December 25, 2025" },
+        "event4": { "title": "Graduation Ball", "date": "June 15, 2026" }
+      },
+      "projects": {
+        "event1": { "title": "Eco-Initiative «Green School»", "date": "September 20, 2025" },
+        "event2": { "title": "Robotics Club Showcase", "date": "January 18, 2026" },
+        "event3": { "title": "Charity Fair", "date": "March 28, 2026" },
+        "event4": { "title": "Student Research Conference", "date": "April 30, 2026" }
+      }
+    }
   }
 }
