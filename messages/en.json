@@ -1,0 +1,18 @@
+{
+  "Header": {
+    "logoAlt": "Logo",
+    "nav": {
+      "home": "Home",
+      "about": "About",
+      "services": "Services",
+      "blog": "Blog",
+      "contact": "Contact"
+    }
+  },
+  "Hero": {
+    "title": "Welcome to Our Website",
+    "description": "We provide the best services for your needs",
+    "button": "Get Started",
+    "imageAlt": "Hero image"
+  }
+}

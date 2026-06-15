@@ -1,0 +1,3662 @@
+// 'use client'
+// import React, { useState } from 'react'
+// import './LangSwitcher.scss'
+// import { useLanguage } from '../../context/LanguageContext'
+// import Image from 'next/image'
+
+// const LangSwitcher = () => {
+//   const { selectedLanguage, changeLanguage } = useLanguage()
+//   const [isLanguageSelectorOpen, setIsLanguageSelectorOpen] = useState(false)
+
+//   const languages = [
+//     'English',
+//     'Dansk',
+//     'Deutsch',
+//     'Español',
+//     'Français',
+//     'Hrvatski',
+//     'Indonesia',
+//     'Italiano',
+//     'Magyar',
+//     'Nederlands',
+//     'Norsk',
+//     'Polski',
+//     'Português',
+//     'Română',
+//     'Suomi',
+//     'Svenska',
+//     'Tiếng Việt',
+//     'Türkçe',
+//     'Čeština',
+//     'Ελληνικά',
+//     'Русский',
+//     'Українська',
+//     'български',
+//     'ไทย',
+//     '日本語',
+//     '简体中文',
+//     '한국어',
+//     'עברית',
+//     'العربية',
+//   ]
+
+//   const toggleLanguageSelector = () => {
+//     setIsLanguageSelectorOpen(!isLanguageSelectorOpen)
+//   }
+
+//   const selectLanguage = (language) => {
+//     changeLanguage(language)
+//     setIsLanguageSelectorOpen(false)
+//   }
+
+//   return (
+//     <div className="language-selector">
+//       <div
+//         className="language-selector__current language-selector__current-burger"
+//         onClick={toggleLanguageSelector}
+//       >
+//         <span
+//           className={`language-selector__icon-${selectedLanguage.toLowerCase()}`}
+//         >
+//           {selectedLanguage}
+//         </span>
+//         <span className={`arrow ${isLanguageSelectorOpen ? 'up' : 'down'}`}>
+//           {' '}
+//           <Image
+//             src="/img/bestvpn/arrow.svg"
+//             width={20}
+//             height={20}
+//             alt="arrow"
+//           />
+//         </span>
+//       </div>
+//       {isLanguageSelectorOpen && (
+//         <div className="language-selector__dropdown">
+//           {languages.map((language) => (
+//             <div
+//               key={language}
+//               className={`language-selector__item ${
+//                 language === selectedLanguage ? 'active' : ''
+//               }`}
+//               onClick={() => selectLanguage(language)}
+//             >
+//               {language}
+//             </div>
+//           ))}
+//         </div>
+//       )}
+//     </div>
+//   )
+// }
+
+// export default LangSwitcher
+
+
+
+
+
+// 'use client'
+
+// import React, { useState, useTransition } from 'react'
+// import { useLocale, useTranslations } from 'next-intl'
+// import { useRouter } from 'next/navigation'
+// import { useLanguage } from '../../context/LanguageContext'
+// import Image from 'next/image'
+// import './LangSwitcher.scss'
+
+// const LangSwitcher = () => {
+//   const [isPending, startTransition] = useTransition()
+//   const [isLanguageSelectorOpen, setIsLanguageSelectorOpen] = useState(false)
+
+//   const router = useRouter()
+//   const locale = useLocale()
+//   const t = useTranslations('LangSwitcher')
+
+//   const { selectedLanguage, changeLanguage } = useLanguage()
+
+//   const languages = [
+//     { label: 'English', code: 'en' },
+//     { label: 'Dansk', code: 'da' },
+//     { label: 'Deutsch', code: 'de' },
+//     { label: 'Español', code: 'es' },
+//     { label: 'Français', code: 'fr' },
+//     { label: 'Hrvatski', code: 'hr' },
+//     { label: 'Indonesia', code: 'id' },
+//     { label: 'Italiano', code: 'it' },
+//     { label: 'Magyar', code: 'hu' },
+//     { label: 'Nederlands', code: 'nl' },
+//     { label: 'Norsk', code: 'no' },
+//     { label: 'Polski', code: 'pl' },
+//     { label: 'Português', code: 'pt' },
+//     { label: 'Română', code: 'ro' },
+//     { label: 'Suomi', code: 'fi' },
+//     { label: 'Svenska', code: 'sv' },
+//     { label: 'Tiếng Việt', code: 'vi' },
+//     { label: 'Türkçe', code: 'tr' },
+//     { label: 'Čeština', code: 'cs' },
+//     { label: 'Ελληνικά', code: 'el' },
+//     { label: 'Русский', code: 'ru' },
+//     { label: 'Українська', code: 'uk' },
+//     { label: 'български', code: 'bg' },
+//     { label: 'ไทย', code: 'th' },
+//     { label: '日本語', code: 'ja' },
+//     { label: '简体中文', code: 'zh' },
+//     { label: '한국어', code: 'ko' },
+//     { label: 'עברית', code: 'he' },
+//     { label: 'العربية', code: 'ar' },
+//   ]
+
+//   const currentLanguage =
+//     languages.find((lang) => lang.code === locale) || languages[0]
+
+//   const toggleLanguageSelector = () => {
+//     setIsLanguageSelectorOpen(!isLanguageSelectorOpen)
+//   }
+
+//   const selectLanguage = (language) => {
+//     startTransition(() => {
+//       router.replace(`/${language.code}`)
+//       changeLanguage(language.label)
+//     })
+//     setIsLanguageSelectorOpen(false)
+//   }
+
+//   return (
+//     <div className="language-selector">
+//       <button
+//         className="language-selector__current"
+//         onClick={toggleLanguageSelector}
+//         disabled={isPending}
+//       >
+//         <span className={`language-selector__icon-${currentLanguage.code}`}>
+//           {currentLanguage.label}
+//         </span>
+//         <span className={`arrow ${isLanguageSelectorOpen ? 'up' : 'down'}`}>
+//           <Image
+//             src="/img/bestvpn/arrow.svg"
+//             width={20}
+//             height={20}
+//             alt="Toggle language selector"
+//           />
+//         </span>
+//       </button>
+//       {isLanguageSelectorOpen && (
+//         <div className="language-selector__dropdown">
+//           {languages.map((language) => (
+//             <button
+//               key={language.code}
+//               className={`language-selector__item ${
+//                 language.code === currentLanguage.code ? 'active' : ''
+//               }`}
+//               onClick={() => selectLanguage(language)}
+//               disabled={isPending}
+//             >
+//               {language.label}
+//             </button>
+//           ))}
+//         </div>
+//       )}
+//     </div>
+//   )
+// }
+
+// export default LangSwitcher
+
+
+
+
+
+
+
+
+// 'use client'
+// import { useState } from 'react'
+// import React from 'react'
+// import './BestVpn.scss'
+// import Link from 'next/link'
+// import Image from 'next/image'
+// import { useTranslations } from 'next-intl'
+// import { useSelectedImage } from '../../context/SelectedImageContext'
+
+// const BestVpn = () => {
+//   const t = useTranslations('BestVpn')
+//   const { handleImageChange } = useSelectedImage()
+//   const [showModal, setShowModal] = useState(false)
+
+//   const toggleModal = () => {
+//     setShowModal((prev) => !prev)
+//   }
+
+//   const handleLinkClick = (imageSrc) => {
+//     handleImageChange(imageSrc)
+//   }
+
+//   return (
+//     <>
+//       <div className="best-vpn" onClick={toggleModal}>
+//         <div className="link-increase">
+//           <div>{t('link-increase')}</div>
+//           <span className={`arrow ${showModal ? 'up' : 'down'}`}>
+//             <Image
+//               src="/img/bestvpn/arrow.svg"
+//               width={20}
+//               height={20}
+//               alt="arrow"
+//             />
+//           </span>
+//         </div>
+//         {showModal && (
+//           <div className="modal">
+//             <div className="modal__block">
+//               <div className="modal__block__items">
+//                 <div className="modal__block__items-title">
+//                   <h3>{t('modal__block__items-title-1')}</h3>
+//                 </div>
+//                 <Link
+//                   href="#"
+//                   className="modal__block__items-links"
+//                   onClick={() => handleLinkClick('/img/hero/hero-image.svg')}
+//                 >
+//                   <span>👍🏻</span>
+//                   <span>{t('modal__block__items-links-1_1')}</span>
+//                 </Link>
+//               </div>
+//               <div className="modal__block__items">
+//                 <div className="modal__block__items-title">
+//                   <h3>{t('modal__block__items-title-2')}</h3>
+//                 </div>
+//                 <Link
+//                   href="#"
+//                   className="modal__block__items-links"
+//                   onClick={() => handleLinkClick('/img/location/China.svg')}
+//                 >
+//                   <span>🇨🇳</span>
+//                   <span>{t('modal__block__items-links-2_1')}</span>
+//                 </Link>
+//                 <Link
+//                   href="#"
+//                   className="modal__block__items-links"
+//                   onClick={() => handleLinkClick('/img/location/USA.svg')}
+//                 >
+//                   <span>🇺🇸</span>
+//                   <span>{t('modal__block__items-links-2_2')}</span>
+//                 </Link>
+//                 <Link
+//                   href="#"
+//                   className="modal__block__items-links"
+//                   onClick={() => handleLinkClick('/img/location/AE.svg')}
+//                 >
+//                   <span>🇸🇩</span>
+//                   <span>{t('modal__block__items-links-2_3')}</span>
+//                 </Link>
+//                 <Link
+//                   href="#"
+//                   className="modal__block__items-links"
+//                   onClick={() => handleLinkClick('/img/location/AU.svg')}
+//                 >
+//                   <span>🇦🇺</span>
+//                   <span>{t('modal__block__items-links-2_4')}</span>
+//                 </Link>
+//                 <Link
+//                   href="#"
+//                   className="modal__block__items-links"
+//                   onClick={() => handleLinkClick('/img/location/UK.svg')}
+//                 >
+//                   <span>🇬🇧</span>
+//                   <span>{t('modal__block__items-links-2_5')}</span>
+//                 </Link>
+//                 <Link
+//                   href="#"
+//                   className="modal__block__items-links"
+//                   onClick={() => handleLinkClick('/img/location/CA.svg')}
+//                 >
+//                   <span>🇨🇦</span>
+//                   <span>{t('modal__block__items-links-2_6')}</span>
+//                 </Link>
+//               </div>
+//               <div className="modal__block__items">
+//                 <div className="modal__block__items-title">
+//                   <h3>{t('modal__block__items-title-3')}</h3>
+//                 </div>
+//                 <Link
+//                   href="#"
+//                   className="modal__block__items-links"
+//                   onClick={() => handleLinkClick('/img/device/Android.svg')}
+//                 >
+//                   <Image
+//                     src="/img/bestvpn/device/android.svg"
+//                     width={15}
+//                     height={15}
+//                     alt="android"
+//                   />
+//                   <span>{t('modal__block__items-links-3_1')}</span>
+//                 </Link>
+//                 <Link
+//                   href="#"
+//                   className="modal__block__items-links"
+//                   onClick={() => handleLinkClick('/img/device/Ipad.svg')}
+//                 >
+//                   <Image
+//                     src="/img/bestvpn/device/iphone.svg"
+//                     width={15}
+//                     height={15}
+//                     alt="iphone"
+//                   />
+//                   <span>{t('modal__block__items-links-3_2')}</span>
+//                 </Link>
+//                 <Link
+//                   href="#"
+//                   className="modal__block__items-links"
+//                   onClick={() => handleLinkClick('/img/device/Apple.svg')}
+//                 >
+//                   <Image
+//                     src="/img/bestvpn/device/mac.svg"
+//                     width={15}
+//                     height={15}
+//                     alt="mac"
+//                   />
+//                   <span>{t('modal__block__items-links-3_3')}</span>
+//                 </Link>
+//                 <Link
+//                   href="#"
+//                   className="modal__block__items-links"
+//                   onClick={() => handleLinkClick('/img/device/Routers.svg')}
+//                 >
+//                   <Image
+//                     src="/img/bestvpn/device/routers.svg"
+//                     width={15}
+//                     height={15}
+//                     alt="routers"
+//                   />
+//                   <span>{t('modal__block__items-links-3_4')}</span>
+//                 </Link>
+//                 <Link
+//                   href="#"
+//                   className="modal__block__items-links"
+//                   onClick={() => handleLinkClick('/img/device/PC.svg')}
+//                 >
+//                   <Image
+//                     src="/img/bestvpn/device/pc.svg"
+//                     width={15}
+//                     height={15}
+//                     alt="pc"
+//                   />
+//                   <span>{t('modal__block__items-links-3_5')}</span>
+//                 </Link>
+//                 <Link
+//                   href="#"
+//                   className="modal__block__items-links"
+//                   onClick={() => handleLinkClick('/img/device/Windows.svg')}
+//                 >
+//                   <Image
+//                     src="/img/bestvpn/device/windows.svg"
+//                     width={15}
+//                     height={15}
+//                     alt="windows"
+//                   />
+//                   <span>{t('modal__block__items-links-3_6')}</span>
+//                 </Link>
+//               </div>
+//             </div>
+//           </div>
+//         )}
+//       </div>
+//     </>
+//   )
+// }
+
+// export default BestVpn
+
+
+
+
+
+
+
+// import { useState, useEffect } from 'react'
+// import './Burger.scss'
+// import { useLanguage } from '../../context/LanguageContext'
+// import LangSwitcher from '../LangSwitcher/LangSwitcher'
+// import Image from 'next/image'
+// import Link from 'next/link'
+// import { useTranslations } from 'next-intl'
+
+// const Burger = () => {
+//   const t = useTranslations('BestVpn')
+
+//   const { selectedLanguage } = useLanguage()
+//   const [open, setOpen] = useState(false)
+
+//   const toggleMenu = () => {
+//     setOpen((prevOpen) => {
+//       const newOpenState = !prevOpen
+
+//       if (newOpenState) {
+//         document.body.classList.add('no-scroll')
+//       } else {
+//         document.body.classList.remove('no-scroll')
+//       }
+
+//       return newOpenState
+//     })
+//   }
+
+//   const closeMenu = () => {
+//     setOpen(false)
+//     document.body.classList.remove('no-scroll')
+//   }
+
+//   useEffect(() => {
+//     const handleResize = () => {
+//       if (window.innerWidth > 768 || !open) {
+//         document.body.classList.remove('no-scroll')
+//       } else if (open) {
+//         document.body.classList.add('no-scroll')
+//       }
+//     }
+
+//     handleResize()
+
+//     window.addEventListener('resize', handleResize)
+
+//     return () => {
+//       window.removeEventListener('resize', handleResize)
+//       document.body.classList.remove('no-scroll')
+//     }
+//   }, [open])
+
+//   return (
+//     <div className="burgerContainer">
+//       <div className={`burger ${open ? 'open' : ''}`} onClick={toggleMenu}>
+//         <div className="burgerLine"></div>
+//         <div className="burgerLine"></div>
+//         <div className="burgerLine"></div>
+//       </div>
+//       <div className={`menu ${open ? 'showMenu' : ''}`}>
+//         <div className="burger__content">
+//           <div className="best-vpn">
+//             <div className="link-increase">
+//               <div>{t('link-increase')}</div>
+//             </div>
+//             <div className="modal">
+//               <div className="modal__block">
+//                 <div className="modal__block__top">
+//                   <div className="modal__block__items">
+//                     <div className="modal__block__items-title">
+//                       <h3>{t('modal__block__items-title-1')}</h3>
+//                     </div>
+//                     <Link
+//                       href="/"
+//                       className="modal__block__items-links"
+//                       onClick={closeMenu}
+//                     >
+//                       <span>👍🏻</span>
+//                       <span>{t('modal__block__items-links-1_1')}</span>
+//                     </Link>
+//                   </div>
+//                 </div>
+//                 <div className="modal__block__bottom">
+//                   <div className="modal__block__items">
+//                     <div className="modal__block__items-title">
+//                       <h3>{t('modal__block__items-title-2')}</h3>
+//                     </div>
+//                     <Link
+//                       href="/"
+//                       className="modal__block__items-links"
+//                       onClick={closeMenu}
+//                     >
+//                       <span>🇨🇳</span>
+//                       <span>{t('modal__block__items-links-2_1')}</span>
+//                     </Link>
+//                     <Link
+//                       href="/"
+//                       className="modal__block__items-links"
+//                       onClick={closeMenu}
+//                     >
+//                       <span>🇺🇸</span>
+//                       <span>{t('modal__block__items-links-2_2')}</span>
+//                     </Link>
+//                     <Link
+//                       href="/"
+//                       className="modal__block__items-links"
+//                       onClick={closeMenu}
+//                     >
+//                       <span>🇸🇩</span>
+//                       <span>{t('modal__block__items-links-2_3')}</span>
+//                     </Link>
+//                     <Link
+//                       href="/"
+//                       className="modal__block__items-links"
+//                       onClick={closeMenu}
+//                     >
+//                       <span>🇦🇺</span>
+//                       <span>{t('modal__block__items-links-2_4')}</span>
+//                     </Link>
+//                     <Link
+//                       href="/"
+//                       className="modal__block__items-links"
+//                       onClick={closeMenu}
+//                     >
+//                       <span>🇬🇧</span>
+//                       <span>{t('modal__block__items-links-2_5')}</span>
+//                     </Link>
+//                     <Link
+//                       href="/"
+//                       className="modal__block__items-links"
+//                       onClick={closeMenu}
+//                     >
+//                       <span>🇨🇦</span>
+//                       <span>{t('modal__block__items-links-2_6')}</span>
+//                     </Link>
+//                   </div>
+//                   <div className="modal__block__items">
+//                     <div className="modal__block__items-title">
+//                       <h3>{t('modal__block__items-title-3')}</h3>
+//                     </div>
+//                     <Link
+//                       href="/"
+//                       className="modal__block__items-links"
+//                       onClick={closeMenu}
+//                     >
+//                       <Image
+//                         src="/img/bestvpn/device/android.svg"
+//                         width={15}
+//                         height={15}
+//                         alt="android"
+//                       />
+//                       <span>{t('modal__block__items-links-3_1')}</span>
+//                     </Link>
+//                     <Link
+//                       href="/"
+//                       className="modal__block__items-links"
+//                       onClick={closeMenu}
+//                     >
+//                       <Image
+//                         src="/img/bestvpn/device/iphone.svg"
+//                         width={15}
+//                         height={15}
+//                         alt="iphone"
+//                       />
+//                       <span>{t('modal__block__items-links-3_2')}</span>
+//                     </Link>
+//                     <Link
+//                       href="/"
+//                       className="modal__block__items-links"
+//                       onClick={closeMenu}
+//                     >
+//                       <Image
+//                         src="/img/bestvpn/device/mac.svg"
+//                         width={15}
+//                         height={15}
+//                         alt="mac"
+//                       />
+//                       <span>{t('modal__block__items-links-3_3')}</span>
+//                     </Link>
+//                     <Link
+//                       href="/"
+//                       className="modal__block__items-links"
+//                       onClick={closeMenu}
+//                     >
+//                       <Image
+//                         src="/img/bestvpn/device/routers.svg"
+//                         width={15}
+//                         height={15}
+//                         alt="routers"
+//                       />
+//                       <span>{t('modal__block__items-links-3_4')}</span>
+//                     </Link>
+//                     <Link
+//                       href="/"
+//                       className="modal__block__items-links"
+//                       onClick={closeMenu}
+//                     >
+//                       <Image
+//                         src="/img/bestvpn/device/pc.svg"
+//                         width={15}
+//                         height={15}
+//                         alt="pc"
+//                       />
+//                       <span>{t('modal__block__items-links-3_5')}</span>
+//                     </Link>
+//                     <Link
+//                       href="/"
+//                       className="modal__block__items-links"
+//                       onClick={closeMenu}
+//                     >
+//                       <Image
+//                         src="/img/bestvpn/device/windows.svg"
+//                         width={15}
+//                         height={15}
+//                         alt="windows"
+//                       />
+//                       <span>{t('modal__block__items-links-3_6')}</span>
+//                     </Link>
+//                   </div>
+//                 </div>
+//               </div>
+//             </div>
+//           </div>
+//           <LangSwitcher />
+//         </div>
+//       </div>
+//     </div>
+//   )
+// }
+
+// export default Burger
+
+
+
+
+
+
+
+
+// 'use client'
+// import React, { createContext, useContext, useState, useEffect } from 'react'
+
+// const LinksContext = createContext()
+
+// export const LinksProvider = ({ children }) => {
+//   const [links, setLinks] = useState({
+//     link1:
+//       'https://www.expressvpn.com/go/vpnmentor?irclickid=XQN10l1zVxyKRa30qrT6uyWVUkC1vRSZDX3sQ40&irgwc=1&shareid=&xvcid=XQN10l1zVxyKRa30qrT6uyWVUkC1vRSZDX3sQ40',
+//     link2:
+//       'https://www.cyberghostvpn.com/offer/best?coupon=2Y2Mb&brand=vpnmentor&aff_sub=eyJwaWQiOiIxfE0wSUxIVVFTQ1E2NVEiLCJjaWQiOiIxfE0wSUxIVVFTQ1E2NVF8M3wxNjE1IiwicyI6IjEifQ&aff_sub2=D202408312029_o&noForceCondition=true&aff_id=1004&source=greatvpnEN',
+//     link3:
+//       'https://www.privateinternetaccess.com/offer/discount?coupon=2Y2M&aff_sub=eyJwaWQiOiIxfE0wSUxIVVFTQ1E2NVEiLCJjaWQiOiIxfE0wSUxIVVFTQ1E2NVF8NHwxMTE5IiwicyI6IjEifQ&aff_sub2=D202408312029_o&noForceCondition=true&aff_id=7761&source=general',
+//     link4:
+//       'https://www.ipvanish.com/vpn-mentor/?transaction_id=102f94b57f557d7fd91dc8f3aa3745&offer_id=10&utm_source=1026&utm_medium=affiliate&utm_campaign=10&utm_term=30',
+//     link5:
+//       'https://nordvpn.com/ru/special/?utm_medium=affiliate&utm_term=&utm_content=eyJwaWQiOiIxfE0wSUxIVVFTQ1E2NVEiLCJjaWQiOiIxfE0wSUxIVVFTQ1E2NVF8Nnw0MTM1NyIsInMiOiIxIn0&utm_campaign=off51&utm_source=aff826',
+//     link6: 'https://privatevpn.com/',
+//     link7: 'https://www.totalvpn.com/buy-now',
+//     link8:
+//       'https://www.privateinternetaccess.com/offer/discount?coupon=2Y2M&aff_sub=eyJwaWQiOiIxfE0wSUxIVVFTQ1E2NVEiLCJjaWQiOiIxfE0wSUxIVVFTQ1E2NVF8NHwxMTE5IiwicyI6IjEifQ&aff_sub2=D202408312029_o&noForceCondition=true&aff_id=7761&source=general',
+//     link9:
+//       'https://us.norton.com/products/norton-vpn?SID=eyJwaWQiOiIxfE0wTDhDR0tFM1lZVkgiLCJjaWQiOiIxfE0wTDhDR0tFM1lZVkh8MXw1NjA1MCIsInMiOiIxIn0&cjid=100130848&clickid=82f67a79694a11ef821d361a0a18b8fb&af_sub4=aff&af_sub5=CJ&c=CJ&cjevent=82f67a79694a11ef821d361a0a18b8fb',
+//   })
+
+//   useEffect(() => {
+//     const savedLinks = localStorage.getItem('savedLinks')
+//     if (savedLinks) {
+//       try {
+//         const parsedLinks = JSON.parse(savedLinks)
+//         setLinks((prevLinks) => ({
+//           ...prevLinks,
+//           ...parsedLinks, // Объединение с сохраненными ссылками
+//         }))
+//       } catch (error) {
+//         console.error('Error parsing savedLinks:', error)
+//       }
+//     }
+//   }, [])
+
+//   const setNewLinks1 = () => {
+//     const newLinks = {
+//       link1:
+//         'https://www.expressvpn.com/go/vpnmentor?irclickid=XQN10l1zVxyKRa30qrT6uyWVUkC1vRSZDX3sQ40&irgwc=1&shareid=&xvcid=XQN10l1zVxyKRa30qrT6uyWVUkC1vRSZDX3sQ40',
+//       link2:
+//         'https://www.cyberghostvpn.com/offer/best?coupon=2Y2Mb&brand=vpnmentor&aff_sub=eyJwaWQiOiIxfE0wSUxIVVFTQ1E2NVEiLCJjaWQiOiIxfE0wSUxIVVFTQ1E2NVF8M3wxNjE1IiwicyI6IjEifQ&aff_sub2=D202408312029_o&noForceCondition=true&aff_id=1004&source=greatvpnEN',
+//       link3:
+//         'https://www.privateinternetaccess.com/offer/discount?coupon=2Y2M&aff_sub=eyJwaWQiOiIxfE0wSUxIVVFTQ1E2NVEiLCJjaWQiOiIxfE0wSUxIVVFTQ1E2NVF8NHwxMTE5IiwicyI6IjEifQ&aff_sub2=D202408312029_o&noForceCondition=true&aff_id=7761&source=general',
+//       link4:
+//         'https://www.ipvanish.com/vpn-mentor/?transaction_id=102f94b57f557d7fd91dc8f3aa3745&offer_id=10&utm_source=1026&utm_medium=affiliate&utm_campaign=10&utm_term=30',
+//       link5:
+//         'https://nordvpn.com/ru/special/?utm_medium=affiliate&utm_term=&utm_content=eyJwaWQiOiIxfE0wSUxIVVFTQ1E2NVEiLCJjaWQiOiIxfE0wSUxIVVFTQ1E2NVF8Nnw0MTM1NyIsInMiOiIxIn0&utm_campaign=off51&utm_source=aff826',
+//       link6: 'https://privatevpn.com/',
+//       link7: 'https://www.totalvpn.com/buy-now',
+//       link8:
+//         'https://www.privateinternetaccess.com/offer/discount?coupon=2Y2M&aff_sub=eyJwaWQiOiIxfE0wSUxIVVFTQ1E2NVEiLCJjaWQiOiIxfE0wSUxIVVFTQ1E2NVF8NHwxMTE5IiwicyI6IjEifQ&aff_sub2=D202408312029_o&noForceCondition=true&aff_id=7761&source=general',
+//       link9:
+//         'https://us.norton.com/products/norton-vpn?SID=eyJwaWQiOiIxfE0wTDhDR0tFM1lZVkgiLCJjaWQiOiIxfE0wTDhDR0tFM1lZVkh8MXw1NjA1MCIsInMiOiIxIn0&cjid=100130848&clickid=82f67a79694a11ef821d361a0a18b8fb&af_sub4=aff&af_sub5=CJ&c=CJ&cjevent=82f67a79694a11ef821d361a0a18b8fb',
+//     }
+//     setLinks(newLinks)
+//     localStorage.setItem('savedLinks', JSON.stringify(newLinks))
+//   }
+
+//   const setNewLinks2 = () => {
+//     const newLinks = {
+//       link1:
+//         'https://www.expressvpn.com/go/home-20?shareid=&irgwc=1&xvcid=XQN10l1zVxyKRa30qrT6uyWVUkC1vQ0JDX3sQ40&irclickid=XQN10l1zVxyKRa30qrT6uyWVUkC1vQ0JDX3sQ40',
+//       link2:
+//         'https://www.cyberghostvpn.com/offer/access?coupon=2Y2Mb&brand=vpnmentor&aff_sub=eyJwaWQiOiIxfE0wSU05NldDU0ZWNUwiLCJjaWQiOiIxfE0wSU05NldDU0ZWNUx8MXwxNjE1IiwicyI6IjEifQ&aff_sub2=D202408312053_o&noForceCondition=true&aff_id=1004&source=mainen',
+//       link3:
+//         'https://www.privateinternetaccess.com/offer/discount?coupon=2Y2M&aff_sub=eyJwaWQiOiIxfE0wSU05NldDU0ZWNUwiLCJjaWQiOiIxfE0wSU05NldDU0ZWNUx8MnwxMTE5IiwicyI6IjEifQ&aff_sub2=D202408312053_o&noForceCondition=true&aff_id=7761&source=general',
+//       link4:
+//         'https://www.ipvanish.com/vpn-mentor/?transaction_id=102f94b57f557d7fd91dc8f3aa3745&offer_id=10&utm_source=1026&utm_medium=affiliate&utm_campaign=10&utm_term=30',
+//       link5:
+//         'https://nordvpn.com/ru/special/deal/?utm_medium=affiliate&utm_term=&utm_content=eyJwaWQiOiIxfE0wSU05NldDU0ZWNUwiLCJjaWQiOiIxfE0wSU05NldDU0ZWNUx8NHw0MTM1NyIsInMiOiIxIn0&utm_campaign=off51&utm_source=aff826',
+//       link6: 'https://privatevpn.com/',
+//       link7: 'https://www.totalvpn.com/buy-now',
+//       link8:
+//         'https://surfshark.com/deals?aff=vpnmentor&coupon=vpnmentor&transaction_id=102d101dece884ae406fd4043b3ba6&offer_id=40&affiliate_id=1355&source=&aff_sub=eyJwaWQiOiIxfE0wSU05NldDU0ZWNUwiLCJjaWQiOiIxfE0wSU05NldDU0ZWNUx8NnwxMTg3MTkiLCJzIjoiMSJ9&utm_source=Affiliates&utm_medium=1355&utm_campaign=affiliate&recurring_goal_id=7',
+//       link9:
+//         'https://us.norton.com/products/norton-vpn?SID=eyJwaWQiOiIxfE0wTDhDR0tFM1lZVkgiLCJjaWQiOiIxfE0wTDhDR0tFM1lZVkh8MXw1NjA1MCIsInMiOiIxIn0&cjid=100130848&clickid=82f67a79694a11ef821d361a0a18b8fb&af_sub4=aff&af_sub5=CJ&c=CJ&cjevent=82f67a79694a11ef821d361a0a18b8fb',
+//     }
+//     setLinks(newLinks)
+//     localStorage.setItem('savedLinks', JSON.stringify(newLinks))
+//   }
+
+//   const setNewLinks3 = () => {
+//     const newLinks = {
+//       link1:
+//         'https://www.expressvpn.com/go/unrestricted-1?irclickid=XQN10l1zVxyKRa30qrT6uyWVUkC1vkVpDX3sQ40&shareid=&irgwc=1&xvcid=XQN10l1zVxyKRa30qrT6uyWVUkC1vkVpDX3sQ40',
+//       link2:
+//         'https://www.cyberghostvpn.com/offer/bestus?coupon=2Y2Mb&brand=vpnmentor&aff_sub=eyJwaWQiOiIxfE0wSU1JTFZDQlpaQUkiLCJjaWQiOiIxfE0wSU1JTFZDQlpaQUl8MnwxNjE1IiwicyI6IjEifQ&aff_sub2=D202408312059_o&noForceCondition=true&aff_id=1004&source=USAen',
+//       link3:
+//         'https://www.privateinternetaccess.com/offer/bestus?source=us&coupon=2Y2M&brand=vpnMentorbb&aff_sub4=2Y2M&aff_sub=eyJwaWQiOiIxfE0wSU1JTFZDQlpaQUkiLCJjaWQiOiIxfE0wSU1JTFZDQlpaQUl8M3wxMTE5IiwicyI6IjEifQ&aff_sub2=D202408312059_o&aff_id=7761',
+//       link4:
+//         'https://www.ipvanish.com/vpn-mentor/?transaction_id=102f94b57f557d7fd91dc8f3aa3745&offer_id=10&utm_source=1026&utm_medium=affiliate&utm_campaign=10&utm_term=30',
+//       link5:
+//         'https://nordvpn.com/ru/special/?utm_medium=affiliate&utm_term=&utm_content=eyJwaWQiOiIxfE0wSU1JTFZDQlpaQUkiLCJjaWQiOiIxfE0wSU1JTFZDQlpaQUl8NXw0MTM1NyIsInMiOiIxIn0&utm_campaign=off51&utm_source=aff826',
+//       link6: 'https://privatevpn.com/',
+//       link7: 'https://www.totalvpn.com/buy-now',
+//       link8:
+//         'https://surfshark.com/deals?aff=vpnmentor&coupon=vpnmentor&transaction_id=102d101dece884ae406fd4043b3ba6&offer_id=40&affiliate_id=1355&source=&aff_sub=eyJwaWQiOiIxfE0wSU05NldDU0ZWNUwiLCJjaWQiOiIxfE0wSU05NldDU0ZWNUx8NnwxMTg3MTkiLCJzIjoiMSJ9&utm_source=Affiliates&utm_medium=1355&utm_campaign=affiliate&recurring_goal_id=7',
+//       link9:
+//         'https://us.norton.com/products/norton-vpn?SID=eyJwaWQiOiIxfE0wTDhDR0tFM1lZVkgiLCJjaWQiOiIxfE0wTDhDR0tFM1lZVkh8MXw1NjA1MCIsInMiOiIxIn0&cjid=100130848&clickid=82f67a79694a11ef821d361a0a18b8fb&af_sub4=aff&af_sub5=CJ&c=CJ&cjevent=82f67a79694a11ef821d361a0a18b8fb',
+//     }
+//     setLinks(newLinks)
+//     localStorage.setItem('savedLinks', JSON.stringify(newLinks))
+//   }
+
+//   const setNewLinks4 = () => {
+//     const newLinks = {
+//       link1:
+//         'https://www.expressvpn.com/go/vpnmentor?shareid=&irclickid=XQN10l1zVxyKRa30qrT6uyWVUkC1vm0xDX3sQ40&xvcid=XQN10l1zVxyKRa30qrT6uyWVUkC1vm0xDX3sQ40&irgwc=1',
+//       link2:
+//         'https://www.cyberghostvpn.com/offer/access?coupon=2Y2Mb&brand=vpnmentor&aff_sub=eyJwaWQiOiIxfE0wSU1RNVA4UUE3QzQiLCJjaWQiOiIxfE0wSU1RNVA4UUE3QzR8MnwxNjE1IiwicyI6IjEifQ&aff_sub2=D202408312104_o&noForceCondition=true&aff_id=1004&source=mainen',
+//       link3:
+//         'https://www.privateinternetaccess.com/offer/discount?coupon=2Y2M&aff_sub=eyJwaWQiOiIxfE0wSU1RNVA4UUE3QzQiLCJjaWQiOiIxfE0wSU1RNVA4UUE3QzR8M3wxMTE5IiwicyI6IjEifQ&aff_sub2=D202408312104_o&noForceCondition=true&aff_id=7761&source=general',
+//       link4:
+//         'https://www.ipvanish.com/vpn-mentor/?transaction_id=102f94b57f557d7fd91dc8f3aa3745&offer_id=10&utm_source=1026&utm_medium=affiliate&utm_campaign=10&utm_term=30',
+//       link5:
+//         'https://nordvpn.com/ru/special/?utm_medium=affiliate&utm_term=&utm_content=eyJwaWQiOiIxfE0wSU1RNVA4UUE3QzQiLCJjaWQiOiIxfE0wSU1RNVA4UUE3QzR8NXw0MTM1NyIsInMiOiIxIn0&utm_campaign=off51&utm_source=aff826',
+//       link6: 'https://privatevpn.com/',
+//       link7: 'https://www.totalvpn.com/buy-now',
+//       link8:
+//         'https://surfshark.com/deals?aff=vpnmentor&coupon=vpnmentor&transaction_id=102d101dece884ae406fd4043b3ba6&offer_id=40&affiliate_id=1355&source=&aff_sub=eyJwaWQiOiIxfE0wSU1RNVA4UUE3QzQiLCJjaWQiOiIxfE0wSU1RNVA4UUE3QzR8N3wxMTg3MTkiLCJzIjoiMSJ9&utm_source=Affiliates&utm_medium=1355&utm_campaign=affiliate&recurring_goal_id=7',
+//       link9:
+//         'https://us.norton.com/products/norton-vpn?SID=eyJwaWQiOiIxfE0wTDhDR0tFM1lZVkgiLCJjaWQiOiIxfE0wTDhDR0tFM1lZVkh8MXw1NjA1MCIsInMiOiIxIn0&cjid=100130848&clickid=82f67a79694a11ef821d361a0a18b8fb&af_sub4=aff&af_sub5=CJ&c=CJ&cjevent=82f67a79694a11ef821d361a0a18b8fb',
+//     }
+//     setLinks(newLinks)
+//     localStorage.setItem('savedLinks', JSON.stringify(newLinks))
+//   }
+//   const setNewLinks5 = () => {
+//     const newLinks = {
+//       link1:
+//         'https://www.expressvpn.com/offer/vpn-server/australia-vpn?xvcid=XQN10l1zVxyKRa30qrT6uyWVUkC1vjSpDX3sQ40&irclickid=XQN10l1zVxyKRa30qrT6uyWVUkC1vjSpDX3sQ40&irgwc=1&shareid=',
+//       link2:
+//         'https://www.cyberghostvpn.com/offer/bestau?coupon=2Y2Mb&brand=vpnmentor&aff_sub=eyJwaWQiOiIxfE0wSU4wWjlGUzAxNVoiLCJjaWQiOiIxfE0wSU4wWjlGUzAxNVp8MnwxNjE1IiwicyI6IjEifQ&aff_sub2=D202408312116_o&aff_id=1004&source=bestAUen',
+//       link3:
+//         'https://www.privateinternetaccess.com/offer/bestau?source=au&coupon=2Y2M&brand=vpnMentorb&aff_sub4=2Y2M&aff_sub=eyJwaWQiOiIxfE0wSU4wWjlGUzAxNVoiLCJjaWQiOiIxfE0wSU4wWjlGUzAxNVp8M3wxMTE5IiwicyI6IjEifQ&aff_sub2=D202408312116_o&aff_id=7761',
+//       link4:
+//         'https://www.ipvanish.com/vpn-mentor/?transaction_id=102f94b57f557d7fd91dc8f3aa3745&offer_id=10&utm_source=1026&utm_medium=affiliate&utm_campaign=10&utm_term=30',
+//       link5:
+//         'https://nordvpn.com/ru/servers/australia/?utm_medium=affiliate&utm_term=&utm_content=eyJwaWQiOiIxfE0wSU4wWjlGUzAxNVoiLCJjaWQiOiIxfE0wSU4wWjlGUzAxNVp8NXw0MTM1NyIsInMiOiIxIn0&utm_campaign=off51&utm_source=aff826',
+//       link6: 'https://privatevpn.com/',
+//       link7: 'https://www.totalvpn.com/buy-now',
+//       link8:
+//         'https://surfshark.com/deal/best-vpn-for-australia?aff=vpnmentor&coupon=topvpnoffer&transaction_id=102d101dece884ae406fd4043b3ba6&offer_id=40&affiliate_id=1355&source=&aff_sub=eyJwaWQiOiIxfE0wSU4wWjlGUzAxNVoiLCJjaWQiOiIxfE0wSU4wWjlGUzAxNVp8N3wxMTg3MTkiLCJzIjoiMSJ9&utm_source=Affiliates&utm_medium=1355&utm_campaign=affiliate&recurring_goal_id=7',
+//       link9:
+//         'https://us.norton.com/products/norton-vpn?SID=eyJwaWQiOiIxfE0wTDhDR0tFM1lZVkgiLCJjaWQiOiIxfE0wTDhDR0tFM1lZVkh8MXw1NjA1MCIsInMiOiIxIn0&cjid=100130848&clickid=82f67a79694a11ef821d361a0a18b8fb&af_sub4=aff&af_sub5=CJ&c=CJ&cjevent=82f67a79694a11ef821d361a0a18b8fb',
+//     }
+//     setLinks(newLinks)
+//     localStorage.setItem('savedLinks', JSON.stringify(newLinks))
+//   }
+//   const setNewLinks6 = () => {
+//     const newLinks = {
+//       link1:
+//         'https://www.expressvpn.com/offer/vpn-server/uk-vpn?xvcid=XQN10l1zVxyKRa30qrT6uyWVUkC1vn0JDX3sQ40&irclickid=XQN10l1zVxyKRa30qrT6uyWVUkC1vn0JDX3sQ40&shareid=&irgwc=1',
+//       link2:
+//         'https://www.cyberghostvpn.com/offer/bestuk?coupon=2Y2Mb&brand=vpnmentor&aff_sub=eyJwaWQiOiIxfE0wSU5DQ1c0NkM5WEUiLCJjaWQiOiIxfE0wSU5DQ1c0NkM5WEV8MnwxNjE1IiwicyI6IjEifQ&aff_sub2=D202408312121_o&aff_id=1004&source=bestUKen',
+//       link3:
+//         'https://www.privateinternetaccess.com/offer/bestgb?source=uk&coupon=2Y2M&brand=vpnMentorb&aff_sub4=2Y2M&aff_sub=eyJwaWQiOiIxfE0wSU5DQ1c0NkM5WEUiLCJjaWQiOiIxfE0wSU5DQ1c0NkM5WEV8M3wxMTE5IiwicyI6IjEifQ&aff_sub2=D202408312121_o&aff_id=7761',
+//       link4:
+//         'https://www.ipvanish.com/vpn-mentor/?transaction_id=102f94b57f557d7fd91dc8f3aa3745&offer_id=10&utm_source=1026&utm_medium=affiliate&utm_campaign=10&utm_term=30',
+//       link5:
+//         'https://nordvpn.com/ru/special/?utm_medium=affiliate&utm_term=&utm_content=eyJwaWQiOiIxfE0wSU5DQ1c0NkM5WEUiLCJjaWQiOiIxfE0wSU5DQ1c0NkM5WEV8NXw0MTM1NyIsInMiOiIxIn0&utm_campaign=off51&utm_source=aff826',
+//       link6: 'https://privatevpn.com/',
+//       link7: 'https://www.totalvpn.com/buy-now',
+//       link8:
+//         'https://surfshark.com/deal/best-vpn-for-uk?aff=vpnmentor&coupon=vpnmentor&transaction_id=102d101dece884ae406fd4043b3ba6&offer_id=40&affiliate_id=1355&source=&aff_sub=eyJwaWQiOiIxfE0wSU5DQ1c0NkM5WEUiLCJjaWQiOiIxfE0wSU5DQ1c0NkM5WEV8N3wxMTg3MTkiLCJzIjoiMSJ9&utm_source=Affiliates&utm_medium=1355&utm_campaign=affiliate&recurring_goal_id=7',
+//       link9:
+//         'https://us.norton.com/products/norton-vpn?SID=eyJwaWQiOiIxfE0wTDhDR0tFM1lZVkgiLCJjaWQiOiIxfE0wTDhDR0tFM1lZVkh8MXw1NjA1MCIsInMiOiIxIn0&cjid=100130848&clickid=82f67a79694a11ef821d361a0a18b8fb&af_sub4=aff&af_sub5=CJ&c=CJ&cjevent=82f67a79694a11ef821d361a0a18b8fb',
+//     }
+//     setLinks(newLinks)
+//     localStorage.setItem('savedLinks', JSON.stringify(newLinks))
+//   }
+//   const setNewLinks7 = () => {
+//     const newLinks = {
+//       link1:
+//         'https://www.expressvpn.com/go/vpnmentor?irgwc=1&xvcid=XQN10l1zVxyKRa30qrT6uyWVUkC1vnQZDX3sQ40&irclickid=XQN10l1zVxyKRa30qrT6uyWVUkC1vnQZDX3sQ40&shareid=',
+//       link2:
+//         'https://www.cyberghostvpn.com/offer/bestca?coupon=2Y2Mb&brand=vpnmentor&aff_sub=eyJwaWQiOiIxfE0wSU5HSFowTk80Q0giLCJjaWQiOiIxfE0wSU5HSFowTk80Q0h8MnwxNjE1IiwicyI6IjEifQ&aff_sub2=D202408312123_o&aff_id=1004&source=bestCAen',
+//       link3:
+//         'https://www.privateinternetaccess.com/offer/discount?coupon=2Y2M&aff_sub=eyJwaWQiOiIxfE0wSU5HSFowTk80Q0giLCJjaWQiOiIxfE0wSU5HSFowTk80Q0h8M3wxMTE5IiwicyI6IjEifQ&aff_sub2=D202408312123_o&noForceCondition=true&aff_id=7761&source=general',
+//       link4:
+//         'https://www.ipvanish.com/vpn-locations/canada-vpn/?transaction_id=102f94b57f557d7fd91dc8f3aa3745&offer_id=10&utm_source=1026&utm_medium=affiliate&utm_campaign=10&utm_term=217',
+//       link5:
+//         'https://nordvpn.com/ru/special/?utm_medium=affiliate&utm_term=&utm_content=eyJwaWQiOiIxfE0wSU5HSFowTk80Q0giLCJjaWQiOiIxfE0wSU5HSFowTk80Q0h8NXw0MTM1NyIsInMiOiIxIn0&utm_campaign=off51&utm_source=aff826',
+//       link6: 'https://privatevpn.com/',
+//       link7: 'https://www.totalvpn.com/buy-now',
+//       link8:
+//         'https://surfshark.com/deal/best-vpn-for-canada?aff=vpnmentor&coupon=vpnmentor&transaction_id=102d101dece884ae406fd4043b3ba6&offer_id=40&affiliate_id=1355&source=&aff_sub=eyJwaWQiOiIxfE0wSU5HSFowTk80Q0giLCJjaWQiOiIxfE0wSU5HSFowTk80Q0h8N3wxMTg3MTkiLCJzIjoiMSJ9&utm_source=Affiliates&utm_medium=1355&utm_campaign=affiliate&recurring_goal_id=7',
+//       link9:
+//         'https://us.norton.com/products/norton-vpn?SID=eyJwaWQiOiIxfE0wTDhDR0tFM1lZVkgiLCJjaWQiOiIxfE0wTDhDR0tFM1lZVkh8MXw1NjA1MCIsInMiOiIxIn0&cjid=100130848&clickid=82f67a79694a11ef821d361a0a18b8fb&af_sub4=aff&af_sub5=CJ&c=CJ&cjevent=82f67a79694a11ef821d361a0a18b8fb',
+//     }
+//     setLinks(newLinks)
+//     localStorage.setItem('savedLinks', JSON.stringify(newLinks))
+//   }
+//   const setNewLinks8 = () => {
+//     const newLinks = {
+//       link1:
+//         'https://www.expressvpn.com/go/vpn-software/vpn-android?xvcid=XQN10l1zVxyKRa30qrT6uyWVUkC1viX9DX3sQ40&irclickid=XQN10l1zVxyKRa30qrT6uyWVUkC1viX9DX3sQ40&shareid=&irgwc=1',
+//       link2:
+//         'https://www.cyberghostvpn.com/offer/flash-devices?coupon=2Y2Mb&brand=vpnmentor&aff_sub=eyJwaWQiOiIxfE0wSU5NUVRSSTRNNU0iLCJjaWQiOiIxfE0wSU5NUVRSSTRNNU18MnwxNjE1IiwicyI6IjEifQ&aff_sub2=D202408312128_o&noForceCondition=true&aff_id=1004&source=androiden',
+//       link3:
+//         'https://www.privateinternetaccess.com/offer/android-security?source=android&coupon=2Y2M&brand=vpnMentorb&aff_sub4=2Y2M&aff_sub=eyJwaWQiOiIxfE0wSU5NUVRSSTRNNU0iLCJjaWQiOiIxfE0wSU5NUVRSSTRNNU18M3wxMTE5IiwicyI6IjEifQ&aff_sub2=D202408312128_o&aff_id=7761',
+//       link4:
+//         'https://www.ipvanish.com/vpn-mentor/?transaction_id=102f94b57f557d7fd91dc8f3aa3745&offer_id=10&utm_source=1026&utm_medium=affiliate&utm_campaign=10&utm_term=30',
+//       link5:
+//         'https://nordvpn.com/ru/special/?utm_medium=affiliate&utm_term=&utm_content=eyJwaWQiOiIxfE0wSU5NUVRSSTRNNU0iLCJjaWQiOiIxfE0wSU5NUVRSSTRNNU18NXw0MTM1NyIsInMiOiIxIn0&utm_campaign=off51&utm_source=aff826',
+//       link6: 'https://privatevpn.com/best-vpn/vpn-android/',
+//       link7: 'https://www.totalvpn.com/buy-now',
+//       link8:
+//         'https://surfshark.com/deal/android?aff=vpnmentor&coupon=vpnmentor&transaction_id=102d101dece884ae406fd4043b3ba6&offer_id=40&affiliate_id=1355&source=&aff_sub=eyJwaWQiOiIxfE0wSU5NUVRSSTRNNU0iLCJjaWQiOiIxfE0wSU5NUVRSSTRNNU18N3wxMTg3MTkiLCJzIjoiMSJ9&utm_source=Affiliates&utm_medium=1355&utm_campaign=affiliate&recurring_goal_id=7',
+//       link9:
+//         'https://us.norton.com/products/norton-vpn?SID=eyJwaWQiOiIxfE0wTDhDR0tFM1lZVkgiLCJjaWQiOiIxfE0wTDhDR0tFM1lZVkh8MXw1NjA1MCIsInMiOiIxIn0&cjid=100130848&clickid=82f67a79694a11ef821d361a0a18b8fb&af_sub4=aff&af_sub5=CJ&c=CJ&cjevent=82f67a79694a11ef821d361a0a18b8fb',
+//     }
+//     setLinks(newLinks)
+//     localStorage.setItem('savedLinks', JSON.stringify(newLinks))
+//   }
+//   const setNewLinks9 = () => {
+//     const newLinks = {
+//       link1:
+//         'https://www.expressvpn.com/go/vpn-software/vpn-ios?xvcid=XQN10l1zVxyKRa30qrT6uyWVUkC1vE31DX3sQ40&shareid=&irclickid=XQN10l1zVxyKRa30qrT6uyWVUkC1vE31DX3sQ40&irgwc=1',
+//       link2:
+//         'https://www.cyberghostvpn.com/offer/vpn-for-iphone?coupon=2Y2Mb&brand=vpnmentor&aff_sub=eyJwaWQiOiIxfE0wSU5QNVIwMVpXNzEiLCJjaWQiOiIxfE0wSU5QNVIwMVpXNzF8MnwxNjE1IiwicyI6IjEifQ&aff_sub2=D202408312130_o&noForceCondition=true&aff_id=1004&source=iosen',
+//       link3:
+//         'https://www.privateinternetaccess.com/offer/ios-security?coupon=2Y2M&brand=vpnmentorb&aff_sub=eyJwaWQiOiIxfE0wSU5QNVIwMVpXNzEiLCJjaWQiOiIxfE0wSU5QNVIwMVpXNzF8M3wxMTE5IiwicyI6IjEifQ&aff_sub2=D202408312130_o&aff_id=7761&source=ios',
+//       link4:
+//         'https://www.ipvanish.com/vpn-setup/ios/?transaction_id=102f94b57f557d7fd91dc8f3aa3745&offer_id=10&utm_source=1026&utm_medium=affiliate&utm_campaign=10&utm_term=218',
+//       link5:
+//         'https://nordvpn.com/ru/special/vpn-for-ios/?utm_medium=affiliate&utm_term=&utm_content=eyJwaWQiOiIxfE0wSU5QNVIwMVpXNzEiLCJjaWQiOiIxfE0wSU5QNVIwMVpXNzF8NXw0MTM1NyIsInMiOiIxIn0&utm_campaign=off51&utm_source=aff826',
+//       link6: 'https://privatevpn.com/',
+//       link7: 'https://www.totalvpn.com/buy-now',
+//       link8:
+//         'https://surfshark.com/deal/ios?aff=vpnmentor&coupon=vpnmentor&transaction_id=102d101dece884ae406fd4043b3ba6&offer_id=40&affiliate_id=1355&source=&aff_sub=eyJwaWQiOiIxfE0wSU5QNVIwMVpXNzEiLCJjaWQiOiIxfE0wSU5QNVIwMVpXNzF8NnwxMTg3MTkiLCJzIjoiMSJ9&utm_source=Affiliates&utm_medium=1355&utm_campaign=affiliate&recurring_goal_id=7',
+//       link9:
+//         'https://us.norton.com/products/norton-vpn?SID=eyJwaWQiOiIxfE0wTDhDR0tFM1lZVkgiLCJjaWQiOiIxfE0wTDhDR0tFM1lZVkh8MXw1NjA1MCIsInMiOiIxIn0&cjid=100130848&clickid=82f67a79694a11ef821d361a0a18b8fb&af_sub4=aff&af_sub5=CJ&c=CJ&cjevent=82f67a79694a11ef821d361a0a18b8fb',
+//     }
+//     setLinks(newLinks)
+//     localStorage.setItem('savedLinks', JSON.stringify(newLinks))
+//   }
+//   const setNewLinks10 = () => {
+//     const newLinks = {
+//       link1:
+//         'https://www.expressvpn.com/go/vpn-software/vpn-mac?irgwc=1&xvcid=XQN10l1zVxyKRa30qrT6uyWVUkC1vBzFDX3sQ40&irclickid=XQN10l1zVxyKRa30qrT6uyWVUkC1vBzFDX3sQ40&shareid=',
+//       link2:
+//         'https://www.cyberghostvpn.com/offer/vpn-for-mac?coupon=2Y2Mb&brand=vpnmentor&aff_sub=eyJwaWQiOiIxfE0wSU5UUlUzQVFLMUkiLCJjaWQiOiIxfE0wSU5UUlUzQVFLMUl8MnwxNjE1IiwicyI6IjEifQ&aff_sub2=D202408312133_o&noForceCondition=true&aff_id=1004&source=bestMACEN',
+//       link3:
+//         'https://www.privateinternetaccess.com/offer/mac-security?source=macen&coupon=2Y2M&brand=vpnMentorb&aff_sub4=2Y2M&aff_sub=eyJwaWQiOiIxfE0wSU5UUlUzQVFLMUkiLCJjaWQiOiIxfE0wSU5UUlUzQVFLMUl8M3wxMTE5IiwicyI6IjEifQ&aff_sub2=D202408312134_o&aff_id=7761',
+//       link4:
+//         'https://www.ipvanish.com/mac-mentor/?transaction_id=102f94b57f557d7fd91dc8f3aa3745&offer_id=10&utm_source=1026&utm_medium=affiliate&utm_campaign=10&utm_term=32',
+//       link5:
+//         'https://nordvpn.com/ru/special/?utm_medium=affiliate&utm_term=&utm_content=eyJwaWQiOiIxfE0wSU5UUlUzQVFLMUkiLCJjaWQiOiIxfE0wSU5UUlUzQVFLMUl8NXw0MTM1NyIsInMiOiIxIn0&utm_campaign=off51&utm_source=aff826',
+//       link6: 'https://privatevpn.com/best-vpn/vpn-mac/',
+//       link7: 'https://www.totalvpn.com/buy-now',
+//       link8:
+//         'https://surfshark.com/deal/macos?aff=vpnmentor&coupon=vpnmentor&transaction_id=102d101dece884ae406fd4043b3ba6&offer_id=40&affiliate_id=1355&source=&aff_sub=eyJwaWQiOiIxfE0wSU5UUlUzQVFLMUkiLCJjaWQiOiIxfE0wSU5UUlUzQVFLMUl8N3wxMTg3MTkiLCJzIjoiMSJ9&utm_source=Affiliates&utm_medium=1355&utm_campaign=affiliate&recurring_goal_id=7',
+//       link9:
+//         'https://us.norton.com/products/norton-vpn?SID=eyJwaWQiOiIxfE0wTDhDR0tFM1lZVkgiLCJjaWQiOiIxfE0wTDhDR0tFM1lZVkh8MXw1NjA1MCIsInMiOiIxIn0&cjid=100130848&clickid=82f67a79694a11ef821d361a0a18b8fb&af_sub4=aff&af_sub5=CJ&c=CJ&cjevent=82f67a79694a11ef821d361a0a18b8fb',
+//     }
+//     setLinks(newLinks)
+//     localStorage.setItem('savedLinks', JSON.stringify(newLinks))
+//   }
+//   const setNewLinks11 = () => {
+//     const newLinks = {
+//       link1:
+//         'https://www.expressvpn.com/go/vpn-software/vpn-router-1?shareid=&irgwc=1&xvcid=XQN10l1zVxyKRa30qrT6uyWVUkC1vBTFDX3sQ40&irclickid=XQN10l1zVxyKRa30qrT6uyWVUkC1vBTFDX3sQ40',
+//       link2:
+//         'https://www.cyberghostvpn.com/download/vpn-router?media_source=inhouse_affiliates&transaction_id=102c5d1351737a1d8ce561f8cd278a&affiliate=1004&offer_id=693&ad=&coupon=2Y2Mb&conversionpoint=externalCP&channel=External+LPs&affiliate_google_clientid={affiliate_google_clientid}&utm_medium=affiliate&utm_source=1004&campaign=promo',
+//       link3:
+//         'https://www.privateinternetaccess.com/offer/discount?coupon=2Y2M&aff_sub=eyJwaWQiOiIxfE0wSU5XSUE1SzVVTUIiLCJjaWQiOiIxfE0wSU5XSUE1SzVVTUJ8M3wxMTE5IiwicyI6IjEifQ&aff_sub2=D202408312136_o&noForceCondition=true&aff_id=7761&source=general',
+//       link4:
+//         'https://www.ipvanish.com/vpn-setup/routers/?transaction_id=102f94b57f557d7fd91dc8f3aa3745&offer_id=10&utm_source=1026&utm_medium=affiliate&utm_campaign=10&utm_term=221',
+//       link5:
+//         'https://nordvpn.com/ru/special/?utm_medium=affiliate&utm_term=&utm_content=eyJwaWQiOiIxfE0wSU5XSUE1SzVVTUIiLCJjaWQiOiIxfE0wSU5XSUE1SzVVTUJ8Nnw0MTM1NyIsInMiOiIxIn0&utm_campaign=off51&utm_source=aff826',
+//       link6: 'https://privatevpn.com/',
+//       link7: 'https://www.totalvpn.com/buy-now',
+//       link8:
+//         'https://surfshark.com/deals?aff=vpnmentor&coupon=vpnmentor&transaction_id=102d101dece884ae406fd4043b3ba6&offer_id=40&affiliate_id=1355&source=&aff_sub=eyJwaWQiOiIxfE0wSU5XSUE1SzVVTUIiLCJjaWQiOiIxfE0wSU5XSUE1SzVVTUJ8OHwxMTg3MTkiLCJzIjoiMSJ9&utm_source=Affiliates&utm_medium=1355&utm_campaign=affiliate&recurring_goal_id=7',
+//       link9:
+//         'https://us.norton.com/products/norton-vpn?SID=eyJwaWQiOiIxfE0wTDhDR0tFM1lZVkgiLCJjaWQiOiIxfE0wTDhDR0tFM1lZVkh8MXw1NjA1MCIsInMiOiIxIn0&cjid=100130848&clickid=82f67a79694a11ef821d361a0a18b8fb&af_sub4=aff&af_sub5=CJ&c=CJ&cjevent=82f67a79694a11ef821d361a0a18b8fb',
+//     }
+//     setLinks(newLinks)
+//     localStorage.setItem('savedLinks', JSON.stringify(newLinks))
+//   }
+//   const setNewLinks12 = () => {
+//     const newLinks = {
+//       link1:
+//         'https://www.expressvpn.com/go/vpn-software?irclickid=XQN10l1zVxyKRa30qrT6uyWVUkC1vGUpDX3sQ40&shareid=&irgwc=1&xvcid=XQN10l1zVxyKRa30qrT6uyWVUkC1vGUpDX3sQ40',
+//       link2:
+//         'https://www.cyberghostvpn.com/offer/vpn-for-windows-pc?&coupon=2Y2Mb&brand=vpnmentor&aff_sub=eyJwaWQiOiIxfE0wSU8wUVlCSUVGRkQiLCJjaWQiOiIxfE0wSU8wUVlCSUVGRkR8MnwxNjE1IiwicyI6IjEifQ&aff_sub2=D202408312139_o&noForceCondition=true&aff_id=1004&source=windowsen',
+//       link3:
+//         'https://www.privateinternetaccess.com/offer/security?coupon=2Y2M&brand=vpnmentorb&aff_sub=eyJwaWQiOiIxfE0wSU8wUVlCSUVGRkQiLCJjaWQiOiIxfE0wSU8wUVlCSUVGRkR8M3wxMTE5IiwicyI6IjEifQ&aff_sub2=D202408312139_o&noForceCondition=true&aff_id=7761&source=windows',
+//       link4:
+//         'https://www.ipvanish.com/vpn-mentor/?transaction_id=102f94b57f557d7fd91dc8f3aa3745&offer_id=10&utm_source=1026&utm_medium=affiliate&utm_campaign=10&utm_term=30',
+//       link5:
+//         'https://nordvpn.com/ru/special/?utm_medium=affiliate&utm_term=&utm_content=eyJwaWQiOiIxfE0wSU8wUVlCSUVGRkQiLCJjaWQiOiIxfE0wSU8wUVlCSUVGRkR8NXw0MTM1NyIsInMiOiIxIn0&utm_campaign=off51&utm_source=aff826',
+//       link6: 'https://privatevpn.com/',
+//       link7: 'https://www.totalvpn.com/buy-now',
+//       link8:
+//         'https://surfshark.com/deals?aff=vpnmentor&coupon=vpnmentor&transaction_id=102d101dece884ae406fd4043b3ba6&offer_id=40&affiliate_id=1355&source=&aff_sub=eyJwaWQiOiIxfE0wSU8wUVlCSUVGRkQiLCJjaWQiOiIxfE0wSU8wUVlCSUVGRkR8N3wxMTg3MTkiLCJzIjoiMSJ9&utm_source=Affiliates&utm_medium=1355&utm_campaign=affiliate&recurring_goal_id=7',
+//       link9:
+//         'https://us.norton.com/products/norton-vpn?SID=eyJwaWQiOiIxfE0wTDhDR0tFM1lZVkgiLCJjaWQiOiIxfE0wTDhDR0tFM1lZVkh8MXw1NjA1MCIsInMiOiIxIn0&cjid=100130848&clickid=82f67a79694a11ef821d361a0a18b8fb&af_sub4=aff&af_sub5=CJ&c=CJ&cjevent=82f67a79694a11ef821d361a0a18b8fb',
+//     }
+//     setLinks(newLinks)
+//     localStorage.setItem('savedLinks', JSON.stringify(newLinks))
+//   }
+//   const setNewLinks13 = () => {
+//     const newLinks = {
+//       link1:
+//         'https://www.expressvpn.com/go/vpn-software/vpn-windows?xvcid=XQN10l1zVxyKRa30qrT6uyWVUkC1vGSxDX3sQ40&shareid=&irclickid=XQN10l1zVxyKRa30qrT6uyWVUkC1vGSxDX3sQ40&irgwc=1',
+//       link2:
+//         'https://www.cyberghostvpn.com/offer/windows?coupon=2Y2Mb&brand=vpnmentor&aff_sub=eyJwaWQiOiIxfE0wSU8zN0wyU1ZWTE4iLCJjaWQiOiIxfE0wSU8zN0wyU1ZWTE58MnwxNjE1IiwicyI6IjEifQ&aff_sub2=D202408312141_o&noForceCondition=true&aff_id=1004&source=windowsen',
+//       link3:
+//         'https://www.privateinternetaccess.com/offer/security?coupon=2Y2M&brand=vpnmentorb&aff_sub=eyJwaWQiOiIxfE0wSU8zN0wyU1ZWTE4iLCJjaWQiOiIxfE0wSU8zN0wyU1ZWTE58M3wxMTE5IiwicyI6IjEifQ&aff_sub2=D202408312141_o&noForceCondition=true&aff_id=7761&source=windows',
+//       link4:
+//         'https://www.ipvanish.com/?transaction_id=102f94b57f557d7fd91dc8f3aa3745&offer_id=10&utm_source=1026&utm_medium=affiliate&utm_campaign=10&utm_term=215',
+//       link5:
+//         'https://nordvpn.com/ru/special/?utm_medium=affiliate&utm_term=&utm_content=eyJwaWQiOiIxfE0wSU8zN0wyU1ZWTE4iLCJjaWQiOiIxfE0wSU8zN0wyU1ZWTE58NXw0MTM1NyIsInMiOiIxIn0&utm_campaign=off51&utm_source=aff826',
+//       link6: 'https://privatevpn.com/best-vpn/vpn-windows/',
+//       link7: 'https://www.totalvpn.com/buy-now',
+//       link8:
+//         'https://surfshark.com/deal/windows?aff=vpnmentor&coupon=vpnmentor&transaction_id=102d101dece884ae406fd4043b3ba6&offer_id=40&affiliate_id=1355&source=&aff_sub=eyJwaWQiOiIxfE0wSU8zN0wyU1ZWTE4iLCJjaWQiOiIxfE0wSU8zN0wyU1ZWTE58N3wxMTg3MTkiLCJzIjoiMSJ9&utm_source=Affiliates&utm_medium=1355&utm_campaign=affiliate&recurring_goal_id=7',
+//       link9:
+//         'https://us.norton.com/products/norton-vpn?SID=eyJwaWQiOiIxfE0wTDhDR0tFM1lZVkgiLCJjaWQiOiIxfE0wTDhDR0tFM1lZVkh8MXw1NjA1MCIsInMiOiIxIn0&cjid=100130848&clickid=82f67a79694a11ef821d361a0a18b8fb&af_sub4=aff&af_sub5=CJ&c=CJ&cjevent=82f67a79694a11ef821d361a0a18b8fb',
+//     }
+//     setLinks(newLinks)
+//     localStorage.setItem('savedLinks', JSON.stringify(newLinks))
+//   }
+//   const setNewLinks14 = () => {
+//     const newLinks = {
+//       link1:
+//         'https://www.expressvpn.com/go/features/free-trial?shareid=&irgwc=1&xvcid=XQN10l1zVxyKRa30qrT6uyWVUkC1Mt24PVVo1g0&irclickid=XQN10l1zVxyKRa30qrT6uyWVUkC1Mt24PVVo1g0',
+//       link2:
+//         'https://www.cyberghostvpn.com/offer/risk-free-x?coupon=2Y2Mb&brand=vpnmentor&aff_sub=eyJwaWQiOiIxfE0wSjk2WE5STVhaUDUiLCJjaWQiOiIxfE0wSjk2WE5STVhaUDV8MXwxNjE1IiwicyI6IjEifQ&aff_sub2=D202409010731_o&noForceCondition=true&aff_id=1004&source=riskEN',
+//       link3:
+//         'https://www.privateinternetaccess.com/offer/risk-free?coupon=2Y2M&brand=vpnmentorb&aff_sub=eyJwaWQiOiIxfE0wSjk2WE5STVhaUDUiLCJjaWQiOiIxfE0wSjk2WE5STVhaUDV8MnwxMTE5IiwicyI6IjEifQ&aff_sub2=D202409010732_o&noForceCondition=true&aff_id=7761&source=risken',
+//       link4:
+//         'https://www.ipvanish.com/try-mentor/?transaction_id=1029bac89eda6818b256c21532ac96&offer_id=10&utm_source=1026&utm_medium=affiliate&utm_campaign=10&utm_term=33',
+//       link5:
+//         'https://nordvpn.com/ru/special/?utm_medium=affiliate&utm_term=&utm_content=eyJwaWQiOiIxfE0wSjk2WE5STVhaUDUiLCJjaWQiOiIxfE0wSjk2WE5STVhaUDV8NHw0MTM1NyIsInMiOiIxIn0&utm_campaign=off51&utm_source=aff826',
+//       link6: 'https://privatevpn.com/',
+//       link7: 'https://www.totalvpn.com/buy-now',
+//       link8:
+//         'https://surfshark.com/deals?aff=vpnmentor&coupon=vpnmentor&transaction_id=102a90d1b6e12d5903f5a5aec5218a&offer_id=40&affiliate_id=1355&source=&aff_sub=eyJwaWQiOiIxfE0wSjk2WE5STVhaUDUiLCJjaWQiOiIxfE0wSjk2WE5STVhaUDV8NnwxMTg3MTkiLCJzIjoiMSJ9&utm_source=Affiliates&utm_medium=1355&utm_campaign=affiliate&recurring_goal_id=7',
+//       link9:
+//         'https://us.norton.com/products/norton-vpn?SID=eyJwaWQiOiIxfE0wTDhDR0tFM1lZVkgiLCJjaWQiOiIxfE0wTDhDR0tFM1lZVkh8MXw1NjA1MCIsInMiOiIxIn0&cjid=100130848&clickid=82f67a79694a11ef821d361a0a18b8fb&af_sub4=aff&af_sub5=CJ&c=CJ&cjevent=82f67a79694a11ef821d361a0a18b8fb',
+//     }
+//     setLinks(newLinks)
+//     localStorage.setItem('savedLinks', JSON.stringify(newLinks))
+//   }
+//   const setNewLinksRu = () => {
+//     const newLinks = {
+//       link1:
+//         'https://www.expressvpn.com/go/features/free-trial?shareid=&irgwc=1&xvcid=XQN10l1zVxyKRa30qrT6uyWVUkC1Mt24PVVo1g0&irclickid=XQN10l1zVxyKRa30qrT6uyWVUkC1Mt24PVVo1g0',
+//       link2:
+//         'https://www.cyberghostvpn.com/offer/risk-free-x?coupon=2Y2Mb&brand=vpnmentor&aff_sub=eyJwaWQiOiIxfE0wSjk2WE5STVhaUDUiLCJjaWQiOiIxfE0wSjk2WE5STVhaUDV8MXwxNjE1IiwicyI6IjEifQ&aff_sub2=D202409010731_o&noForceCondition=true&aff_id=1004&source=riskEN',
+//       link3:
+//         'https://www.privateinternetaccess.com/offer/risk-free?coupon=2Y2M&brand=vpnmentorb&aff_sub=eyJwaWQiOiIxfE0wSjk2WE5STVhaUDUiLCJjaWQiOiIxfE0wSjk2WE5STVhaUDV8MnwxMTE5IiwicyI6IjEifQ&aff_sub2=D202409010732_o&noForceCondition=true&aff_id=7761&source=risken',
+//       link4:
+//         'https://www.ipvanish.com/try-mentor/?transaction_id=1029bac89eda6818b256c21532ac96&offer_id=10&utm_source=1026&utm_medium=affiliate&utm_campaign=10&utm_term=33',
+//       link5:
+//         'https://nordvpn.com/ru/special/?utm_medium=affiliate&utm_term=&utm_content=eyJwaWQiOiIxfE0wSjk2WE5STVhaUDUiLCJjaWQiOiIxfE0wSjk2WE5STVhaUDV8NHw0MTM1NyIsInMiOiIxIn0&utm_campaign=off51&utm_source=aff826',
+//       link6: 'https://privatevpn.com/',
+//       link7: 'https://www.totalvpn.com/buy-now',
+//       link8: 'https://freevpnplanet.com/',
+//       link9: 'https://vpnsatoshi.com/',
+//     }
+//     setLinks(newLinks)
+//     localStorage.setItem('savedLinks', JSON.stringify(newLinks))
+//   }
+
+//   return (
+//     <LinksContext.Provider
+//       value={{
+//         links,
+//         setNewLinks1,
+//         setNewLinks2,
+//         setNewLinks3,
+//         setNewLinks4,
+//         setNewLinks5,
+//         setNewLinks6,
+//         setNewLinks7,
+//         setNewLinks8,
+//         setNewLinks9,
+//         setNewLinks10,
+//         setNewLinks11,
+//         setNewLinks12,
+//         setNewLinks13,
+//         setNewLinks14,
+//         setNewLinksRu,
+//       }}
+//     >
+//       {children}
+//     </LinksContext.Provider>
+//   )
+// }
+
+// export const useLinks = () => useContext(LinksContext)
+
+
+
+
+
+
+
+
+
+// 'use client'
+
+// import { Cabin } from 'next/font/google'
+// import './globals.scss'
+// import Header from '../components/Header/Header'
+// import Footer from '../components/Footer/Footer'
+// import { LanguageProvider } from '../context/LanguageContext'
+// import { NextIntlClientProvider } from 'next-intl'
+// import { SelectedImageProvider } from '../context/SelectedImageContext'
+// import { LinksProvider } from '../context/LinksContext'
+// import enMessages from '../../messages/en.json'
+// import ruMessages from '../../messages/ru.json'
+// import daMessages from '../../messages/da.json'
+// import deMessages from '../../messages/de.json'
+// import esMessages from '../../messages/es.json'
+// import frMessages from '../../messages/fr.json'
+// import hrMessages from '../../messages/hr.json'
+// import idMessages from '../../messages/id.json'
+// import itMessages from '../../messages/it.json'
+// import huMessages from '../../messages/hu.json'
+// import nlMessages from '../../messages/nl.json'
+// import noMessages from '../../messages/no.json'
+// import plMessages from '../../messages/pl.json'
+// import ptMessages from '../../messages/pt.json'
+// import roMessages from '../../messages/ro.json'
+// import fiMessages from '../../messages/fi.json'
+// import svMessages from '../../messages/sv.json'
+// import viMessages from '../../messages/vi.json'
+// import trMessages from '../../messages/tr.json'
+// import csMessages from '../../messages/cs.json'
+// import elMessages from '../../messages/el.json'
+// import ukMessages from '../../messages/uk.json'
+// import bgMessages from '../../messages/bg.json'
+// import thMessages from '../../messages/th.json'
+// import jaMessages from '../../messages/ja.json'
+// import zhMessages from '../../messages/zh.json'
+// import koMessages from '../../messages/ko.json'
+// import heMessages from '../../messages/he.json'
+// import arMessages from '../../messages/ar.json'
+
+// const inter = Cabin({ subsets: ['latin'] })
+
+// const messages = {
+//   en: enMessages,
+//   ru: ruMessages,
+//   da: daMessages,
+//   de: deMessages,
+//   es: esMessages,
+//   fr: frMessages,
+//   hr: hrMessages,
+//   id: idMessages,
+//   it: itMessages,
+//   hu: huMessages,
+//   nl: nlMessages,
+//   no: noMessages,
+//   pl: plMessages,
+//   pt: ptMessages,
+//   ro: roMessages,
+//   fi: fiMessages,
+//   sv: svMessages,
+//   vi: viMessages,
+//   tr: trMessages,
+//   cs: csMessages,
+//   el: elMessages,
+//   uk: ukMessages,
+//   bg: bgMessages,
+//   th: thMessages,
+//   ja: jaMessages,
+//   zh: zhMessages,
+//   ko: koMessages,
+//   he: heMessages,
+//   ar: arMessages,
+// }
+
+// export default function RootLayout({ children, params }) {
+//   const { locale } = params
+//   const currentMessages = messages[locale]
+
+//   return (
+//     <html lang={locale}>
+//       <body className={inter.className}>
+//         <NextIntlClientProvider locale={locale} messages={currentMessages}>
+//           <LanguageProvider>
+//             <SelectedImageProvider>
+//               <LinksProvider>
+//                 <Header />
+//                 <main>{children}</main>
+//                 <Footer />
+//               </LinksProvider>
+//             </SelectedImageProvider>
+//           </LanguageProvider>
+//         </NextIntlClientProvider>
+//       </body>
+//     </html>
+//   )
+// }
+
+
+
+
+layout.js
+// export default function RootLayout({ children }) {
+//   return children
+// }
+
+
+
+
+not-found.js
+
+// 'use client'
+
+// export default function NotFound() {
+//   return (
+//     <html>
+//       <body className="text-center">
+//         <h1 className="mt-10 font-semibold">Something went wrong!</h1>
+//       </body>
+//     </html>
+//   )
+// }
+
+
+
+
+
+// import createMiddleware from 'next-intl/middleware'
+
+// export default createMiddleware({
+//   locales: [
+//     'en',
+//     'da',
+//     'de',
+//     'es',
+//     'fr',
+//     'hr',
+//     'id',
+//     'it',
+//     'hu',
+//     'nl',
+//     'no',
+//     'pl',
+//     'pt',
+//     'ro',
+//     'fi',
+//     'sv',
+//     'vi',
+//     'tr',
+//     'cs',
+//     'el',
+//     'ru',
+//     'uk',
+//     'bg',
+//     'th',
+//     'ja',
+//     'zh',
+//     'ko',
+//     'he',
+//     'ar',
+//   ],
+
+//   defaultLocale: 'en',
+// })
+
+// export const config = {
+//   matcher: ['/', '/(id|en)/:path*'],
+// }
+
+
+
+
+Category -----------
+'use client'
+import React from 'react'
+import './Category.scss'
+import Image from 'next/image'
+import Link from 'next/link'
+import { useTranslations } from 'next-intl'
+import { useLinks } from '../../context/LinksContext'
+
+const Category = () => {
+  const t = useTranslations('Category')
+  const { links } = useLinks()
+  const { visibleBlock } = useLinks()
+
+  return (
+    <section className="category">
+      <div className="container">
+        <div className="category__title">
+          <h2> {t('category__title')}</h2>
+        </div>
+        {visibleBlock === 'block1' ? (
+          <div className="category__content">
+            <div className="category__content__block">
+              <div className="category__content__block__badge">
+                <Image
+                  src="/img/category/badge/star.svg"
+                  width={15}
+                  height={15}
+                  alt="star"
+                />
+              </div>
+              <div className="category__content__block__items">
+                <div className="category__content__block__items-logo">
+                  <Link
+                    target="_blank"
+                    className="overlay-link"
+                    href={links.link1}
+                  ></Link>
+                  <Image
+                    src="/img/category/logo/1.svg"
+                    width={260}
+                    height={45}
+                    alt="1"
+                  />
+                </div>
+                <div className="category__content__block__items__features">
+                  <Link
+                    target="_blank"
+                    className="overlay-link"
+                    href={links.link1}
+                  ></Link>
+                  <div className="category__content__block__items__features__item">
+                    <div className="category__content__block__items__features__item__feature">
+                      <div className="category__content__block__items__features__item__feature-label">
+                        <Image
+                          src="/img/category/label/lock.svg"
+                          width={20}
+                          height={20}
+                          alt="lock"
+                        />
+                      </div>
+                      <div className="category__content__block__items__features__item__feature-check">
+                        <Image
+                          src="/img/category/check.svg"
+                          width={10}
+                          height={10}
+                          alt="check"
+                        />
+                      </div>
+                    </div>
+                    <div className="category__content__block__items__features__item__name">
+                      <span>
+                        {t(
+                          'category__content__block__items__features__item__name-1.part1'
+                        )}
+                      </span>
+                    </div>
+                  </div>
+                  <div className="category__content__block__items__features__item">
+                    <div className="category__content__block__items__features__item__feature">
+                      <div className="category__content__block__items__features__item__feature-label">
+                        <Image
+                          src="/img/category/label/speed.svg"
+                          width={20}
+                          height={20}
+                          alt="speed"
+                        />
+                      </div>
+                      <div className="category__content__block__items__features__item__feature-check">
+                        <Image
+                          src="/img/category/check.svg"
+                          width={10}
+                          height={10}
+                          alt="check"
+                        />
+                      </div>
+                    </div>
+                    <div className="category__content__block__items__features__item__name">
+                      <span>
+                        {t(
+                          'category__content__block__items__features__item__name-1.part2'
+                        )}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <div className="category__content__block__items__features__button">
+                  <Link
+                    target="_blank"
+                    href={links.link1}
+                    className="category__content__block__items__features__btn"
+                  >
+                    <span>
+                      {t('category__content__block__items__features__btn')}
+                    </span>
+                    <Image
+                      src="/img/vendors/arrow-right.svg"
+                      width={20}
+                      height={20}
+                      alt="arrow"
+                    />
+                  </Link>
+                </div>
+              </div>
+            </div>
+            <div className="category__content__block">
+              <div className="category__content__block__items">
+                <div className="category__content__block__items-logo">
+                  <Link
+                    className="overlay-link"
+                    target="_blank"
+                    href={links.link2}
+                  ></Link>
+                  <Image
+                    src="/img/category/logo/2.svg"
+                    width={260}
+                    height={45}
+                    alt="2"
+                  />
+                </div>
+                <div className="category__content__block__items__features">
+                  <Link
+                    className="overlay-link"
+                    target="_blank"
+                    href={links.link2}
+                  ></Link>
+                  <div className="category__content__block__items__features__item">
+                    <div className="category__content__block__items__features__item__feature">
+                      <div className="category__content__block__items__features__item__feature-label">
+                        <Image
+                          src="/img/category/label/badge-check.svg"
+                          width={20}
+                          height={20}
+                          alt="lock"
+                        />
+                      </div>
+                      <div className="category__content__block__items__features__item__feature-check">
+                        <Image
+                          src="/img/category/check.svg"
+                          width={10}
+                          height={10}
+                          alt="check"
+                        />
+                      </div>
+                    </div>
+                    <div className="category__content__block__items__features__item__name">
+                      <span>
+                        {t(
+                          'category__content__block__items__features__item__name-2.part1'
+                        )}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <div className="category__content__block__items__features__button">
+                  <Link
+                    target="_blank"
+                    href={links.link2}
+                    className="category__content__block__items__features__btn"
+                  >
+                    <span>
+                      {t('category__content__block__items__features__btn')}
+                    </span>
+                    <Image
+                      src="/img/vendors/arrow-right.svg"
+                      width={20}
+                      height={20}
+                      alt="arrow"
+                    />
+                  </Link>
+                </div>
+              </div>
+            </div>
+            <div className="category__content__block">
+              <div className="category__content__block__items">
+                <div className="category__content__block__items-logo">
+                  <Link
+                    target="_blank"
+                    className="overlay-link"
+                    href={links.link3}
+                  ></Link>
+                  <Image
+                    src="/img/category/logo/3.svg"
+                    width={260}
+                    height={45}
+                    alt="3"
+                  />
+                </div>
+                <div className="category__content__block__items__features">
+                  <Link
+                    target="_blank"
+                    className="overlay-link"
+                    href={links.link3}
+                  ></Link>
+                  <div className="category__content__block__items__features__item">
+                    <div className="category__content__block__items__features__item__feature">
+                      <div className="category__content__block__items__features__item__feature-label">
+                        <Image
+                          src="/img/category/label/social.svg"
+                          width={20}
+                          height={20}
+                          alt="social"
+                        />
+                      </div>
+                      <div className="category__content__block__items__features__item__feature-check">
+                        <Image
+                          src="/img/category/check.svg"
+                          width={10}
+                          height={10}
+                          alt="check"
+                        />
+                      </div>
+                    </div>
+                    <div className="category__content__block__items__features__item__name">
+                      <span>
+                        {t(
+                          'category__content__block__items__features__item__name-3.part1'
+                        )}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <div className="category__content__block__items__features__button">
+                  <Link
+                    target="_blank"
+                    href={links.link3}
+                    className="category__content__block__items__features__btn"
+                  >
+                    <span>
+                      {t('category__content__block__items__features__btn')}
+                    </span>
+                    <Image
+                      src="/img/vendors/arrow-right.svg"
+                      width={20}
+                      height={20}
+                      alt="arrow"
+                    />
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </div>
+        ) : (
+          <div className="category__content category__content-ru">
+            <div className="category__content__block category__content__block-ru">
+              <div className="category__content__block__badge">
+                <Image
+                  src="/img/category/badge/star.svg"
+                  width={15}
+                  height={15}
+                  alt="star"
+                />
+              </div>
+              <div className="category__content__block__items">
+                <div className="category__content__block__items-logo">
+                  <Link
+                    target="_blank"
+                    className="overlay-link"
+                    href={links.link8}
+                  ></Link>
+                  <Image
+                    src="/img/category/logo/ru/1.svg"
+                    width={150}
+                    height={50}
+                    alt="1"
+                  />
+                </div>
+                <div className="category__content__block__items__features">
+                  <Link
+                    target="_blank"
+                    className="overlay-link"
+                    href={links.link8}
+                  ></Link>
+                  <div className="category__content__block__items__features__item">
+                    <div className="category__content__block__items__features__item__feature">
+                      <div className="category__content__block__items__features__item__feature-label">
+                        <Image
+                          src="/img/category/label/lock.svg"
+                          width={20}
+                          height={20}
+                          alt="lock"
+                        />
+                      </div>
+                      <div className="category__content__block__items__features__item__feature-check">
+                        <Image
+                          src="/img/category/check.svg"
+                          width={10}
+                          height={10}
+                          alt="check"
+                        />
+                      </div>
+                    </div>
+                    <div className="category__content__block__items__features__item__name">
+                      <span>
+                        {t(
+                          'category__content__block__items__features__item__name-1.part1'
+                        )}
+                      </span>
+                    </div>
+                  </div>
+                  <div className="category__content__block__items__features__item">
+                    <div className="category__content__block__items__features__item__feature">
+                      <div className="category__content__block__items__features__item__feature-label">
+                        <Image
+                          src="/img/category/label/speed.svg"
+                          width={20}
+                          height={20}
+                          alt="speed"
+                        />
+                      </div>
+                      <div className="category__content__block__items__features__item__feature-check">
+                        <Image
+                          src="/img/category/check.svg"
+                          width={10}
+                          height={10}
+                          alt="check"
+                        />
+                      </div>
+                    </div>
+                    <div className="category__content__block__items__features__item__name">
+                      <span>
+                        {t(
+                          'category__content__block__items__features__item__name-1.part2'
+                        )}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <div className="category__content__block__items__features__button">
+                  <Link
+                    target="_blank"
+                    href={links.link8}
+                    className="category__content__block__items__features__btn"
+                  >
+                    <span>
+                      {t('category__content__block__items__features__btn')}
+                    </span>
+                    <Image
+                      src="/img/vendors/arrow-right.svg"
+                      width={20}
+                      height={20}
+                      alt="arrow"
+                    />
+                  </Link>
+                </div>
+              </div>
+            </div>
+            <div className="category__content__block category__content__block-ru">
+              <div className="category__content__block__items">
+                <div className="category__content__block__items-logo">
+                  <Link
+                    className="overlay-link"
+                    target="_blank"
+                    href={links.link9}
+                  ></Link>
+                  <Image
+                    src="/img/category/logo/ru/2.svg"
+                    width={150}
+                    height={50}
+                    alt="2"
+                  />
+                </div>
+                <div className="category__content__block__items__features">
+                  <Link
+                    className="overlay-link"
+                    target="_blank"
+                    href={links.link9}
+                  ></Link>
+                  <div className="category__content__block__items__features__item">
+                    <div className="category__content__block__items__features__item__feature">
+                      <div className="category__content__block__items__features__item__feature-label">
+                        <Image
+                          src="/img/category/label/badge-check.svg"
+                          width={20}
+                          height={20}
+                          alt="lock"
+                        />
+                      </div>
+                      <div className="category__content__block__items__features__item__feature-check">
+                        <Image
+                          src="/img/category/check.svg"
+                          width={10}
+                          height={10}
+                          alt="check"
+                        />
+                      </div>
+                    </div>
+                    <div className="category__content__block__items__features__item__name">
+                      <span>
+                        {t(
+                          'category__content__block__items__features__item__name-2.part1'
+                        )}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <div className="category__content__block__items__features__button">
+                  <Link
+                    target="_blank"
+                    href={links.link9}
+                    className="category__content__block__items__features__btn"
+                  >
+                    <span>
+                      {t('category__content__block__items__features__btn')}
+                    </span>
+                    <Image
+                      src="/img/vendors/arrow-right.svg"
+                      width={20}
+                      height={20}
+                      alt="arrow"
+                    />
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+    </section>
+  )
+}
+
+export default Category
+
+
+
+
+Compare-----------------
+
+
+'use client'
+import React from 'react'
+import { useState } from 'react'
+import './Compare.scss'
+import Image from 'next/image'
+import Link from 'next/link'
+import { useTranslations } from 'next-intl'
+import { useLinks } from '../../context/LinksContext'
+
+const Compare = () => {
+  const t = useTranslations('Compare')
+  const { links } = useLinks()
+  const { visibleBlock } = useLinks()
+
+  const [activeTab, setActiveTab] = useState('tab_expressvpn')
+
+  const handleTabClick = (tab) => {
+    setActiveTab(tab)
+  }
+
+  return (
+    <>
+      {visibleBlock === 'block1' ? (
+        <section className="compare">
+          <div className="container">
+            <div className="compare__title">
+              <h2>{t('compare__title')}</h2>
+            </div>
+            <div className="compare__content">
+              <div className="compare__tabs">
+                <div
+                  className={`compare__tabs__tab ${
+                    activeTab === 'tab_expressvpn' ? 'active' : ''
+                  }`}
+                  onClick={() => handleTabClick('tab_expressvpn')}
+                >
+                  <Link
+                    className="compare__tabs__tab-image"
+                    aria-label="Tab express"
+                    href="#tab_expressvpn"
+                  >
+                    <Image
+                      src="/img/compare/tabs/1.svg"
+                      width={40}
+                      height={40}
+                      alt="1"
+                    />
+                  </Link>
+                </div>
+                <div
+                  className={`compare__tabs__tab ${
+                    activeTab === 'tab_cyberghostvpn' ? 'active' : ''
+                  }`}
+                  onClick={() => handleTabClick('tab_cyberghostvpn')}
+                >
+                  <Link
+                    className="compare__tabs__tab-image"
+                    aria-label="Tab cyberghost"
+                    href="#tab_cyberghostvpn"
+                  >
+                    <Image
+                      src="/img/compare/tabs/2.svg"
+                      width={40}
+                      height={40}
+                      alt="2"
+                    />
+                  </Link>
+                </div>
+                <div
+                  className={`compare__tabs__tab ${
+                    activeTab === 'tab_privateinternetaccess' ? 'active' : ''
+                  }`}
+                  onClick={() => handleTabClick('tab_privateinternetaccess')}
+                >
+                  <Link
+                    className="compare__tabs__tab-image"
+                    aria-label="Tab pia"
+                    href="#tab_privateinternetaccess"
+                  >
+                    <Image
+                      src="/img/compare/tabs/3.svg"
+                      width={40}
+                      height={40}
+                      alt="3"
+                    />
+                  </Link>
+                </div>
+              </div>
+              <div className="compare__wrapper compare__wrapper-desctop">
+                <div className="compare__wrapper__item" id="tab_expressvpn">
+                  <Link
+                    target="_blank"
+                    className="overlay-link"
+                    href={links.link1}
+                  ></Link>
+                  <div className="compare__wrapper__item-badge">
+                    <Image
+                      src="/img/compare/badge/star.svg"
+                      width={15}
+                      height={15}
+                      alt="star"
+                    />
+                  </div>
+                  <div className="compare__wrapper__item__desc">
+                    <div className="compare__wrapper__item__desc-logo">
+                      <Image
+                        src="/img/compare/logo/1.svg"
+                        width={480}
+                        height={50}
+                        alt="1"
+                      />
+                    </div>
+                    <div className="compare__wrapper__item__desc-description">
+                      <p>
+                        {t(
+                          'compare__wrapper__item__desc-description.compare1.part1'
+                        )}
+                        &nbsp;
+                        <b>
+                          {t(
+                            'compare__wrapper__item__desc-description.compare1.part2'
+                          )}
+                        </b>
+                        {t(
+                          'compare__wrapper__item__desc-description.compare1.part3'
+                        )}
+                      </p>
+                    </div>
+                    <div className="compare__wrapper__item__desc-notice">
+                      <p> {t('compare__wrapper__item__desc-notice')}</p>
+                    </div>
+                  </div>
+                  <div className="compare__wrapper__item__subtitle">
+                    <h3>ExpressVPN</h3>
+                  </div>
+                  <div className="compare__wrapper__item__list">
+                    <div className="compare__wrapper__item__list__feature">
+                      <div className="compare__wrapper__item__list__feature__label">
+                        <div className="compare__wrapper__item__list__feature__label-image">
+                          <Image
+                            src="/img/compare/label/1.svg"
+                            width={15}
+                            height={15}
+                            alt="1"
+                          />
+                        </div>
+                        <div className="compare__wrapper__item__list__feature__label-text">
+                          <small>
+                            {t(
+                              'compare__wrapper__item__list__feature.label.label1.part1'
+                            )}
+                          </small>
+                        </div>
+                      </div>
+                      <div className="compare__wrapper__item__list__feature__value">
+                        <span>
+                          {' '}
+                          {t(
+                            'compare__wrapper__item__list__feature.value.value1.part1'
+                          )}
+                        </span>
+                      </div>
+                    </div>
+                    <div className="compare__wrapper__item__list__feature">
+                      <div className="compare__wrapper__item__list__feature__label">
+                        <div className="compare__wrapper__item__list__feature__label-image">
+                          <Image
+                            src="/img/compare/label/2.svg"
+                            width={15}
+                            height={15}
+                            alt="2"
+                          />
+                        </div>
+                        <div className="compare__wrapper__item__list__feature__label-text">
+                          <small>
+                            {t(
+                              'compare__wrapper__item__list__feature.label.label2.part1'
+                            )}
+                            <br />
+                            {t(
+                              'compare__wrapper__item__list__feature.label.label2.part2'
+                            )}
+                          </small>
+                        </div>
+                      </div>
+                      <div className="compare__wrapper__item__list__feature__value">
+                        <span>
+                          {' '}
+                          {t(
+                            'compare__wrapper__item__list__feature.value.value1.part2'
+                          )}
+                        </span>
+                      </div>
+                    </div>
+                    <div className="compare__wrapper__item__list__feature">
+                      <div className="compare__wrapper__item__list__feature__label">
+                        <div className="compare__wrapper__item__list__feature__label-image">
+                          <Image
+                            src="/img/compare/label/3.svg"
+                            width={15}
+                            height={15}
+                            alt="3"
+                          />
+                        </div>
+                        <div className="compare__wrapper__item__list__feature__label-text">
+                          <small>
+                            {' '}
+                            {t(
+                              'compare__wrapper__item__list__feature.label.label3.part1'
+                            )}
+                          </small>
+                        </div>
+                      </div>
+                      <div className="compare__wrapper__item__list__feature__value">
+                        <span>
+                          {' '}
+                          {t(
+                            'compare__wrapper__item__list__feature.value.value1.part3'
+                          )}
+                        </span>
+                      </div>
+                    </div>
+                    <div className="compare__wrapper__item__list__feature">
+                      <div className="compare__wrapper__item__list__feature__label">
+                        <div className="compare__wrapper__item__list__feature__label-image">
+                          <Image
+                            src="/img/compare/label/4.svg"
+                            width={15}
+                            height={15}
+                            alt="4"
+                          />
+                        </div>
+                        <div className="compare__wrapper__item__list__feature__label-text">
+                          <small>
+                            {t(
+                              'compare__wrapper__item__list__feature.label.label4.part1'
+                            )}
+                            <br />
+                            {t(
+                              'compare__wrapper__item__list__feature.label.label4.part2'
+                            )}
+                          </small>
+                        </div>
+                      </div>
+                      <div className="compare__wrapper__item__list__feature__value">
+                        <span>
+                          {' '}
+                          {t(
+                            'compare__wrapper__item__list__feature.value.value1.part4'
+                          )}
+                        </span>
+                      </div>
+                    </div>
+                    <div className="compare__wrapper__item__list__feature">
+                      <div className="compare__wrapper__item__list__feature__label">
+                        <div className="compare__wrapper__item__list__feature__label-image">
+                          <Image
+                            src="/img/compare/label/5.svg"
+                            width={15}
+                            height={15}
+                            alt="5"
+                          />
+                        </div>
+                        <div className="compare__wrapper__item__list__feature__label-text">
+                          <small>
+                            {' '}
+                            {t(
+                              'compare__wrapper__item__list__feature.label.label5.part1'
+                            )}
+                          </small>
+                        </div>
+                      </div>
+                      <div className="compare__wrapper__item__list__feature__value">
+                        <span>
+                          {' '}
+                          {t(
+                            'compare__wrapper__item__list__feature.value.value1.part5'
+                          )}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="compare__wrapper__item__for">
+                    <div className="compare__wrapper__item__for-subtitle">
+                      <h3> {t('compare__wrapper__item__for-subtitle')}</h3>
+                    </div>
+                    <div className="compare__wrapper__item__for__features">
+                      <Link
+                        target="_blank"
+                        className="overlay-link"
+                        href={links.link1}
+                      ></Link>
+                      <div className="compare__wrapper__item__for__features__item">
+                        <div className="compare__wrapper__item__for__features__item__feature">
+                          <div className="compare__wrapper__item__for__features__item__feature-label">
+                            <Image
+                              src="/img/compare/label/lock.svg"
+                              width={20}
+                              height={20}
+                              alt="lock"
+                            />
+                          </div>
+                          <div className="compare__wrapper__item__for__features__item__feature-check">
+                            <Image
+                              src="/img/compare/check.svg"
+                              width={10}
+                              height={10}
+                              alt="check"
+                            />
+                          </div>
+                        </div>
+                        <div className="compare__wrapper__item__for__features__item__name">
+                          <span>
+                            {' '}
+                            {t(
+                              'compare__wrapper__item__for__features__item__name.privacy'
+                            )}
+                          </span>
+                        </div>
+                      </div>
+                      <div className="compare__wrapper__item__for__features__item">
+                        <div className="compare__wrapper__item__for__features__item__feature">
+                          <div className="compare__wrapper__item__for__features__item__feature-label">
+                            <Image
+                              src="/img/compare/label/speed.svg"
+                              width={20}
+                              height={20}
+                              alt="speed"
+                            />
+                          </div>
+                          <div className="compare__wrapper__item__for__features__item__feature-check">
+                            <Image
+                              src="/img/compare/check.svg"
+                              width={10}
+                              height={10}
+                              alt="check"
+                            />
+                          </div>
+                        </div>
+                        <div className="compare__wrapper__item__for__features__item__name">
+                          <span>
+                            {t(
+                              'compare__wrapper__item__for__features__item__name.speed'
+                            )}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="compare__wrapper__item__price">
+                    <div className="compare__wrapper__item__price-subtitle">
+                      <h3>{t('compare__wrapper__item__price-subtitle')}</h3>
+                    </div>
+                    <div className="compare__wrapper__item__price-number">
+                      <p>$6.67 </p>
+                    </div>
+                    <div className="compare__wrapper__item__price-range">
+                      <small>{t('compare__wrapper__item__price-range')}</small>
+                    </div>
+                  </div>
+                  <div className="compare__wrapper__item__button">
+                    <Link
+                      target="_blank"
+                      href={links.link1}
+                      className="compare__wrapper__item__btn"
+                    >
+                      <span>{t('compare__wrapper__item__btn')}</span>
+                      <Image
+                        src="/img/vendors/arrow-right.svg"
+                        width={20}
+                        height={20}
+                        alt="arrow"
+                      />
+                    </Link>
+                    <Link
+                      target="_blank"
+                      className="compare__wrapper__item__link"
+                      href={links.link1}
+                    >
+                      <span>expressvpn.com</span>
+                    </Link>
+                  </div>
+                </div>
+                <div className="compare__wrapper__item" id="tab_cyberghostvpn">
+                  <Link
+                    target="_blank"
+                    className="overlay-link"
+                    href={links.link2}
+                  ></Link>
+                  <div className="compare__wrapper__item__desc">
+                    <div className="compare__wrapper__item__desc-logo">
+                      <Image
+                        src="/img/compare/logo/2.svg"
+                        width={480}
+                        height={50}
+                        alt="2"
+                      />
+                    </div>
+                    <div className="compare__wrapper__item__desc-description">
+                      <p>
+                        {t(
+                          'compare__wrapper__item__desc-description.compare2.part1'
+                        )}
+                      </p>
+                    </div>
+                  </div>
+                  <div className="compare__wrapper__item__subtitle">
+                    <h3>CyberGhost VPN</h3>
+                  </div>
+                  <div className="compare__wrapper__item__list">
+                    <div className="compare__wrapper__item__list__feature">
+                      <div className="compare__wrapper__item__list__feature__label">
+                        <div className="compare__wrapper__item__list__feature__label-image">
+                          <Image
+                            src="/img/compare/label/1.svg"
+                            width={15}
+                            height={15}
+                            alt="1"
+                          />
+                        </div>
+                        <div className="compare__wrapper__item__list__feature__label-text">
+                          <small>
+                            {' '}
+                            {t(
+                              'compare__wrapper__item__list__feature.label.label1.part1'
+                            )}{' '}
+                          </small>
+                        </div>
+                      </div>
+                      <div className="compare__wrapper__item__list__feature__value">
+                        <span>
+                          {' '}
+                          {t(
+                            'compare__wrapper__item__list__feature.value.value2.part1'
+                          )}
+                        </span>
+                      </div>
+                    </div>
+                    <div className="compare__wrapper__item__list__feature">
+                      <div className="compare__wrapper__item__list__feature__label">
+                        <div className="compare__wrapper__item__list__feature__label-image">
+                          <Image
+                            src="/img/compare/label/2.svg"
+                            width={15}
+                            height={15}
+                            alt="2"
+                          />
+                        </div>
+                        <div className="compare__wrapper__item__list__feature__label-text">
+                          <small>
+                            {t(
+                              'compare__wrapper__item__list__feature.label.label2.part1'
+                            )}
+                            <br />
+                            {t(
+                              'compare__wrapper__item__list__feature.label.label2.part2'
+                            )}
+                          </small>
+                        </div>
+                      </div>
+                      <div className="compare__wrapper__item__list__feature__value">
+                        <span>
+                          {' '}
+                          {t(
+                            'compare__wrapper__item__list__feature.value.value2.part2'
+                          )}
+                        </span>
+                      </div>
+                    </div>
+                    <div className="compare__wrapper__item__list__feature">
+                      <div className="compare__wrapper__item__list__feature__label">
+                        <div className="compare__wrapper__item__list__feature__label-image">
+                          <Image
+                            src="/img/compare/label/3.svg"
+                            width={15}
+                            height={15}
+                            alt="3"
+                          />
+                        </div>
+                        <div className="compare__wrapper__item__list__feature__label-text">
+                          <small>
+                            {' '}
+                            {t(
+                              'compare__wrapper__item__list__feature.label.label3.part1'
+                            )}
+                          </small>
+                        </div>
+                      </div>
+                      <div className="compare__wrapper__item__list__feature__value">
+                        <span>
+                          {' '}
+                          {t(
+                            'compare__wrapper__item__list__feature.value.value2.part3'
+                          )}
+                        </span>
+                      </div>
+                    </div>
+                    <div className="compare__wrapper__item__list__feature">
+                      <div className="compare__wrapper__item__list__feature__label">
+                        <div className="compare__wrapper__item__list__feature__label-image">
+                          <Image
+                            src="/img/compare/label/4.svg"
+                            width={15}
+                            height={15}
+                            alt="4"
+                          />
+                        </div>
+                        <div className="compare__wrapper__item__list__feature__label-text">
+                          <small>
+                            {t(
+                              'compare__wrapper__item__list__feature.label.label4.part1'
+                            )}
+                            <br />
+                            {t(
+                              'compare__wrapper__item__list__feature.label.label4.part2'
+                            )}
+                          </small>
+                        </div>
+                      </div>
+                      <div className="compare__wrapper__item__list__feature__value">
+                        <span>
+                          {' '}
+                          {t(
+                            'compare__wrapper__item__list__feature.value.value2.part4'
+                          )}
+                        </span>
+                      </div>
+                    </div>
+                    <div className="compare__wrapper__item__list__feature">
+                      <div className="compare__wrapper__item__list__feature__label">
+                        <div className="compare__wrapper__item__list__feature__label-image">
+                          <Image
+                            src="/img/compare/label/5.svg"
+                            width={15}
+                            height={15}
+                            alt="5"
+                          />
+                        </div>
+                        <div className="compare__wrapper__item__list__feature__label-text">
+                          <small>
+                            {' '}
+                            {t(
+                              'compare__wrapper__item__list__feature.label.label5.part1'
+                            )}
+                          </small>
+                        </div>
+                      </div>
+                      <div className="compare__wrapper__item__list__feature__value">
+                        <span>
+                          {' '}
+                          {t(
+                            'compare__wrapper__item__list__feature.value.value2.part5'
+                          )}{' '}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="compare__wrapper__item__for">
+                    <div className="compare__wrapper__item__for-subtitle">
+                      <h3>{t('compare__wrapper__item__for-subtitle')}</h3>
+                    </div>
+                    <div className="compare__wrapper__item__for__features">
+                      <Link
+                        target="_blank"
+                        className="overlay-link"
+                        href={links.link1}
+                      ></Link>
+                      <div className="compare__wrapper__item__for__features__item">
+                        <div className="compare__wrapper__item__for__features__item__feature">
+                          <div className="compare__wrapper__item__for__features__item__feature-label">
+                            <Image
+                              src="/img/compare/label/badge-check.svg"
+                              width={20}
+                              height={20}
+                              alt="badge-check"
+                            />
+                          </div>
+                          <div className="compare__wrapper__item__for__features__item__feature-check">
+                            <Image
+                              src="/img/compare/check.svg"
+                              width={10}
+                              height={10}
+                              alt="check"
+                            />
+                          </div>
+                        </div>
+                        <div className="compare__wrapper__item__for__features__item__name">
+                          <span>
+                            {' '}
+                            {t(
+                              'compare__wrapper__item__for__features__item__name.security'
+                            )}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="compare__wrapper__item__price">
+                    <div className="compare__wrapper__item__price-subtitle">
+                      <h3>{t('compare__wrapper__item__price-subtitle')}</h3>
+                    </div>
+                    <div className="compare__wrapper__item__price-number">
+                      <p>$2.19 </p>
+                    </div>
+                    <div className="compare__wrapper__item__price-range">
+                      <small>{t('compare__wrapper__item__price-range')}</small>
+                    </div>
+                  </div>
+                  <div className="compare__wrapper__item__button">
+                    <Link
+                      target="_blank"
+                      href={links.link2}
+                      className="compare__wrapper__item__btn"
+                    >
+                      <span>{t('compare__wrapper__item__btn')}</span>
+                      <Image
+                        src="/img/vendors/arrow-right.svg"
+                        width={20}
+                        height={20}
+                        alt="arrow"
+                      />
+                    </Link>
+                    <Link
+                      target="_blank"
+                      className="compare__wrapper__item__link"
+                      href={links.link2}
+                    >
+                      <span>cyberghostvpn.com</span>
+                    </Link>
+                  </div>
+                </div>
+                <div
+                  className="compare__wrapper__item"
+                  id="tab_privateinternetaccess"
+                >
+                  <Link
+                    target="_blank"
+                    className="overlay-link"
+                    href={links.link3}
+                  ></Link>
+                  <div className="compare__wrapper__item__desc">
+                    <div className="compare__wrapper__item__desc-logo">
+                      <Image
+                        src="/img/compare/logo/3.svg"
+                        width={480}
+                        height={50}
+                        alt="3"
+                      />
+                    </div>
+                    <div className="compare__wrapper__item__desc-description">
+                      <p>
+                        {t(
+                          'compare__wrapper__item__desc-description.compare3.part1'
+                        )}
+                      </p>
+                    </div>
+                  </div>
+                  <div className="compare__wrapper__item__subtitle">
+                    <h3>Private Internet Access</h3>
+                  </div>
+                  <div className="compare__wrapper__item__list">
+                    <div className="compare__wrapper__item__list__feature">
+                      <div className="compare__wrapper__item__list__feature__label">
+                        <div className="compare__wrapper__item__list__feature__label-image">
+                          <Image
+                            src="/img/compare/label/1.svg"
+                            width={15}
+                            height={15}
+                            alt="1"
+                          />
+                        </div>
+                        <div className="compare__wrapper__item__list__feature__label-text">
+                          <small>
+                            {' '}
+                            {t(
+                              'compare__wrapper__item__list__feature.label.label1.part1'
+                            )}{' '}
+                          </small>
+                        </div>
+                      </div>
+                      <div className="compare__wrapper__item__list__feature__value">
+                        <span>
+                          {' '}
+                          {t(
+                            'compare__wrapper__item__list__feature.value.value3.part1'
+                          )}
+                        </span>
+                      </div>
+                    </div>
+                    <div className="compare__wrapper__item__list__feature">
+                      <div className="compare__wrapper__item__list__feature__label">
+                        <div className="compare__wrapper__item__list__feature__label-image">
+                          <Image
+                            src="/img/compare/label/2.svg"
+                            width={15}
+                            height={15}
+                            alt="2"
+                          />
+                        </div>
+                        <div className="compare__wrapper__item__list__feature__label-text">
+                          <small>
+                            {t(
+                              'compare__wrapper__item__list__feature.label.label2.part1'
+                            )}
+                            <br></br>{' '}
+                            {t(
+                              'compare__wrapper__item__list__feature.label.label2.part2'
+                            )}
+                          </small>
+                        </div>
+                      </div>
+                      <div className="compare__wrapper__item__list__feature__value">
+                        <span>
+                          {' '}
+                          {t(
+                            'compare__wrapper__item__list__feature.value.value3.part2'
+                          )}
+                        </span>
+                      </div>
+                    </div>
+                    <div className="compare__wrapper__item__list__feature">
+                      <div className="compare__wrapper__item__list__feature__label">
+                        <div className="compare__wrapper__item__list__feature__label-image">
+                          <Image
+                            src="/img/compare/label/3.svg"
+                            width={15}
+                            height={15}
+                            alt="3"
+                          />
+                        </div>
+                        <div className="compare__wrapper__item__list__feature__label-text">
+                          <small>
+                            {' '}
+                            {t(
+                              'compare__wrapper__item__list__feature.label.label3.part1'
+                            )}
+                          </small>
+                        </div>
+                      </div>
+                      <div className="compare__wrapper__item__list__feature__value">
+                        <span>
+                          {' '}
+                          {t(
+                            'compare__wrapper__item__list__feature.value.value3.part3'
+                          )}
+                        </span>
+                      </div>
+                    </div>
+                    <div className="compare__wrapper__item__list__feature">
+                      <div className="compare__wrapper__item__list__feature__label">
+                        <div className="compare__wrapper__item__list__feature__label-image">
+                          <Image
+                            src="/img/compare/label/4.svg"
+                            width={15}
+                            height={15}
+                            alt="4"
+                          />
+                        </div>
+                        <div className="compare__wrapper__item__list__feature__label-text">
+                          <small>
+                            {t(
+                              'compare__wrapper__item__list__feature.label.label4.part1'
+                            )}
+                            <br></br>{' '}
+                            {t(
+                              'compare__wrapper__item__list__feature.label.label4.part2'
+                            )}
+                          </small>
+                        </div>
+                      </div>
+                      <div className="compare__wrapper__item__list__feature__value">
+                        <span>
+                          {' '}
+                          {t(
+                            'compare__wrapper__item__list__feature.value.value3.part4'
+                          )}
+                        </span>
+                      </div>
+                    </div>
+                    <div className="compare__wrapper__item__list__feature">
+                      <div className="compare__wrapper__item__list__feature__label">
+                        <div className="compare__wrapper__item__list__feature__label-image">
+                          <Image
+                            src="/img/compare/label/5.svg"
+                            width={15}
+                            height={15}
+                            alt="5"
+                          />
+                        </div>
+                        <div className="compare__wrapper__item__list__feature__label-text">
+                          <small>
+                            {' '}
+                            {t(
+                              'compare__wrapper__item__list__feature.label.label5.part1'
+                            )}
+                          </small>
+                        </div>
+                      </div>
+                      <div className="compare__wrapper__item__list__feature__value">
+                        <span>
+                          {' '}
+                          {t(
+                            'compare__wrapper__item__list__feature.value.value3.part5'
+                          )}{' '}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="compare__wrapper__item__for">
+                    <div className="compare__wrapper__item__for-subtitle">
+                      <h3>{t('compare__wrapper__item__for-subtitle')}</h3>
+                    </div>
+                    <div className="compare__wrapper__item__for__features">
+                      <Link
+                        target="_blank"
+                        className="overlay-link"
+                        href={links.link3}
+                      ></Link>
+                      <div className="compare__wrapper__item__for__features__item">
+                        <div className="compare__wrapper__item__for__features__item__feature">
+                          <div className="compare__wrapper__item__for__features__item__feature-label">
+                            <Image
+                              src="/img/compare/label/social.svg"
+                              width={20}
+                              height={20}
+                              alt="social"
+                            />
+                          </div>
+                          <div className="compare__wrapper__item__for__features__item__feature-check">
+                            <Image
+                              src="/img/compare/check.svg"
+                              width={10}
+                              height={10}
+                              alt="check"
+                            />
+                          </div>
+                        </div>
+                        <div className="compare__wrapper__item__for__features__item__name">
+                          <span>
+                            {' '}
+                            {t(
+                              'compare__wrapper__item__for__features__item__name.newbies'
+                            )}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="compare__wrapper__item__price">
+                    <div className="compare__wrapper__item__price-subtitle">
+                      <h3>{t('compare__wrapper__item__price-subtitle')}</h3>
+                    </div>
+                    <div className="compare__wrapper__item__price-number">
+                      <p>$2.19 </p>
+                    </div>
+                    <div className="compare__wrapper__item__price-range">
+                      <small>{t('compare__wrapper__item__price-range')}</small>
+                    </div>
+                  </div>
+                  <div className="compare__wrapper__item__button">
+                    <Link
+                      target="_blank"
+                      href={links.link3}
+                      className="compare__wrapper__item__btn"
+                    >
+                      <span>{t('compare__wrapper__item__btn')} </span>
+                      <Image
+                        src="/img/vendors/arrow-right.svg"
+                        width={20}
+                        height={20}
+                        alt="arrow"
+                      />
+                    </Link>
+                    <Link
+                      target="_blank"
+                      className="compare__wrapper__item__link"
+                      href={links.link3}
+                    >
+                      <span>privateinternetaccess.com</span>
+                    </Link>
+                  </div>
+                </div>
+              </div>
+              <div className="compare__wrapper compare__wrapper-mobile">
+                {activeTab === 'tab_expressvpn' && (
+                  <div className="compare__wrapper__item" id="tab_expressvpn">
+                    <Link
+                      target="_blank"
+                      className="overlay-link"
+                      href={links.link1}
+                    ></Link>
+                    <div className="compare__wrapper__item-badge">
+                      <Image
+                        src="/img/compare/badge/star.svg"
+                        width={15}
+                        height={15}
+                        alt="star"
+                      />
+                    </div>
+                    <div className="compare__wrapper__item__desc">
+                      <div className="compare__wrapper__item__desc-logo">
+                        <Image
+                          src="/img/compare/logo/1.svg"
+                          width={480}
+                          height={50}
+                          alt="1"
+                        />
+                      </div>
+                      <div className="compare__wrapper__item__desc-description">
+                        <p>
+                          {t(
+                            'compare__wrapper__item__desc-description.compare1.part1'
+                          )}
+                          &nbsp;
+                          <b>
+                            {t(
+                              'compare__wrapper__item__desc-description.compare1.part2'
+                            )}
+                          </b>
+                          {t(
+                            'compare__wrapper__item__desc-description.compare1.part3'
+                          )}
+                        </p>
+                      </div>
+                      <div className="compare__wrapper__item__desc-notice">
+                        <p> {t('compare__wrapper__item__desc-notice')}</p>
+                      </div>
+                    </div>
+                    <div className="compare__wrapper__item__subtitle">
+                      <h3>ExpressVPN</h3>
+                    </div>
+                    <div className="compare__wrapper__item__list">
+                      <div className="compare__wrapper__item__list__feature">
+                        <div className="compare__wrapper__item__list__feature__label">
+                          <div className="compare__wrapper__item__list__feature__label-image">
+                            <Image
+                              src="/img/compare/label/1.svg"
+                              width={15}
+                              height={15}
+                              alt="1"
+                            />
+                          </div>
+                          <div className="compare__wrapper__item__list__feature__label-text">
+                            <small>
+                              {t(
+                                'compare__wrapper__item__list__feature.label.label1.part1'
+                              )}
+                            </small>
+                          </div>
+                        </div>
+                        <div className="compare__wrapper__item__list__feature__value">
+                          <span>
+                            {' '}
+                            {t(
+                              'compare__wrapper__item__list__feature.value.value1.part1'
+                            )}
+                          </span>
+                        </div>
+                      </div>
+                      <div className="compare__wrapper__item__list__feature">
+                        <div className="compare__wrapper__item__list__feature__label">
+                          <div className="compare__wrapper__item__list__feature__label-image">
+                            <Image
+                              src="/img/compare/label/2.svg"
+                              width={15}
+                              height={15}
+                              alt="2"
+                            />
+                          </div>
+                          <div className="compare__wrapper__item__list__feature__label-text">
+                            <small>
+                              {t(
+                                'compare__wrapper__item__list__feature.label.label2.part1'
+                              )}
+                              <br />
+                              {t(
+                                'compare__wrapper__item__list__feature.label.label2.part2'
+                              )}
+                            </small>
+                          </div>
+                        </div>
+                        <div className="compare__wrapper__item__list__feature__value">
+                          <span>
+                            {' '}
+                            {t(
+                              'compare__wrapper__item__list__feature.value.value1.part2'
+                            )}
+                          </span>
+                        </div>
+                      </div>
+                      <div className="compare__wrapper__item__list__feature">
+                        <div className="compare__wrapper__item__list__feature__label">
+                          <div className="compare__wrapper__item__list__feature__label-image">
+                            <Image
+                              src="/img/compare/label/3.svg"
+                              width={15}
+                              height={15}
+                              alt="3"
+                            />
+                          </div>
+                          <div className="compare__wrapper__item__list__feature__label-text">
+                            <small>
+                              {' '}
+                              {t(
+                                'compare__wrapper__item__list__feature.label.label3.part1'
+                              )}
+                            </small>
+                          </div>
+                        </div>
+                        <div className="compare__wrapper__item__list__feature__value">
+                          <span>
+                            {' '}
+                            {t(
+                              'compare__wrapper__item__list__feature.value.value1.part3'
+                            )}
+                          </span>
+                        </div>
+                      </div>
+                      <div className="compare__wrapper__item__list__feature">
+                        <div className="compare__wrapper__item__list__feature__label">
+                          <div className="compare__wrapper__item__list__feature__label-image">
+                            <Image
+                              src="/img/compare/label/4.svg"
+                              width={15}
+                              height={15}
+                              alt="4"
+                            />
+                          </div>
+                          <div className="compare__wrapper__item__list__feature__label-text">
+                            <small>
+                              {t(
+                                'compare__wrapper__item__list__feature.label.label4.part1'
+                              )}
+                              <br />
+                              {t(
+                                'compare__wrapper__item__list__feature.label.label4.part2'
+                              )}
+                            </small>
+                          </div>
+                        </div>
+                        <div className="compare__wrapper__item__list__feature__value">
+                          <span>
+                            {' '}
+                            {t(
+                              'compare__wrapper__item__list__feature.value.value1.part4'
+                            )}
+                          </span>
+                        </div>
+                      </div>
+                      <div className="compare__wrapper__item__list__feature">
+                        <div className="compare__wrapper__item__list__feature__label">
+                          <div className="compare__wrapper__item__list__feature__label-image">
+                            <Image
+                              src="/img/compare/label/5.svg"
+                              width={15}
+                              height={15}
+                              alt="5"
+                            />
+                          </div>
+                          <div className="compare__wrapper__item__list__feature__label-text">
+                            <small>
+                              {' '}
+                              {t(
+                                'compare__wrapper__item__list__feature.label.label5.part1'
+                              )}
+                            </small>
+                          </div>
+                        </div>
+                        <div className="compare__wrapper__item__list__feature__value">
+                          <span>
+                            {' '}
+                            {t(
+                              'compare__wrapper__item__list__feature.value.value1.part5'
+                            )}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="compare__wrapper__item__for">
+                      <div className="compare__wrapper__item__for-subtitle">
+                        <h3> {t('compare__wrapper__item__for-subtitle')}</h3>
+                      </div>
+                      <div className="compare__wrapper__item__for__features">
+                        <Link
+                          target="_blank"
+                          className="overlay-link"
+                          href={links.link1}
+                        ></Link>
+                        <div className="compare__wrapper__item__for__features__item">
+                          <div className="compare__wrapper__item__for__features__item__feature">
+                            <div className="compare__wrapper__item__for__features__item__feature-label">
+                              <Image
+                                src="/img/compare/label/lock.svg"
+                                width={20}
+                                height={20}
+                                alt="lock"
+                              />
+                            </div>
+                            <div className="compare__wrapper__item__for__features__item__feature-check">
+                              <Image
+                                src="/img/compare/check.svg"
+                                width={10}
+                                height={10}
+                                alt="check"
+                              />
+                            </div>
+                          </div>
+                          <div className="compare__wrapper__item__for__features__item__name">
+                            <span>
+                              {' '}
+                              {t(
+                                'compare__wrapper__item__for__features__item__name.privacy'
+                              )}
+                            </span>
+                          </div>
+                        </div>
+                        <div className="compare__wrapper__item__for__features__item">
+                          <div className="compare__wrapper__item__for__features__item__feature">
+                            <div className="compare__wrapper__item__for__features__item__feature-label">
+                              <Image
+                                src="/img/compare/label/speed.svg"
+                                width={20}
+                                height={20}
+                                alt="speed"
+                              />
+                            </div>
+                            <div className="compare__wrapper__item__for__features__item__feature-check">
+                              <Image
+                                src="/img/compare/check.svg"
+                                width={10}
+                                height={10}
+                                alt="check"
+                              />
+                            </div>
+                          </div>
+                          <div className="compare__wrapper__item__for__features__item__name">
+                            <span>
+                              {t(
+                                'compare__wrapper__item__for__features__item__name.speed'
+                              )}
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="compare__wrapper__item__price">
+                      <div className="compare__wrapper__item__price-subtitle">
+                        <h3>{t('compare__wrapper__item__price-subtitle')}</h3>
+                      </div>
+                      <div className="compare__wrapper__item__price-number">
+                        <p>$6.67 </p>
+                      </div>
+                      <div className="compare__wrapper__item__price-range">
+                        <small>
+                          {t('compare__wrapper__item__price-range')}
+                        </small>
+                      </div>
+                    </div>
+                    <div className="compare__wrapper__item__button">
+                      <Link
+                        target="_blank"
+                        href={links.link1}
+                        className="compare__wrapper__item__btn"
+                      >
+                        <span>{t('compare__wrapper__item__btn')}</span>
+                        <Image
+                          src="/img/vendors/arrow-right.svg"
+                          width={20}
+                          height={20}
+                          alt="arrow"
+                        />
+                      </Link>
+                      <Link
+                        target="_blank"
+                        className="compare__wrapper__item__link"
+                        href={links.link1}
+                      >
+                        <span>expressvpn.com</span>
+                      </Link>
+                    </div>
+                  </div>
+                )}
+                {activeTab === 'tab_cyberghostvpn' && (
+                  <div
+                    className="compare__wrapper__item"
+                    id="tab_cyberghostvpn"
+                  >
+                    <Link
+                      target="_blank"
+                      className="overlay-link"
+                      href={links.link2}
+                    ></Link>
+                    <div className="compare__wrapper__item__desc">
+                      <div className="compare__wrapper__item__desc-logo">
+                        <Image
+                          src="/img/compare/logo/2.svg"
+                          width={480}
+                          height={50}
+                          alt="2"
+                        />
+                      </div>
+                      <div className="compare__wrapper__item__desc-description">
+                        <p>
+                          {t(
+                            'compare__wrapper__item__desc-description.compare2.part1'
+                          )}
+                        </p>
+                      </div>
+                    </div>
+                    <div className="compare__wrapper__item__subtitle">
+                      <h3>CyberGhost VPN</h3>
+                    </div>
+                    <div className="compare__wrapper__item__list">
+                      <div className="compare__wrapper__item__list__feature">
+                        <div className="compare__wrapper__item__list__feature__label">
+                          <div className="compare__wrapper__item__list__feature__label-image">
+                            <Image
+                              src="/img/compare/label/1.svg"
+                              width={15}
+                              height={15}
+                              alt="1"
+                            />
+                          </div>
+                          <div className="compare__wrapper__item__list__feature__label-text">
+                            <small>
+                              {' '}
+                              {t(
+                                'compare__wrapper__item__list__feature.label.label1.part1'
+                              )}{' '}
+                            </small>
+                          </div>
+                        </div>
+                        <div className="compare__wrapper__item__list__feature__value">
+                          <span>
+                            {' '}
+                            {t(
+                              'compare__wrapper__item__list__feature.value.value2.part1'
+                            )}
+                          </span>
+                        </div>
+                      </div>
+                      <div className="compare__wrapper__item__list__feature">
+                        <div className="compare__wrapper__item__list__feature__label">
+                          <div className="compare__wrapper__item__list__feature__label-image">
+                            <Image
+                              src="/img/compare/label/2.svg"
+                              width={15}
+                              height={15}
+                              alt="2"
+                            />
+                          </div>
+                          <div className="compare__wrapper__item__list__feature__label-text">
+                            <small>
+                              {t(
+                                'compare__wrapper__item__list__feature.label.label2.part1'
+                              )}
+                              <br />
+                              {t(
+                                'compare__wrapper__item__list__feature.label.label2.part2'
+                              )}
+                            </small>
+                          </div>
+                        </div>
+                        <div className="compare__wrapper__item__list__feature__value">
+                          <span>
+                            {' '}
+                            {t(
+                              'compare__wrapper__item__list__feature.value.value2.part2'
+                            )}
+                          </span>
+                        </div>
+                      </div>
+                      <div className="compare__wrapper__item__list__feature">
+                        <div className="compare__wrapper__item__list__feature__label">
+                          <div className="compare__wrapper__item__list__feature__label-image">
+                            <Image
+                              src="/img/compare/label/3.svg"
+                              width={15}
+                              height={15}
+                              alt="3"
+                            />
+                          </div>
+                          <div className="compare__wrapper__item__list__feature__label-text">
+                            <small>
+                              {' '}
+                              {t(
+                                'compare__wrapper__item__list__feature.label.label3.part1'
+                              )}
+                            </small>
+                          </div>
+                        </div>
+                        <div className="compare__wrapper__item__list__feature__value">
+                          <span>
+                            {' '}
+                            {t(
+                              'compare__wrapper__item__list__feature.value.value2.part3'
+                            )}
+                          </span>
+                        </div>
+                      </div>
+                      <div className="compare__wrapper__item__list__feature">
+                        <div className="compare__wrapper__item__list__feature__label">
+                          <div className="compare__wrapper__item__list__feature__label-image">
+                            <Image
+                              src="/img/compare/label/4.svg"
+                              width={15}
+                              height={15}
+                              alt="4"
+                            />
+                          </div>
+                          <div className="compare__wrapper__item__list__feature__label-text">
+                            <small>
+                              {t(
+                                'compare__wrapper__item__list__feature.label.label4.part1'
+                              )}
+                              <br />
+                              {t(
+                                'compare__wrapper__item__list__feature.label.label4.part2'
+                              )}
+                            </small>
+                          </div>
+                        </div>
+                        <div className="compare__wrapper__item__list__feature__value">
+                          <span>
+                            {' '}
+                            {t(
+                              'compare__wrapper__item__list__feature.value.value2.part4'
+                            )}
+                          </span>
+                        </div>
+                      </div>
+                      <div className="compare__wrapper__item__list__feature">
+                        <div className="compare__wrapper__item__list__feature__label">
+                          <div className="compare__wrapper__item__list__feature__label-image">
+                            <Image
+                              src="/img/compare/label/5.svg"
+                              width={15}
+                              height={15}
+                              alt="5"
+                            />
+                          </div>
+                          <div className="compare__wrapper__item__list__feature__label-text">
+                            <small>
+                              {' '}
+                              {t(
+                                'compare__wrapper__item__list__feature.label.label5.part1'
+                              )}
+                            </small>
+                          </div>
+                        </div>
+                        <div className="compare__wrapper__item__list__feature__value">
+                          <span>
+                            {' '}
+                            {t(
+                              'compare__wrapper__item__list__feature.value.value2.part5'
+                            )}{' '}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="compare__wrapper__item__for">
+                      <div className="compare__wrapper__item__for-subtitle">
+                        <h3>{t('compare__wrapper__item__for-subtitle')}</h3>
+                      </div>
+                      <div className="compare__wrapper__item__for__features">
+                        <Link
+                          target="_blank"
+                          className="overlay-link"
+                          href={links.link1}
+                        ></Link>
+                        <div className="compare__wrapper__item__for__features__item">
+                          <div className="compare__wrapper__item__for__features__item__feature">
+                            <div className="compare__wrapper__item__for__features__item__feature-label">
+                              <Image
+                                src="/img/compare/label/badge-check.svg"
+                                width={20}
+                                height={20}
+                                alt="badge-check"
+                              />
+                            </div>
+                            <div className="compare__wrapper__item__for__features__item__feature-check">
+                              <Image
+                                src="/img/compare/check.svg"
+                                width={10}
+                                height={10}
+                                alt="check"
+                              />
+                            </div>
+                          </div>
+                          <div className="compare__wrapper__item__for__features__item__name">
+                            <span>
+                              {' '}
+                              {t(
+                                'compare__wrapper__item__for__features__item__name.security'
+                              )}
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="compare__wrapper__item__price">
+                      <div className="compare__wrapper__item__price-subtitle">
+                        <h3>{t('compare__wrapper__item__price-subtitle')}</h3>
+                      </div>
+                      <div className="compare__wrapper__item__price-number">
+                        <p>$2.19 </p>
+                      </div>
+                      <div className="compare__wrapper__item__price-range">
+                        <small>
+                          {t('compare__wrapper__item__price-range')}
+                        </small>
+                      </div>
+                    </div>
+                    <div className="compare__wrapper__item__button">
+                      <Link
+                        target="_blank"
+                        href={links.link2}
+                        className="compare__wrapper__item__btn"
+                      >
+                        <span>{t('compare__wrapper__item__btn')}</span>
+                        <Image
+                          src="/img/vendors/arrow-right.svg"
+                          width={20}
+                          height={20}
+                          alt="arrow"
+                        />
+                      </Link>
+                      <Link
+                        target="_blank"
+                        className="compare__wrapper__item__link"
+                        href={links.link2}
+                      >
+                        <span>cyberghostvpn.com</span>
+                      </Link>
+                    </div>
+                  </div>
+                )}
+                {activeTab === 'tab_privateinternetaccess' && (
+                  <div
+                    className="compare__wrapper__item"
+                    id="tab_privateinternetaccess"
+                  >
+                    <Link
+                      target="_blank"
+                      className="overlay-link"
+                      href={links.link3}
+                    ></Link>
+                    <div className="compare__wrapper__item__desc">
+                      <div className="compare__wrapper__item__desc-logo">
+                        <Image
+                          src="/img/compare/logo/3.svg"
+                          width={480}
+                          height={50}
+                          alt="3"
+                        />
+                      </div>
+                      <div className="compare__wrapper__item__desc-description">
+                        <p>
+                          {t(
+                            'compare__wrapper__item__desc-description.compare3.part1'
+                          )}
+                        </p>
+                      </div>
+                    </div>
+                    <div className="compare__wrapper__item__subtitle">
+                      <h3>Private Internet Access</h3>
+                    </div>
+                    <div className="compare__wrapper__item__list">
+                      <div className="compare__wrapper__item__list__feature">
+                        <div className="compare__wrapper__item__list__feature__label">
+                          <div className="compare__wrapper__item__list__feature__label-image">
+                            <Image
+                              src="/img/compare/label/1.svg"
+                              width={15}
+                              height={15}
+                              alt="1"
+                            />
+                          </div>
+                          <div className="compare__wrapper__item__list__feature__label-text">
+                            <small>
+                              {' '}
+                              {t(
+                                'compare__wrapper__item__list__feature.label.label1.part1'
+                              )}{' '}
+                            </small>
+                          </div>
+                        </div>
+                        <div className="compare__wrapper__item__list__feature__value">
+                          <span>
+                            {' '}
+                            {t(
+                              'compare__wrapper__item__list__feature.value.value3.part1'
+                            )}
+                          </span>
+                        </div>
+                      </div>
+                      <div className="compare__wrapper__item__list__feature">
+                        <div className="compare__wrapper__item__list__feature__label">
+                          <div className="compare__wrapper__item__list__feature__label-image">
+                            <Image
+                              src="/img/compare/label/2.svg"
+                              width={15}
+                              height={15}
+                              alt="2"
+                            />
+                          </div>
+                          <div className="compare__wrapper__item__list__feature__label-text">
+                            <small>
+                              {t(
+                                'compare__wrapper__item__list__feature.label.label2.part1'
+                              )}
+                              <br></br>{' '}
+                              {t(
+                                'compare__wrapper__item__list__feature.label.label2.part2'
+                              )}
+                            </small>
+                          </div>
+                        </div>
+                        <div className="compare__wrapper__item__list__feature__value">
+                          <span>
+                            {' '}
+                            {t(
+                              'compare__wrapper__item__list__feature.value.value3.part2'
+                            )}
+                          </span>
+                        </div>
+                      </div>
+                      <div className="compare__wrapper__item__list__feature">
+                        <div className="compare__wrapper__item__list__feature__label">
+                          <div className="compare__wrapper__item__list__feature__label-image">
+                            <Image
+                              src="/img/compare/label/3.svg"
+                              width={15}
+                              height={15}
+                              alt="3"
+                            />
+                          </div>
+                          <div className="compare__wrapper__item__list__feature__label-text">
+                            <small>
+                              {' '}
+                              {t(
+                                'compare__wrapper__item__list__feature.label.label3.part1'
+                              )}
+                            </small>
+                          </div>
+                        </div>
+                        <div className="compare__wrapper__item__list__feature__value">
+                          <span>
+                            {' '}
+                            {t(
+                              'compare__wrapper__item__list__feature.value.value3.part3'
+                            )}
+                          </span>
+                        </div>
+                      </div>
+                      <div className="compare__wrapper__item__list__feature">
+                        <div className="compare__wrapper__item__list__feature__label">
+                          <div className="compare__wrapper__item__list__feature__label-image">
+                            <Image
+                              src="/img/compare/label/4.svg"
+                              width={15}
+                              height={15}
+                              alt="4"
+                            />
+                          </div>
+                          <div className="compare__wrapper__item__list__feature__label-text">
+                            <small>
+                              {t(
+                                'compare__wrapper__item__list__feature.label.label4.part1'
+                              )}
+                              <br></br>{' '}
+                              {t(
+                                'compare__wrapper__item__list__feature.label.label4.part2'
+                              )}
+                            </small>
+                          </div>
+                        </div>
+                        <div className="compare__wrapper__item__list__feature__value">
+                          <span>
+                            {' '}
+                            {t(
+                              'compare__wrapper__item__list__feature.value.value3.part4'
+                            )}
+                          </span>
+                        </div>
+                      </div>
+                      <div className="compare__wrapper__item__list__feature">
+                        <div className="compare__wrapper__item__list__feature__label">
+                          <div className="compare__wrapper__item__list__feature__label-image">
+                            <Image
+                              src="/img/compare/label/5.svg"
+                              width={15}
+                              height={15}
+                              alt="5"
+                            />
+                          </div>
+                          <div className="compare__wrapper__item__list__feature__label-text">
+                            <small>
+                              {' '}
+                              {t(
+                                'compare__wrapper__item__list__feature.label.label5.part1'
+                              )}
+                            </small>
+                          </div>
+                        </div>
+                        <div className="compare__wrapper__item__list__feature__value">
+                          <span>
+                            {' '}
+                            {t(
+                              'compare__wrapper__item__list__feature.value.value3.part5'
+                            )}{' '}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="compare__wrapper__item__for">
+                      <div className="compare__wrapper__item__for-subtitle">
+                        <h3>{t('compare__wrapper__item__for-subtitle')}</h3>
+                      </div>
+                      <div className="compare__wrapper__item__for__features">
+                        <Link
+                          target="_blank"
+                          className="overlay-link"
+                          href={links.link3}
+                        ></Link>
+                        <div className="compare__wrapper__item__for__features__item">
+                          <div className="compare__wrapper__item__for__features__item__feature">
+                            <div className="compare__wrapper__item__for__features__item__feature-label">
+                              <Image
+                                src="/img/compare/label/social.svg"
+                                width={20}
+                                height={20}
+                                alt="social"
+                              />
+                            </div>
+                            <div className="compare__wrapper__item__for__features__item__feature-check">
+                              <Image
+                                src="/img/compare/check.svg"
+                                width={10}
+                                height={10}
+                                alt="check"
+                              />
+                            </div>
+                          </div>
+                          <div className="compare__wrapper__item__for__features__item__name">
+                            <span>
+                              {' '}
+                              {t(
+                                'compare__wrapper__item__for__features__item__name.newbies'
+                              )}
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="compare__wrapper__item__price">
+                      <div className="compare__wrapper__item__price-subtitle">
+                        <h3>{t('compare__wrapper__item__price-subtitle')}</h3>
+                      </div>
+                      <div className="compare__wrapper__item__price-number">
+                        <p>$2.19 </p>
+                      </div>
+                      <div className="compare__wrapper__item__price-range">
+                        <small>
+                          {t('compare__wrapper__item__price-range')}
+                        </small>
+                      </div>
+                    </div>
+                    <div className="compare__wrapper__item__button">
+                      <Link
+                        target="_blank"
+                        href={links.link3}
+                        className="compare__wrapper__item__btn"
+                      >
+                        <span>{t('compare__wrapper__item__btn')} </span>
+                        <Image
+                          src="/img/vendors/arrow-right.svg"
+                          width={20}
+                          height={20}
+                          alt="arrow"
+                        />
+                      </Link>
+                      <Link
+                        target="_blank"
+                        className="compare__wrapper__item__link"
+                        href={links.link3}
+                      >
+                        <span>privateinternetaccess.com</span>
+                      </Link>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        </section>
+      ) : (
+        <div className="compare-ru"></div>
+      )}
+    </>
+  )
+}
+
+export default Compare
+
+
+
+
+ExitIntentKape----------------
+'use client'
+import React, { useState, useEffect } from 'react'
+import './ExitIntentKape.scss'
+import Link from 'next/link'
+import Image from 'next/image'
+import { useTranslations } from 'next-intl'
+import { useLinks } from '../../context/LinksContext'
+
+const ExitIntentKape = () => {
+  const t = useTranslations('ExitIntentKape')
+  const { links } = useLinks()
+  const { visibleBlock } = useLinks()
+
+  const initialTime = 1 * 24 * 60 * 60 + 12 * 60 * 60 + 40 * 60 + 30
+  const [timeLeft, setTimeLeft] = useState(initialTime)
+  const [isModalOpen, setIsModalOpen] = useState(true)
+
+  const handleScroll = (event) => {
+    event.preventDefault()
+    event.stopPropagation()
+  }
+  const enableScroll = () => {
+    if (!document.body.classList.contains('no-scroll')) {
+      document.body.style.overflow = 'auto'
+    }
+  }
+  const updateScrollState = () => {
+    const isSmallScreen = window.innerWidth <= 320
+    if (isModalOpen) {
+      if (!isSmallScreen) {
+        document.body.style.overflow = 'hidden'
+      } else {
+        document.body.style.overflow = ''
+      }
+    } else {
+      document.body.style.overflow = ''
+    }
+  }
+
+  useEffect(() => {
+    updateScrollState()
+
+    const handleResize = () => {
+      updateScrollState()
+    }
+
+    window.addEventListener('resize', handleResize)
+
+    return () => {
+      document.body.style.overflow = ''
+      window.removeEventListener('resize', handleResize)
+      document.removeEventListener('wheel', handleScroll)
+      document.removeEventListener('touchmove', handleScroll)
+    }
+  }, [isModalOpen])
+
+  useEffect(() => {
+    if (timeLeft > 0) {
+      const timer = setInterval(() => {
+        setTimeLeft((prevTime) => prevTime - 1)
+      }, 1000)
+      return () => clearInterval(timer)
+    }
+  }, [timeLeft])
+
+  const formatTime = (time) => {
+    const days = String(Math.floor(time / (24 * 60 * 60))).padStart(2, '0')
+    const hours = String(
+      Math.floor((time % (24 * 60 * 60)) / (60 * 60))
+    ).padStart(2, '0')
+    const minutes = String(Math.floor((time % (60 * 60)) / 60)).padStart(2, '0')
+    const seconds = String((time % 60).toString().padStart(2, '0'))
+
+    return { days, hours, minutes, seconds }
+  }
+
+  const time = formatTime(timeLeft)
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false)
+  }
+
+  return (
+    isModalOpen && (
+      <div className="exit-intent-kape__wrapper">
+        <div className="exit-intent-kape__bg"></div>
+        <div className="exit-intent-kape__modal">
+          <Link
+            target="_blank"
+            className="overlay-link"
+            href={links.link1}
+          ></Link>
+          <div className="container">
+            <div className="bioep-kape__content">
+              {visibleBlock === 'block1' ? (
+                <div className="bioep-kape__content bioep-kape__content-all">
+                  <div className="bioep-kape__left">
+                    <div className="bioep-kape__left__exclusive-offer">
+                      <h2>{t('bioep-kape__left__exclusive-offer')}</h2>
+                    </div>
+                    <div className="bioep-kape__left__heading">
+                      <h1>{t('bioep-kape__left__heading')}</h1>
+                    </div>
+                    <div className="bioep-kape__left__subheading">
+                      <p>
+                        {t('bioep-kape__left__subheading.part1')}{' '}
+                        <span>{t('bioep-kape__left__subheading.part2')} </span>{' '}
+                        {t('bioep-kape__left__subheading.part3')}
+                      </p>
+                    </div>
+                    <div className="bioep-kape__left__countdown-wrapper">
+                      <div className="bioep-kape__left__countdown-wrapper__limit-offer">
+                        <h3>
+                          {t(
+                            'bioep-kape__left__countdown-wrapper__limit-offer'
+                          )}{' '}
+                        </h3>
+                      </div>
+                      <div className="bioep-kape__left__countdown-wrapper__counter">
+                        <div className="bioep-kape__left__countdown-wrapper__counter-item">
+                          <div className="bioep-kape__left__countdown-wrapper__counter-item__numbers">
+                            {time.days}
+                          </div>
+                          <div className="bioep-kape__left__countdown-wrapper__counter-item__text">
+                            {t(
+                              'bioep-kape__left__countdown-wrapper__counter-item__text.part1'
+                            )}
+                          </div>
+                        </div>
+                        <div className="bioep-kape__left__countdown-wrapper__counter-item">
+                          <div className="bioep-kape__left__countdown-wrapper__counter-item__numbers">
+                            {time.hours}
+                          </div>
+                          <div className="bioep-kape__left__countdown-wrapper__counter-item__text">
+                            {t(
+                              'bioep-kape__left__countdown-wrapper__counter-item__text.part2'
+                            )}
+                          </div>
+                        </div>
+                        <div className="bioep-kape__left__countdown-wrapper__counter-item">
+                          <div className="bioep-kape__left__countdown-wrapper__counter-item__numbers">
+                            {time.minutes}
+                          </div>
+                          <div className="bioep-kape__left__countdown-wrapper__counter-item__text">
+                            {t(
+                              'bioep-kape__left__countdown-wrapper__counter-item__text.part3'
+                            )}
+                          </div>
+                        </div>
+                        <div className="bioep-kape__left__countdown-wrapper__counter-item">
+                          <div className="bioep-kape__left__countdown-wrapper__counter-item__numbers">
+                            {time.seconds}
+                          </div>
+                          <div className="bioep-kape__left__countdown-wrapper__counter-item__text">
+                            {t(
+                              'bioep-kape__left__countdown-wrapper__counter-item__text.part4'
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                      <Link
+                        className="bioep-kape__left__cta-link"
+                        href={links.link1}
+                        target="_blank"
+                      >
+                        <span>{t('bioep-kape__left__cta-link')}</span>
+                        <Image
+                          src="/img/exitintentkape/arrow-right.svg"
+                          width={20}
+                          height={20}
+                          alt="arrow-right"
+                        />
+                      </Link>
+                      <div className="bioep-kape__left__guarantee">
+                        <p>{t('bioep-kape__left__guarantee')} </p>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="bioep-kape__right">
+                    <div className="bioep-kape__right-logo">
+                      <Image
+                        src="/img/exitintentkape/logo.svg"
+                        width={260}
+                        height={50}
+                        alt="logo"
+                      />
+                    </div>
+                    <div className="bioep-kape__right-device">
+                      <Image
+                        src="/img/exitintentkape/device.svg"
+                        width={370}
+                        height={216}
+                        alt="device"
+                      />
+                    </div>
+                    <div className="bioep-kape__right-trustpilot">
+                      <Image
+                        src="/img/exitintentkape/trustpilot.svg"
+                        width={320}
+                        height={40}
+                        alt="trustpilot"
+                      />
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                <div className="bioep-kape__content bioep-kape__content-ru">
+                  <div className="bioep-kape__left">
+                    <div className="bioep-kape__left__exclusive-offer">
+                      <h2>{t('bioep-kape__left__exclusive-offer')}</h2>
+                    </div>
+                    <div className="bioep-kape__left__countdown-wrapper">
+                      <Link
+                        className="bioep-kape__left__cta-link"
+                        href={links.link8}
+                        target="_blank"
+                      >
+                        <span>{t('bioep-kape__left__cta-link-ru')}</span>
+                        <Image
+                          src="/img/exitintentkape/arrow-right.svg"
+                          width={20}
+                          height={20}
+                          alt="arrow-right"
+                        />
+                      </Link>
+                    </div>
+                  </div>
+                  <div className="bioep-kape__right">
+                    <div className="bioep-kape__right-logo">
+                      <Image
+                        src="/img/exitintentkape/ru/logo.svg"
+                        width={250}
+                        height={100}
+                        alt="logo"
+                      />
+                    </div>
+                    <div className="bioep-kape__right-device">
+                      <Image
+                        src="/img/exitintentkape/ru/device.svg"
+                        width={370}
+                        height={216}
+                        alt="device"
+                      />
+                    </div>
+                    <div className="bioep-kape__right-trustpilot">
+                      <Image
+                        src="/img/exitintentkape/trustpilot.svg"
+                        width={320}
+                        height={40}
+                        alt="trustpilot"
+                      />
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+          <div
+            className="exit-intent-kape__modal__close"
+            onClick={handleCloseModal}
+          >
+            <span>X</span>
+          </div>
+        </div>
+      </div>
+    )
+  )
+}
+
+export default ExitIntentKape
