@@ -55,7 +55,7 @@
       }
     }
   },
-  "SchoolEvents": {
+  "EventsSchool": {
     "title": "Шкільні події",
     "button": "Детальніше",
     "tabs": {

@@ -3,124 +3,95 @@
 import React from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { useTranslations } from 'next-intl'
 import './ AdvancedTraining.scss'
 
-const trainingItems = [
-  {
-    id: 1,
-    key: 'item1',
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-        <path
-          d="M4 6.5 12 3l8 3.5v9L12 21l-8-5.5v-9Z"
-          stroke="currentColor"
-          strokeWidth="1.5"
-          strokeLinejoin="round"
-        />
-        <path
-          d="M12 11.5V21M4 6.5 12 11.5l8-5"
-          stroke="currentColor"
-          strokeWidth="1.5"
-          strokeLinejoin="round"
-        />
-      </svg>
-    ),
-  },
-  {
-    id: 2,
-    key: 'item2',
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-        <path
-          d="M4 6.5 12 3l8 3.5v9L12 21l-8-5.5v-9Z"
-          stroke="currentColor"
-          strokeWidth="1.5"
-          strokeLinejoin="round"
-        />
-        <path
-          d="M12 11.5V21M4 6.5 12 11.5l8-5"
-          stroke="currentColor"
-          strokeWidth="1.5"
-          strokeLinejoin="round"
-        />
-      </svg>
-    ),
-  },
-  {
-    id: 3,
-    key: 'item3',
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-        <path
-          d="M4 6.5 12 3l8 3.5v9L12 21l-8-5.5v-9Z"
-          stroke="currentColor"
-          strokeWidth="1.5"
-          strokeLinejoin="round"
-        />
-        <path
-          d="M12 11.5V21M4 6.5 12 11.5l8-5"
-          stroke="currentColor"
-          strokeWidth="1.5"
-          strokeLinejoin="round"
-        />
-      </svg>
-    ),
-  },
-  {
-    id: 4,
-    key: 'item4',
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-        <path
-          d="M4 6.5 12 3l8 3.5v9L12 21l-8-5.5v-9Z"
-          stroke="currentColor"
-          strokeWidth="1.5"
-          strokeLinejoin="round"
-        />
-        <path
-          d="M12 11.5V21M4 6.5 12 11.5l8-5"
-          stroke="currentColor"
-          strokeWidth="1.5"
-          strokeLinejoin="round"
-        />
-      </svg>
-    ),
-  },
+const icons = [
+  <svg key="icon-1" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+    <path
+      d="M4 6.5 12 3l8 3.5v9L12 21l-8-5.5v-9Z"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinejoin="round"
+    />
+    <path
+      d="M12 11.5V21M4 6.5 12 11.5l8-5"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinejoin="round"
+    />
+  </svg>,
+  <svg key="icon-2" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+    <path
+      d="M4 6.5 12 3l8 3.5v9L12 21l-8-5.5v-9Z"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinejoin="round"
+    />
+    <path
+      d="M12 11.5V21M4 6.5 12 11.5l8-5"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinejoin="round"
+    />
+  </svg>,
+  <svg key="icon-3" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+    <path
+      d="M4 6.5 12 3l8 3.5v9L12 21l-8-5.5v-9Z"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinejoin="round"
+    />
+    <path
+      d="M12 11.5V21M4 6.5 12 11.5l8-5"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinejoin="round"
+    />
+  </svg>,
+  <svg key="icon-4" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+    <path
+      d="M4 6.5 12 3l8 3.5v9L12 21l-8-5.5v-9Z"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinejoin="round"
+    />
+    <path
+      d="M12 11.5V21M4 6.5 12 11.5l8-5"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinejoin="round"
+    />
+  </svg>,
 ]
 
-const sectionLink = {
-  href: '/about',
-}
-
-const sectionImage = {
-  src: '/img/hero/1.png',
-  width: 420,
-  height: 520,
-}
-
-const AdvancedTraining = () => {
-  const t = useTranslations('AdvancedTraining')
+const AdvancedTraining = ({ content }) => {
+  if (!content) return null
 
   return (
     <section className="advanced-training">
       <div className="container">
         <div className="advanced-training__content">
+          {/* TEXT BLOCK */}
           <div className="advanced-training__text">
-            <h2 className="advanced-training__title">{t('title')}</h2>
+            <h2 className="advanced-training__title">{content.title}</h2>
 
             <div className="advanced-training__items">
-              {trainingItems.map((item) => (
-                <article key={item.id} className="advanced-training__item">
+              {content.items?.map((item, index) => (
+                <article
+                  key={item.id ?? index}
+                  className="advanced-training__item"
+                >
                   <div className="advanced-training__item-icon">
-                    {item.icon}
+                    {icons[index % icons.length]}
                   </div>
+
                   <div className="advanced-training__item-body">
                     <h3 className="advanced-training__item-name">
-                      {t(`items.${item.key}.title`)}
+                      {item.title}
                     </h3>
+
                     <p className="advanced-training__item-description">
-                      {t(`items.${item.key}.description`)}
+                      {item.description}
                     </p>
                   </div>
                 </article>
@@ -128,18 +99,20 @@ const AdvancedTraining = () => {
             </div>
           </div>
 
+          {/* IMAGE */}
           <div className="advanced-training__image">
             <Image
-              src={sectionImage.src}
-              width={sectionImage.width}
-              height={sectionImage.height}
-              alt={t('imageAlt')}
+              src={content.imageUrl}
+              width={420}
+              height={520}
+              alt={content.imageAlt || content.title}
             />
           </div>
         </div>
 
-        <Link href={sectionLink.href} className="advanced-training__link">
-          {t('button')}
+        {/* CTA BUTTON */}
+        <Link href={content.link} className="advanced-training__link">
+          {content.button}
         </Link>
       </div>
     </section>

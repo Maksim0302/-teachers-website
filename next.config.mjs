@@ -8,4 +8,16 @@ export default createNextIntlPlugin('./i18n.js')({
   turbopack: {
     root: __dirname,
   },
+  compiler: {
+    styledComponents: true,
+  },
+  transpilePackages: ['sanity', 'next-sanity'],
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'cdn.sanity.io',
+      },
+    ],
+  },
 })

@@ -27,15 +27,11 @@ const Header = forwardRef((props, ref) => {
 
   const normalizedPath = pathname.replace(/\/$/, '') || '/'
   const isHome =
-    normalizedPath === '/' ||
-    (locale && normalizedPath === `/${locale}`)
+    normalizedPath === '/' || (locale && normalizedPath === `/${locale}`)
 
   return (
-    <header
-      ref={ref}
-      className={`header${isHome ? '' : ' header--no-nav'}`}
-    >
-      <div className="container">
+    <header ref={ref} className={`header${isHome ? '' : ' header--no-nav'}`}>
+      <div className="container header__container">
         <div className="header__content">
           <Link href={homePath} className="logo">
             <Image

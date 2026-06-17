@@ -6,10 +6,15 @@
   background-color: #eef3ee;
   box-shadow: 0 3px 24px rgba(0, 0, 0, 0.08);
 
+  &__container {
+    position: relative;
+  }
+
   &__content {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding: 10px 0;
   }
 
   &__actions {
@@ -34,6 +39,7 @@
   align-items: center;
 }
 
+/* NAV DESKTOP */
 .navigation__menu {
   display: flex;
   flex-wrap: wrap;
@@ -45,8 +51,72 @@
   color: #111;
   text-decoration: none;
   font-weight: 500;
+  transition: color 0.2s ease;
 }
 
 .navigation__menu a:hover {
   color: #0a66c2;
+}
+
+/* =========================
+   TABLET (<= 1024px)
+========================= */
+@media (max-width: 1024px) {
+  .header {
+    &__content {
+      padding: 10px 15px;
+    }
+  }
+
+  .navigation {
+    padding: 10px;
+  }
+
+  .navigation__menu {
+    gap: 18px;
+  }
+
+  .navigation__menu a {
+    font-size: 15px;
+  }
+}
+
+/* =========================
+   MOBILE (<= 768px)
+========================= */
+@media (max-width: 768px) {
+  .navigation {
+    display: none; /* скрываем меню, остаётся BurgerMenu */
+  }
+
+  .header__content {
+    padding: 10px 15px;
+  }
+
+  .header__actions {
+    gap: 12px;
+  }
+
+  .logo img {
+    width: 55px;
+    height: 55px;
+  }
+}
+
+/* =========================
+   SMALL MOBILE (<= 480px)
+========================= */
+@media (max-width: 480px) {
+  .header__content {
+    padding: 8px 10px;
+  }
+
+  .logo img {
+    width: 48px;
+    height: 48px;
+  }
+
+  .header__actions {
+    gap: 10px;
+  }
 }

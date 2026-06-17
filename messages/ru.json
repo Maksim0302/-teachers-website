@@ -55,7 +55,7 @@
       }
     }
   },
-  "SchoolEvents": {
+  "EventsSchool": {
     "title": "Школьные события",
     "button": "Подробнее",
     "tabs": {
