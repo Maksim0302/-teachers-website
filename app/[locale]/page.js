@@ -3,6 +3,7 @@ import AssessmentMethodology from '../components/AssessmentMethodology/Assessmen
 import EventsSchool from '../components/EventsSchool/EventsSchool'
 import AdvancedTraining from '../components/ AdvancedTraining/ AdvancedTraining'
 import { getHomePageData, mapHomePageData } from '@/sanity/lib/queries'
+import VideoGallery from '../components/VideoGallery/VideoGallery'
 
 export default async function Home({ params }) {
   const { locale } = await params
@@ -15,6 +16,7 @@ export default async function Home({ params }) {
       <AdvancedTraining content={content.advancedTraining} />
       <AssessmentMethodology content={content.assessmentMethodology} />
       <EventsSchool content={content.eventsSchool} />
+      <VideoGallery />
     </>
   )
 }
