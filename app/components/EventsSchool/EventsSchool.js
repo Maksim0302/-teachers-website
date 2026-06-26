@@ -54,8 +54,11 @@ const EventsSchool = ({ content }) => {
                 <div className="events-school__item-image">
                   <Image
                     src={event.imageUrl}
-                    width={250}
-                    height={200}
+                    width={400}
+                    height={320}
+                    quality={90}
+                    priority={false}
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 400px"
                     alt={event.title}
                   />
                 </div>

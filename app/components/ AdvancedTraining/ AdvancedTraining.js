@@ -103,9 +103,10 @@ const AdvancedTraining = ({ content }) => {
           <div className="advanced-training__image">
             <Image
               src={content.imageUrl}
-              width={420}
-              height={520}
+              fill
               alt={content.imageAlt || content.title}
+              quality={90}
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 440px"
             />
           </div>
         </div>

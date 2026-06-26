@@ -58,6 +58,11 @@ function getPreferredLocale(req) {
 export function middleware(req) {
   const { pathname } = req.nextUrl
 
+  // Exclude /studio from locale redirect
+  if (pathname.startsWith('/studio')) {
+    return NextResponse.next()
+  }
+
   // Check if pathname already has a locale
   const pathnameHasLocale = supportedLocales.some(
     (locale) => pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`

@@ -104,7 +104,7 @@ export function mapAdvancedTrainingData(data, locale) {
 
   const imageBuilder = data.image ? urlFor(data.image) : null
   const imageUrl = imageBuilder
-    ? imageBuilder.width(420).height(520).fit('crop').url()
+    ? imageBuilder.width(420).height(520).fit('max').quality(90).url()
     : null
 
   if (!imageUrl) return null
@@ -136,7 +136,7 @@ export function mapEventsSchoolData(data, locale) {
         .map((event, index) => {
           const imageBuilder = event.image ? urlFor(event.image) : null
           const imageUrl = imageBuilder
-            ? imageBuilder.width(100).height(75).fit('crop').url()
+            ? imageBuilder.width(500).height(400).fit('max').quality(90).url()
             : null
 
           if (!imageUrl) return null
