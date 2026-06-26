@@ -68,6 +68,11 @@ const LangSwitcher = () => {
       return
     }
 
+    // Сохраняем выбранный язык в cookie
+    const expirationDate = new Date()
+    expirationDate.setFullYear(expirationDate.getFullYear() + 1)
+    document.cookie = `NEXT_LOCALE=${language.code}; path=/; expires=${expirationDate.toUTCString()}`
+
     startTransition(() => {
       router.replace(getLocalizedPath(language.code))
     })
@@ -85,7 +90,9 @@ const LangSwitcher = () => {
         aria-expanded={isOpen}
         aria-label="Select language"
       >
-        <span className="language-selector__label">{currentLanguage.label}</span>
+        <span className="language-selector__label">
+          {currentLanguage.label}
+        </span>
         <span
           className={`language-selector__arrow ${
             isOpen ? 'language-selector__arrow--up' : ''
@@ -103,7 +110,9 @@ const LangSwitcher = () => {
               role="option"
               aria-selected={language.code === locale}
               className={`language-selector__item ${
-                language.code === locale ? 'language-selector__item--active' : ''
+                language.code === locale
+                  ? 'language-selector__item--active'
+                  : ''
               }`}
               onClick={() => selectLanguage(language)}
               disabled={isPending}

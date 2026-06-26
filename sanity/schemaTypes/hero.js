@@ -11,6 +11,12 @@ export default {
       validation: (Rule) => Rule.required(),
     },
     {
+      name: 'subtitle',
+      title: 'Subtitle',
+      type: 'localeText',
+      description: 'Use line breaks for multiple lines',
+    },
+    {
       name: 'description',
       title: 'Description',
       type: 'localeString',

@@ -1,0 +1,327 @@
+.about-page {
+  padding: 60px 0 80px;
+  background: linear-gradient(180deg, #ffffff 0%, #f7faf9 100%);
+}
+
+.about-page__header {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.about-page__page-title {
+  font-size: 42px;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0 0 20px 0;
+  letter-spacing: -0.5px;
+}
+
+.about-page__teacher-name {
+  font-size: 36px;
+  font-weight: 700;
+  color: #14b8a6;
+  margin: 0;
+}
+
+.about-page__intro-section {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: center;
+  margin-bottom: 60px;
+  background: #fff;
+  padding: 40px;
+  border-radius: 16px;
+  box-shadow: 0 4px 15px rgba(15, 23, 42, 0.06);
+}
+
+.about-page__photo-wrapper {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 12px;
+  overflow: hidden;
+  background: linear-gradient(135deg, #14b8a6 0%, #0f766e 100%);
+}
+
+.about-page__photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.about-page__intro-text {
+  font-size: 18px;
+  line-height: 1.8;
+  color: #1e293b;
+  white-space: pre-line;
+  margin: 0;
+  background: linear-gradient(135deg, #f0fdf9 0%, #f8fafc 100%);
+  padding: 28px 28px;
+  border-radius: 12px;
+  border-left: 4px solid #14b8a6;
+  position: relative;
+  transition: all 0.3s ease;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+  box-shadow: 0 2px 8px rgba(20, 184, 166, 0.08);
+
+  &::first-line {
+    font-weight: 700;
+    color: #0f766e;
+  }
+
+  @supports (background-clip: text) {
+    &:hover {
+      box-shadow: 0 4px 16px rgba(20, 184, 166, 0.15);
+      transform: translateY(-2px);
+    }
+  }
+}
+
+.about-page__section {
+  background: #fff;
+  padding: 40px;
+  border-radius: 16px;
+  box-shadow: 0 4px 15px rgba(15, 23, 42, 0.06);
+  margin-bottom: 40px;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.about-page__section-title {
+  font-size: 28px;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0 0 28px 0;
+  letter-spacing: -0.3px;
+  border-bottom: 3px solid #14b8a6;
+  padding-bottom: 12px;
+}
+
+.about-page__info-item {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 20px;
+  padding: 16px 0;
+  border-bottom: 1px solid #e2e8f0;
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.about-page__info-label {
+  font-weight: 700;
+  color: #0f766e;
+  font-size: 15px;
+}
+
+.about-page__info-value {
+  color: #475569;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.about-page__text-block {
+  margin: 16px 0;
+  font-size: 16px;
+  line-height: 1.8;
+  color: #475569;
+
+  &--highlight {
+    background: #f0fdf9;
+    padding: 20px;
+    border-left: 4px solid #14b8a6;
+    border-radius: 8px;
+    font-weight: 500;
+  }
+}
+
+.about-page__skills-list {
+  list-style: none;
+  padding: 0;
+  margin: 20px 0;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.about-page__skill-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px;
+  background: #f8fafc;
+  border-radius: 8px;
+  border-left: 3px solid #14b8a6;
+
+  &::before {
+    content: '–';
+    flex-shrink: 0;
+    color: #14b8a6;
+    font-weight: 700;
+    font-size: 18px;
+    margin-right: 8px;
+  }
+}
+
+.about-page__skill-text {
+  font-size: 14px;
+  line-height: 1.5;
+  color: #475569;
+  margin: 0;
+}
+
+.about-page__methods-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px;
+  margin-top: 30px;
+}
+
+.about-page__method-subsection {
+  display: flex;
+  flex-direction: column;
+}
+
+.about-page__method-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0 0 16px 0;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #14b8a6;
+}
+
+.about-page__method-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.about-page__method-list-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 10px;
+  background: #f8fafc;
+  border-radius: 6px;
+  border-left: 3px solid #14b8a6;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #475569;
+
+  &::before {
+    content: '•';
+    flex-shrink: 0;
+    color: #14b8a6;
+    font-weight: 700;
+    font-size: 16px;
+  }
+}
+
+.about-page__credo {
+  background: linear-gradient(135deg, #f0fdf9 0%, #e0f7f4 100%);
+  padding: 30px;
+  border-radius: 12px;
+  border: 2px solid #14b8a6;
+  text-align: center;
+  font-size: 18px;
+  font-weight: 600;
+  color: #0f766e;
+  line-height: 1.8;
+  margin: 0;
+}
+
+.about-page__email {
+  font-size: 16px;
+  color: #475569;
+  margin: 0;
+}
+
+.about-page__email-link {
+  color: #14b8a6;
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.3s;
+
+  &:hover {
+    color: #0f766e;
+    text-decoration: underline;
+  }
+}
+
+@media (max-width: 900px) {
+  .about-page__intro-section {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+
+  .about-page__page-title {
+    font-size: 32px;
+  }
+
+  .about-page__teacher-name {
+    font-size: 26px;
+  }
+
+  .about-page__section-title {
+    font-size: 22px;
+  }
+
+  .about-page__info-item {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .about-page__methods-grid {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+
+  .about-page__skills-list {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 560px) {
+  .about-page {
+    padding: 40px 0 60px;
+  }
+
+  .about-page__page-title {
+    font-size: 24px;
+  }
+
+  .about-page__teacher-name {
+    font-size: 20px;
+  }
+
+  .about-page__section {
+    padding: 24px;
+    margin-bottom: 30px;
+  }
+
+  .about-page__section-title {
+    font-size: 18px;
+  }
+
+  .about-page__intro-text {
+    font-size: 16px;
+  }
+
+  .about-page__text-block {
+    font-size: 14px;
+  }
+
+  .about-page__credo {
+    font-size: 16px;
+    padding: 20px;
+  }
+}

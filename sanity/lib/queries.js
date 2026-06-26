@@ -4,6 +4,7 @@ import { urlFor } from './image'
 export const HOME_PAGE_QUERY = `{
   "hero": *[_type == "hero"][0]{
     title,
+    subtitle,
     description,
     button,
     link,
@@ -75,6 +76,7 @@ export function mapHeroData(data, locale) {
 
   return {
     title: getLocalizedValue(data.title, locale),
+    subtitle: getLocalizedValue(data.subtitle, locale),
     description: getLocalizedValue(data.description, locale),
     button: getLocalizedValue(data.button, locale),
     link: data.link || '/about',

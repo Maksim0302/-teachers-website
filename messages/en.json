@@ -67,35 +67,158 @@
     },
     "items": {
       "all": {
-        "event1": { "title": "Open Day at the Lyceum", "date": "September 1, 2025" },
-        "event2": { "title": "Parent-Teacher Meeting", "date": "October 15, 2025" },
+        "event1": {
+          "title": "Open Day at the Lyceum",
+          "date": "September 1, 2025"
+        },
+        "event2": {
+          "title": "Parent-Teacher Meeting",
+          "date": "October 15, 2025"
+        },
         "event3": { "title": "Science Fair", "date": "November 20, 2025" },
         "event4": { "title": "End of Year Ceremony", "date": "May 30, 2026" }
       },
       "competitions": {
-        "event1": { "title": "Mathematics Olympiad", "date": "February 10, 2026" },
-        "event2": { "title": "English Language Contest", "date": "March 5, 2026" },
+        "event1": {
+          "title": "Mathematics Olympiad",
+          "date": "February 10, 2026"
+        },
+        "event2": {
+          "title": "English Language Contest",
+          "date": "March 5, 2026"
+        },
         "event3": { "title": "Sports Tournament", "date": "April 12, 2026" },
         "event4": { "title": "Art Competition", "date": "May 8, 2026" }
       },
       "excursions": {
-        "event1": { "title": "Museum of Natural History", "date": "October 3, 2025" },
-        "event2": { "title": "City Observatory Visit", "date": "November 14, 2025" },
-        "event3": { "title": "Botanical Garden Trip", "date": "April 18, 2026" },
+        "event1": {
+          "title": "Museum of Natural History",
+          "date": "October 3, 2025"
+        },
+        "event2": {
+          "title": "City Observatory Visit",
+          "date": "November 14, 2025"
+        },
+        "event3": {
+          "title": "Botanical Garden Trip",
+          "date": "April 18, 2026"
+        },
         "event4": { "title": "Historical Center Tour", "date": "May 22, 2026" }
       },
       "holidays": {
-        "event1": { "title": "Knowledge Day Celebration", "date": "September 1, 2025" },
-        "event2": { "title": "Teacher's Day Concert", "date": "October 5, 2025" },
-        "event3": { "title": "New Year Performance", "date": "December 25, 2025" },
+        "event1": {
+          "title": "Knowledge Day Celebration",
+          "date": "September 1, 2025"
+        },
+        "event2": {
+          "title": "Teacher's Day Concert",
+          "date": "October 5, 2025"
+        },
+        "event3": {
+          "title": "New Year Performance",
+          "date": "December 25, 2025"
+        },
         "event4": { "title": "Graduation Ball", "date": "June 15, 2026" }
       },
       "projects": {
-        "event1": { "title": "Eco-Initiative «Green School»", "date": "September 20, 2025" },
-        "event2": { "title": "Robotics Club Showcase", "date": "January 18, 2026" },
+        "event1": {
+          "title": "Eco-Initiative «Green School»",
+          "date": "September 20, 2025"
+        },
+        "event2": {
+          "title": "Robotics Club Showcase",
+          "date": "January 18, 2026"
+        },
         "event3": { "title": "Charity Fair", "date": "March 28, 2026" },
-        "event4": { "title": "Student Research Conference", "date": "April 30, 2026" }
+        "event4": {
+          "title": "Student Research Conference",
+          "date": "April 30, 2026"
+        }
       }
     }
+  },
+  "teacher": {
+    "fullName": "Bilyk Irina Petrovna",
+    "title": "Primary School Teacher",
+    "school": "Krasnopillia Lyceum of Berezan Municipal Council",
+    "birthDate": "March 29, 1977",
+    "birthPlace": "Krasnopillia village, Mykolaiv region",
+    "education": "Mykolaiv National University named after V. O. Sukhomlynsky, 2008",
+    "specialty": "Primary school teacher, practical psychologist",
+    "workplace": "Krasnopillia Lyceum of Berezan Municipal Council",
+    "workExperienceTotal": "31 years",
+    "workExperiencePedagogical": "22 years",
+    "qualification": "Specialist of the highest category, senior teacher",
+    "methodicalProblem": "Development of cross-cutting skills in primary school students of the New Ukrainian School",
+    "intro": "Welcome to the website of\n\nIrina Petrovna Bilyk,\n\na primary school teacher at Krasnopillia Lyceum of Berezan Municipal Council.\n\nI'm glad to see you!",
+    "pedagogicalIdeaIntro": "In modern conditions of educational reform, the development of cross-cutting skills becomes particularly important, as they form the basis for key competencies in learners.",
+    "pedagogicalIdea": "The pedagogical idea of 'Development of cross-cutting skills in primary school students' aims to teach children to think critically, work in teams, communicate effectively, solve problems, engage in lifelong learning, and use ICT in educational and everyday activities.",
+    "crossSkillsIntro": "Cross-cutting skills form a common foundation for all subjects and include:",
+    "crossSkills": [
+      "ability to read with understanding",
+      "ability to express one's opinion orally and in writing",
+      "critical and creative thinking",
+      "ability to show initiative",
+      "ability to logically justify one's position",
+      "ability to manage emotions constructively",
+      "ability to assess risks",
+      "ability to make decisions",
+      "ability to solve problems",
+      "ability to cooperate in teams",
+      "initiative and responsibility for one's own learning"
+    ],
+    "pedagogicalGoal": "The goal of my pedagogical work is to create conditions for developing these skills in every student through implementing interactive, competency-oriented technologies that help children learn with joy, make new discoveries, and think independently.",
+    "technologies": [
+      "Interactive learning technologies — pair work, group work, 'Brainstorming', 'Aquarium', 'Circle of Ideas'",
+      "Project-based technologies — implementation of mini-projects ('My Family', 'About Me', 'Water is Life', 'My Homeland')",
+      "Information and communication technologies — interactive presentations, online quests, educational platforms (LearningApps, Wordwall, Kazka.fun, Kahoot)",
+      "Critical thinking technology — techniques 'Cube', 'Fishbone', 'Cinquain', 'Six Thinking Hats'",
+      "Game-based technologies — role-play, didactic, interactive games",
+      "Technology of developing critical and creative thinking through reading and writing (RWCT)"
+    ],
+    "methods": [
+      "project method",
+      "research method",
+      "problem-based learning",
+      "'PRESS' method",
+      "'Five Fingers' method",
+      "reflective exercises: 'Microphone', 'Success Tree', 'Mood Traffic Light'",
+      "integrated lessons"
+    ],
+    "teachingForms": [
+      "individual, pair, group, collective work",
+      "project-based activities",
+      "morning meetings",
+      "educational games and trainings",
+      "mini-research, experiments",
+      "online activities, interactive competitions",
+      "creation of lapbooks, quests, book trailers"
+    ],
+    "effectiveness": "The implementation of the pedagogical idea for developing cross-cutting skills has shown positive results in educational and upbringing work.",
+    "conclusion": "Developing cross-cutting skills in primary school students is not a separate direction of work, but the foundation of the educational process in the New Ukrainian School.\n\nThe application of modern technologies and methods enables every child to realize their potential, learn how to learn, think critically, act creatively and responsibly.\n\nMy pedagogical idea is aimed at making every student an active, independent, responsible and happy participant in the educational process, capable of successfully living and learning in our changing world.",
+    "credo": "\"A teacher is not the one who teaches, but the one from whom we learn.\"",
+    "email": "bilykira19770329@gmail.com"
+  },
+  "aboutPageLabels": {
+    "personalInfo": "Personal Information",
+    "fullName": "Full Name",
+    "birthDate": "Date and Place of Birth",
+    "education": "Education",
+    "speciality": "specialty",
+    "workplace": "Workplace",
+    "experience": "Work Experience",
+    "totalExperienceLabel": "of total experience. Teaching experience",
+    "qualification": "Qualification and Title",
+    "methodicalProblem": "Methodical Problem",
+    "pedagogicalIdea": "Essence of Pedagogical Idea",
+    "crossSkills": "Cross-cutting Skills",
+    "teachingMethods": "Technologies, Methods, and Forms of Teaching",
+    "technologies": "Technologies",
+    "methods": "Methods",
+    "teachingForms": "Teaching Forms and Tools",
+    "effectiveness": "Effectiveness and Results of Implementation",
+    "conclusion": "Conclusion",
+    "credo": "Pedagogical Credo",
+    "contacts": "Email"
   }
 }

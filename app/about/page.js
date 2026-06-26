@@ -1,19 +1,12 @@
 import React from 'react'
 import AboutPageContent from './components/AboutPageContent'
-import { aboutUsPage } from './data/aboutPages'
 
 export const metadata = {
-  title: aboutUsPage.title,
-  description: aboutUsPage.description,
+  title: 'Про вчителя',
+  description:
+    'Детальна інформація про учителя початкових класів Білик Ірину Петрівну',
 }
 
-const AboutUs = () => {
-  return (
-    <AboutPageContent
-      title={aboutUsPage.title}
-      description={aboutUsPage.description}
-    />
-  )
+export default function AboutPage() {
+  return <AboutPageContent />
 }
-
-export default AboutUs

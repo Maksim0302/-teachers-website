@@ -34,6 +34,12 @@ const supportedLocales = [
 ]
 
 function getPreferredLocale(req) {
+  // Сначала проверяем сохраненный язык в cookies
+  const savedLocale = req.cookies.get('NEXT_LOCALE')?.value
+  if (savedLocale && supportedLocales.includes(savedLocale)) {
+    return savedLocale
+  }
+
   const negotiator = new Negotiator({
     headers: { 'accept-language': req.headers.get('accept-language') },
   })
@@ -52,17 +58,24 @@ function getPreferredLocale(req) {
 export function middleware(req) {
   const { pathname } = req.nextUrl
 
-  if (pathname === '/') {
-    const preferredLocale = getPreferredLocale(req)
+  // Check if pathname already has a locale
+  const pathnameHasLocale = supportedLocales.some(
+    (locale) => pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`
+  )
 
-    return NextResponse.redirect(
-      new URL(`/${preferredLocale}${pathname}`, req.url)
-    )
+  if (!pathnameHasLocale) {
+    const preferredLocale = getPreferredLocale(req)
+    const newPathname =
+      pathname === '/'
+        ? `/${preferredLocale}/`
+        : `/${preferredLocale}${pathname}`
+
+    return NextResponse.redirect(new URL(newPathname, req.url))
   }
 
   return NextResponse.next()
 }
 
 export const config = {
-  matcher: '/',
+  matcher: ['/((?!.*\\..*|_next).*)', '/'],
 }

@@ -37,6 +37,34 @@
       white-space: pre-line;
     }
 
+    &__subtitle {
+      font-size: 18px;
+      color: #0f766e;
+      line-height: 1.9;
+      letter-spacing: 0.4px;
+      font-weight: 600;
+      margin-top: 8px;
+      margin-bottom: 16px;
+      padding: 14px 16px;
+      border-left: 4px solid #14b8a6;
+      background: linear-gradient(
+        135deg,
+        rgba(20, 184, 166, 0.08) 0%,
+        rgba(15, 118, 110, 0.04) 100%
+      );
+      border-radius: 4px;
+      transition: all 0.3s ease;
+
+      &:hover {
+        background: linear-gradient(
+          135deg,
+          rgba(20, 184, 166, 0.15) 0%,
+          rgba(15, 118, 110, 0.1) 100%
+        );
+        border-left-color: #0d9488;
+      }
+    }
+
     &__description {
       font-size: 22px;
       color: #475569;
@@ -113,6 +141,9 @@
 
       padding: 70px 20px;
       gap: 40px;
+      &__items {
+        order: 2;
+      }
     }
 
     &__text {

@@ -15,6 +15,14 @@ const Hero = ({ content }) => {
           <div className="hero__content__items">
             <div className="hero__text">
               <h1 className="hero__text__title">{content.title}</h1>
+              {content.subtitle && (
+                <p
+                  className="hero__text__subtitle"
+                  style={{ whiteSpace: 'pre-line' }}
+                >
+                  {content.subtitle}
+                </p>
+              )}
               <p className="hero__text__description">«{content.description}»</p>
             </div>
             <div className="hero__button">
