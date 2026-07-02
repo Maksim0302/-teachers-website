@@ -49,8 +49,20 @@ export const HOME_PAGE_QUERY = `{
 
 export function getLocalizedValue(field, locale, fallbackLocale = 'en') {
   if (!field) return ''
+
+  // If it's already a string (not a locale object)
   if (typeof field === 'string') return field
-  return field[locale] || field[fallbackLocale] || Object.values(field)[0] || ''
+
+  // Try to get value in order: requested locale → fallback locale → first available value
+  if (field[locale] && field[locale].trim?.() !== '') return field[locale]
+  if (field[fallbackLocale] && field[fallbackLocale].trim?.() !== '')
+    return field[fallbackLocale]
+
+  // Find first non-empty value
+  const values = Object.values(field).filter(
+    (v) => v && typeof v === 'string' && v.trim() !== ''
+  )
+  return values[0] || ''
 }
 
 export async function getHomePageData() {
@@ -220,4 +232,86 @@ export function mapMenuData(data, locale) {
             }))
         : [],
     }))
+}
+
+// ============== GRADUATES DATA ==============
+
+export const GRADUATES_ALL_QUERY = `*[_type == "graduate"] | order(year desc) {
+  year,
+  title,
+  subtitle,
+  description,
+  photos[]{
+    image,
+    alt
+  }
+}`
+
+export const GRADUATES_BY_YEAR_QUERY = `*[_type == "graduate" && year == $year][0] {
+  year,
+  title,
+  subtitle,
+  description,
+  photos[]{
+    image,
+    alt
+  }
+}`
+
+export async function getGraduatesData() {
+  if (!client) return null
+
+  try {
+    return await client.fetch(GRADUATES_ALL_QUERY)
+  } catch (error) {
+    console.error('Failed to fetch graduates data from Sanity:', error)
+    return null
+  }
+}
+
+export async function getGraduateByYear(year) {
+  if (!client) return null
+
+  try {
+    return await client.fetch(GRADUATES_BY_YEAR_QUERY, { year })
+  } catch (error) {
+    console.error(`Failed to fetch graduate ${year} from Sanity:`, error)
+    return null
+  }
+}
+
+export function mapGraduateData(data, locale) {
+  if (!data) return null
+
+  const photos = (data.photos || [])
+    .map((photo) => {
+      if (!photo.image) return null
+
+      const imageBuilder = urlFor(photo.image)
+      const imageUrl = imageBuilder
+        ? imageBuilder.width(800).height(600).fit('max').quality(90).url()
+        : null
+
+      if (!imageUrl) return null
+
+      return {
+        imageUrl,
+        alt: getLocalizedValue(photo.alt, locale),
+      }
+    })
+    .filter(Boolean)
+
+  const title = getLocalizedValue(data.title, locale)
+  const subtitle = getLocalizedValue(data.subtitle, locale)
+
+  // Don't require photos, but require at least a title
+  if (!title) return null
+
+  return {
+    year: data.year,
+    title,
+    subtitle,
+    description: getLocalizedValue(data.description, locale),
+    photos,
+  }
 }

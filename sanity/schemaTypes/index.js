@@ -1,6 +1,7 @@
 import advancedTraining from './advancedTraining'
 import assessmentMethodology from './assessmentMethodology'
 import eventsSchool from './eventsSchool'
+import graduate from './graduate'
 import hero from './hero'
 import localeString from './localeString'
 import localeText from './localeText'
@@ -14,4 +15,5 @@ export const schemaTypes = [
   advancedTraining,
   eventsSchool,
   menuNavigation,
+  graduate,
 ]

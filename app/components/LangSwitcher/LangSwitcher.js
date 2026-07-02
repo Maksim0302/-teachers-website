@@ -73,9 +73,24 @@ const LangSwitcher = () => {
     expirationDate.setFullYear(expirationDate.getFullYear() + 1)
     document.cookie = `NEXT_LOCALE=${language.code}; path=/; expires=${expirationDate.toUTCString()}`
 
+    const newPath = getLocalizedPath(language.code)
+
+    // Use startTransition for smooth UI updates
     startTransition(() => {
-      router.replace(getLocalizedPath(language.code))
+      // Navigate to new locale path
+      router.replace(newPath)
     })
+
+    // Schedule refresh after route change completes
+    // Use requestAnimationFrame to ensure proper timing
+    if (typeof window !== 'undefined') {
+      requestAnimationFrame(() => {
+        setTimeout(() => {
+          router.refresh()
+        }, 100)
+      })
+    }
+
     setIsOpen(false)
   }
 
