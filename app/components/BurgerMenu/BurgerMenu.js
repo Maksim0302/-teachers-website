@@ -1,57 +1,38 @@
 'use client'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
+import { useLocale } from 'next-intl'
+import { fetchMenuAction } from '@/app/actions/menu'
 import './BurgerMenu.scss'
 
 const BurgerMenu = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [expandedId, setExpandedId] = useState(null)
+  const [menuItems, setMenuItems] = useState([])
+  const [isLoading, setIsLoading] = useState(true)
+  const locale = useLocale()
 
-  const menuItems = [
-    {
-      id: 'home',
-      label: 'Home',
-      submenu: [
-        { label: 'Home Page', href: '/' },
-        { label: 'Introduction', href: '/home/intro' },
-      ],
-    },
-    {
-      id: 'about',
-      label: 'About',
-      submenu: [
-        { label: 'About Us', href: '/about' },
-        { label: 'Our Team', href: '/about/team' },
-        { label: 'History', href: '/about/history' },
-      ],
-    },
-    {
-      id: 'services',
-      label: 'Services',
-      submenu: [
-        { label: 'All Services', href: '/services' },
-        { label: 'Consulting', href: '/services/consulting' },
-        { label: 'Development', href: '/services/development' },
-      ],
-    },
-    {
-      id: 'blog',
-      label: 'Blog',
-      submenu: [
-        { label: 'All Posts', href: '/blog' },
-        { label: 'Latest', href: '/blog/latest' },
-        { label: 'Archive', href: '/blog/archive' },
-      ],
-    },
-    {
-      id: 'contact',
-      label: 'Contact',
-      submenu: [
-        { label: 'Contact Us', href: '/contact' },
-        { label: 'Support', href: '/contact/support' },
-      ],
-    },
-  ]
+  useEffect(() => {
+    const fetchMenu = async () => {
+      try {
+        setIsLoading(true)
+        const { menuItems: items, error } = await fetchMenuAction(locale)
+        if (error) {
+          console.error('Error fetching menu:', error)
+          setMenuItems([])
+        } else {
+          setMenuItems(items || [])
+        }
+      } catch (error) {
+        console.error('Error fetching menu:', error)
+        setMenuItems([])
+      } finally {
+        setIsLoading(false)
+      }
+    }
+
+    fetchMenu()
+  }, [locale])
 
   const toggleAccordion = (id) => {
     setExpandedId((prev) => (prev === id ? null : id))
@@ -75,35 +56,57 @@ const BurgerMenu = () => {
         <span />
       </button>
       <nav className={`burger__menu ${isMenuOpen ? 'burger__menu--open' : ''}`}>
-        {menuItems.map((item) => (
-          <div key={item.id} className="burger__accordion-item">
-            <button
-              type="button"
-              className={`burger__accordion-trigger ${
-                expandedId === item.id ? 'burger__accordion-trigger--open' : ''
-              }`}
-              onClick={() => toggleAccordion(item.id)}
-              aria-expanded={expandedId === item.id}
-            >
-              {item.label}
-              <span className="burger__accordion-icon" />
-            </button>
-            {expandedId === item.id && (
-              <div className="burger__submenu">
-                {item.submenu.map((subitem, index) => (
-                  <Link
-                    key={index}
-                    href={subitem.href}
-                    className="burger__submenu-link"
-                    onClick={handleLinkClick}
+        {isLoading ? (
+          <div className="burger__loading">Loading menu...</div>
+        ) : menuItems.length > 0 ? (
+          menuItems.map((item) => (
+            <div key={item.id} className="burger__accordion-item">
+              {item.children && item.children.length > 0 ? (
+                // Accordion item
+                <>
+                  <button
+                    type="button"
+                    className={`burger__accordion-trigger ${
+                      expandedId === item.id
+                        ? 'burger__accordion-trigger--open'
+                        : ''
+                    }`}
+                    onClick={() => toggleAccordion(item.id)}
+                    aria-expanded={expandedId === item.id}
                   >
-                    {subitem.label}
-                  </Link>
-                ))}
-              </div>
-            )}
-          </div>
-        ))}
+                    {item.label}
+                    <span className="burger__accordion-icon" />
+                  </button>
+                  {expandedId === item.id && (
+                    <div className="burger__submenu">
+                      {item.children.map((child) => (
+                        <Link
+                          key={child.id}
+                          href={child.href}
+                          className="burger__submenu-link"
+                          onClick={handleLinkClick}
+                        >
+                          {child.label}
+                        </Link>
+                      ))}
+                    </div>
+                  )}
+                </>
+              ) : (
+                // Regular link
+                <Link
+                  href={item.href}
+                  className="burger__accordion-trigger burger__accordion-trigger--link"
+                  onClick={handleLinkClick}
+                >
+                  {item.label}
+                </Link>
+              )}
+            </div>
+          ))
+        ) : (
+          <div className="burger__empty">No menu items</div>
+        )}
       </nav>
     </>
   )

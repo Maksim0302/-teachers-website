@@ -76,11 +76,17 @@
   align-items: center;
   text-align: left;
   transition: color 0.2s ease;
+  text-decoration: none;
 }
 
 .burger__accordion-trigger:hover {
   color: #0a66c2;
   background-color: #f9f9f9;
+}
+
+.burger__accordion-trigger--link {
+  cursor: pointer;
+  pointer-events: all;
 }
 
 .burger__accordion-icon {
@@ -131,6 +137,14 @@
 
 .burger__submenu-link:hover {
   color: #0a66c2;
+}
+
+.burger__loading,
+.burger__empty {
+  padding: 12px 20px;
+  color: #999;
+  font-size: 14px;
+  text-align: center;
 }
 
 // @media (min-width: 769px) {

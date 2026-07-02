@@ -19,12 +19,12 @@ const VideoGallery = () => {
     },
     {
       id: 2,
-      videoId: 'mdkHvQk757k',
+      videoId: 'V0XB8t2Z6_4',
       title: 'Video 2',
     },
     {
       id: 3,
-      videoId: 'dQw4w9WgXcQ',
+      videoId: 't7bkuP7K_1s',
       title: 'Video 3',
     },
   ]

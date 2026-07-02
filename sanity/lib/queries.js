@@ -175,3 +175,49 @@ export function mapHomePageData(data, locale) {
     eventsSchool: mapEventsSchoolData(data.eventsSchool, locale),
   }
 }
+
+export const MENU_QUERY = `*[_type == "menuNavigation"][0]{
+  menuItems[]{
+    title,
+    slug,
+    order,
+    children[]{
+      title,
+      slug,
+      order
+    }
+  }
+}`
+
+export async function getMenuData() {
+  if (!client) return null
+
+  try {
+    return await client.fetch(MENU_QUERY)
+  } catch (error) {
+    console.error('Failed to fetch menu data from Sanity:', error)
+    return null
+  }
+}
+
+export function mapMenuData(data, locale) {
+  if (!data?.menuItems) return []
+
+  // Sort by order and map menu items
+  return data.menuItems
+    .sort((a, b) => (a.order ?? 0) - (b.order ?? 0))
+    .map((item) => ({
+      id: item.slug || `menu-${Math.random()}`,
+      label: getLocalizedValue(item.title, locale),
+      href: item.slug ? `/${item.slug}` : null,
+      children: item.children
+        ? item.children
+            .sort((a, b) => (a.order ?? 0) - (b.order ?? 0))
+            .map((child, idx) => ({
+              id: `${item.slug}-child-${idx}`,
+              label: getLocalizedValue(child.title, locale),
+              href: `/${child.slug}`,
+            }))
+        : [],
+    }))
+}

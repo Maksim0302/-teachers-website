@@ -4,6 +4,7 @@ import eventsSchool from './eventsSchool'
 import hero from './hero'
 import localeString from './localeString'
 import localeText from './localeText'
+import menuNavigation from './menuNavigation'
 
 export const schemaTypes = [
   localeString,
@@ -12,4 +13,5 @@ export const schemaTypes = [
   assessmentMethodology,
   advancedTraining,
   eventsSchool,
+  menuNavigation,
 ]

@@ -4,6 +4,11 @@ import { apiVersion, dataset, projectId } from './sanity/env'
 import { schemaTypes } from './sanity/schemaTypes'
 
 const singletons = [
+  {
+    title: 'Navigation Menu',
+    schemaType: 'menuNavigation',
+    documentId: 'menuNavigation',
+  },
   { title: 'Hero', schemaType: 'hero', documentId: 'hero' },
   {
     title: 'Assessment Methodology',

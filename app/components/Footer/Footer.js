@@ -39,7 +39,7 @@ const Footer = () => {
 
             <div className="footer__socials">
               <a
-                href="https://youtube.com"
+                href="https://youtube.com/@БилыкИрина-г1х"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="YouTube"
