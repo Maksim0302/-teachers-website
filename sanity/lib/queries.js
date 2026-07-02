@@ -289,7 +289,7 @@ export function mapGraduateData(data, locale) {
 
       const imageBuilder = urlFor(photo.image)
       const imageUrl = imageBuilder
-        ? imageBuilder.width(800).height(600).fit('max').quality(90).url()
+        ? imageBuilder.width(1800).fit('max').auto('format').quality(100).url()
         : null
 
       if (!imageUrl) return null

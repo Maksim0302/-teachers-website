@@ -1,92 +1,78 @@
 .graduates-page {
-  padding: 40px 0;
+  padding: 48px 0;
   min-height: 100vh;
 
   @media (max-width: 768px) {
-    padding: 20px 0;
+    padding: 24px 0;
   }
 }
 
 .graduates-page__header {
-  margin-bottom: 40px;
   text-align: center;
-
-  @media (max-width: 768px) {
-    margin-bottom: 25px;
-  }
+  margin-bottom: 40px;
 }
 
 .graduates-page__title {
-  font-size: 48px;
+  font-size: clamp(2rem, 5vw, 3rem);
   font-weight: 700;
   line-height: 1.2;
-  margin-bottom: 10px;
-  color: #000;
-
-  @media (max-width: 768px) {
-    font-size: 32px;
-  }
-
-  @media (max-width: 480px) {
-    font-size: 24px;
-  }
+  color: #111827;
+  margin-bottom: 12px;
 }
 
 .graduates-page__subtitle {
-  font-size: 20px;
-  line-height: 1.5;
-  color: #666;
-  margin: 0;
-
-  @media (max-width: 768px) {
-    font-size: 16px;
-  }
-
-  @media (max-width: 480px) {
-    font-size: 14px;
-  }
+  font-size: clamp(1rem, 3vw, 1.25rem);
+  color: #6b7280;
 }
 
 .graduates-page__description {
+  max-width: 900px;
+  margin: 0 auto 40px;
   font-size: 16px;
-  line-height: 1.6;
-  color: #555;
-  margin-bottom: 40px;
+  line-height: 1.7;
+  color: #4b5563;
   white-space: pre-line;
-
-  @media (max-width: 768px) {
-    margin-bottom: 30px;
-    font-size: 14px;
-  }
 }
+
+/* ==========================
+   Gallery
+========================== */
 
 .graduates-page__gallery {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 20px;
-  margin-top: 40px;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 24px;
 
   @media (max-width: 768px) {
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 15px;
-    margin-top: 30px;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 16px;
   }
 
   @media (max-width: 480px) {
     grid-template-columns: 1fr;
-    gap: 15px;
   }
 }
 
 .graduates-page__photo-item {
+  aspect-ratio: 4 / 3;
+  background: #f8fafc;
+  border-radius: 14px;
   overflow: hidden;
-  border-radius: 8px;
-  background-color: #f5f5f5;
-  aspect-ratio: 1 / 1;
+  cursor: pointer;
 
-  @media (max-width: 768px) {
-    border-radius: 6px;
-  }
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.graduates-page__photo-item:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.15);
 }
 
 .graduates-page__photo {
@@ -95,16 +81,112 @@
   object-fit: cover;
   display: block;
   transition: transform 0.3s ease;
+}
 
-  &:hover {
-    transform: scale(1.05);
+.graduates-page__photo-item:hover .graduates-page__photo {
+  transform: scale(1.03);
+}
+
+@media (max-width: 768px) {
+  .graduates-page__photo-item:hover {
+    transform: none;
   }
 
-  @media (max-width: 768px) {
-    transition: none;
+  .graduates-page__photo-item:hover .graduates-page__photo {
+    transform: none;
+  }
+}
 
-    &:hover {
-      transform: none;
-    }
+/* ==========================
+   Modal
+========================== */
+
+.graduates-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.88);
+
+  animation: fadeIn 0.25s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.graduates-modal__content {
+  position: relative;
+  max-width: 95vw;
+  max-height: 95vh;
+}
+
+.graduates-modal__image {
+  display: block;
+  max-width: 95vw;
+  max-height: 95vh;
+  width: auto;
+  height: auto;
+  border-radius: 14px;
+
+  animation: zoomIn 0.25s ease;
+}
+
+@keyframes zoomIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.graduates-modal__close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+
+  width: 42px;
+  height: 42px;
+
+  border: none;
+  border-radius: 50%;
+
+  background: rgba(24, 22, 22, 0.889);
+  color: #fff;
+
+  font-size: 24px;
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  transition: 0.2s ease;
+}
+
+.graduates-modal__close:hover {
+  background: rgba(18, 16, 16, 0.931);
+  transform: scale(1.1);
+}
+
+@media (max-width: 768px) {
+  .graduates-modal__close {
+    top: 12px;
+    right: 12px;
   }
 }
