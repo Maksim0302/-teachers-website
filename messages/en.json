@@ -223,6 +223,9 @@
   },
   "VideoGallery": {
     "title": "Video Gallery",
-    "button": "More Videos"
+    "subtitle": "Watch our collection of educational videos to enhance your learning experience",
+    "button": "More Videos",
+    "watchOnYoutube": "Watch on YouTube",
+    "noVideos": "No videos available"
   }
 }

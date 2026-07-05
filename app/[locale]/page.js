@@ -16,7 +16,7 @@ export default async function Home({ params }) {
       <AdvancedTraining content={content.advancedTraining} />
       <AssessmentMethodology content={content.assessmentMethodology} />
       <EventsSchool content={content.eventsSchool} />
-      <VideoGallery />
+      <VideoGallery content={content.videoGallery} />
     </>
   )
 }

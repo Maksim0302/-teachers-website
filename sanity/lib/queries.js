@@ -44,6 +44,14 @@ export const HOME_PAGE_QUERY = `{
         image
       }
     }
+  },
+  "videoGallery": *[_type == "videoGallery"][0]{
+    title,
+    subtitle,
+    videos[]{
+      title,
+      youtubeUrl
+    }
   }
 }`
 
@@ -185,6 +193,7 @@ export function mapHomePageData(data, locale) {
     ),
     advancedTraining: mapAdvancedTrainingData(data.advancedTraining, locale),
     eventsSchool: mapEventsSchoolData(data.eventsSchool, locale),
+    videoGallery: mapVideoGalleryData(data.videoGallery, locale),
   }
 }
 
@@ -313,5 +322,67 @@ export function mapGraduateData(data, locale) {
     subtitle,
     description: getLocalizedValue(data.description, locale),
     photos,
+  }
+}
+
+// ============== VIDEO GALLERY DATA ==============
+
+export const VIDEO_GALLERY_QUERY = `*[_type == "videoGallery"][0] {
+  title,
+  subtitle,
+  videos[]{
+    title,
+    youtubeUrl
+  }
+}`
+
+export async function getVideoGalleryData() {
+  if (!client) return null
+
+  try {
+    return await client.fetch(VIDEO_GALLERY_QUERY)
+  } catch (error) {
+    console.error('Failed to fetch video gallery data from Sanity:', error)
+    return null
+  }
+}
+
+function extractYoutubeId(url) {
+  if (!url) return null
+
+  // Handle youtu.be format
+  let videoId = url.match(/youtu\.be\/([^?]+)/)
+  if (videoId) return videoId[1]
+
+  // Handle youtube.com format
+  videoId = url.match(/[?&]v=([^&]+)/)
+  if (videoId) return videoId[1]
+
+  return null
+}
+
+export function mapVideoGalleryData(data, locale) {
+  if (!data) return null
+
+  const videos = (data.videos || [])
+    .map((video) => {
+      const videoId = extractYoutubeId(video.youtubeUrl)
+      if (!videoId) return null
+
+      return {
+        id: videoId,
+        title: getLocalizedValue(video.title, locale),
+        youtubeUrl: video.youtubeUrl,
+        youtubeId: videoId,
+      }
+    })
+    .filter(Boolean)
+
+  if (!videos.length) return null
+
+  return {
+    title: getLocalizedValue(data.title, locale),
+    subtitle: getLocalizedValue(data.subtitle, locale),
+    videos,
   }
 }
