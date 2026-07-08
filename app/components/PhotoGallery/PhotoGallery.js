@@ -6,7 +6,7 @@ import './PhotoGallery.scss'
 
 const PhotoGallery = ({ content }) => {
   const t = useTranslations('PhotoGallery')
-  const [selectedPhoto, setSelectedPhoto] = useState(null)
+  const [selectedPhotoIndex, setSelectedPhotoIndex] = useState(null)
 
   const title = content?.title || t('title')
   const subtitle = content?.subtitle || ''
@@ -23,7 +23,7 @@ const PhotoGallery = ({ content }) => {
 
   // Manage body overflow when modal is open
   useEffect(() => {
-    if (selectedPhoto) {
+    if (selectedPhotoIndex !== null) {
       document.body.style.overflow = 'hidden'
     } else {
       document.body.style.overflow = ''
@@ -32,14 +32,22 @@ const PhotoGallery = ({ content }) => {
     return () => {
       document.body.style.overflow = ''
     }
-  }, [selectedPhoto])
+  }, [selectedPhotoIndex])
 
-  const handlePhotoClick = (photo) => {
-    setSelectedPhoto(photo)
+  const handlePhotoClick = (index) => {
+    setSelectedPhotoIndex(index)
   }
 
   const handleCloseModal = () => {
-    setSelectedPhoto(null)
+    setSelectedPhotoIndex(null)
+  }
+
+  const handleNextPhoto = () => {
+    setSelectedPhotoIndex((prev) => (prev + 1) % photos.length)
+  }
+
+  const handlePrevPhoto = () => {
+    setSelectedPhotoIndex((prev) => (prev - 1 + photos.length) % photos.length)
   }
 
   const handleModalBackdropClick = (e) => {
@@ -53,17 +61,21 @@ const PhotoGallery = ({ content }) => {
     const handleKeyPress = (e) => {
       if (e.key === 'Escape') {
         handleCloseModal()
+      } else if (e.key === 'ArrowRight') {
+        handleNextPhoto()
+      } else if (e.key === 'ArrowLeft') {
+        handlePrevPhoto()
       }
     }
 
-    if (selectedPhoto) {
+    if (selectedPhotoIndex !== null) {
       window.addEventListener('keydown', handleKeyPress)
     }
 
     return () => {
       window.removeEventListener('keydown', handleKeyPress)
     }
-  }, [selectedPhoto])
+  }, [selectedPhotoIndex, photos.length])
 
   return (
     <>
@@ -80,12 +92,12 @@ const PhotoGallery = ({ content }) => {
                 <div
                   key={photo.id || index}
                   className="photo-gallery__photo-item"
-                  onClick={() => handlePhotoClick(photo)}
+                  onClick={() => handlePhotoClick(index)}
                   role="button"
                   tabIndex={0}
                   onKeyDown={(e) => {
                     if (e.key === 'Enter' || e.key === ' ') {
-                      handlePhotoClick(photo)
+                      handlePhotoClick(index)
                     }
                   }}
                 >
@@ -106,7 +118,7 @@ const PhotoGallery = ({ content }) => {
       </section>
 
       {/* Modal for full-size photo */}
-      {selectedPhoto && (
+      {selectedPhotoIndex !== null && (
         <div className="photo-gallery-modal" onClick={handleModalBackdropClick}>
           <div className="photo-gallery-modal__content">
             <button
@@ -117,9 +129,39 @@ const PhotoGallery = ({ content }) => {
             >
               ✕
             </button>
+
+            {/* Navigation arrows */}
+            {photos.length > 1 && (
+              <>
+                <button
+                  className="photo-gallery-modal__nav photo-gallery-modal__nav--prev"
+                  onClick={handlePrevPhoto}
+                  aria-label="Previous photo"
+                  title="Previous (← arrow)"
+                >
+                  ‹
+                </button>
+                <button
+                  className="photo-gallery-modal__nav photo-gallery-modal__nav--next"
+                  onClick={handleNextPhoto}
+                  aria-label="Next photo"
+                  title="Next (→ arrow)"
+                >
+                  ›
+                </button>
+              </>
+            )}
+
+            {/* Photo counter */}
+            {photos.length > 1 && (
+              <div className="photo-gallery-modal__counter">
+                {selectedPhotoIndex + 1} / {photos.length}
+              </div>
+            )}
+
             <img
-              src={selectedPhoto.imageUrlFull}
-              alt={selectedPhoto.alt || 'Photo'}
+              src={photos[selectedPhotoIndex].imageUrlFull}
+              alt={photos[selectedPhotoIndex].alt || 'Photo'}
               className="photo-gallery-modal__image"
             />
           </div>

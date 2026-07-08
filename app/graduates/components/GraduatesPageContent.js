@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react'
 import './GraduatesPageContent.scss'
 
 const GraduatesPageContent = ({ title, subtitle, description, photos }) => {
-  const [selectedPhoto, setSelectedPhoto] = useState(null)
+  const [selectedPhotoIndex, setSelectedPhotoIndex] = useState(null)
 
   // Debug logging
   if (!title) {
@@ -17,7 +17,7 @@ const GraduatesPageContent = ({ title, subtitle, description, photos }) => {
 
   // Manage body overflow when modal is open
   useEffect(() => {
-    if (selectedPhoto) {
+    if (selectedPhotoIndex !== null) {
       document.body.style.overflow = 'hidden'
     } else {
       document.body.style.overflow = ''
@@ -26,14 +26,22 @@ const GraduatesPageContent = ({ title, subtitle, description, photos }) => {
     return () => {
       document.body.style.overflow = ''
     }
-  }, [selectedPhoto])
+  }, [selectedPhotoIndex])
 
-  const handlePhotoClick = (photo) => {
-    setSelectedPhoto(photo)
+  const handlePhotoClick = (index) => {
+    setSelectedPhotoIndex(index)
   }
 
   const handleCloseModal = () => {
-    setSelectedPhoto(null)
+    setSelectedPhotoIndex(null)
+  }
+
+  const handleNextPhoto = () => {
+    setSelectedPhotoIndex((prev) => (prev + 1) % photos.length)
+  }
+
+  const handlePrevPhoto = () => {
+    setSelectedPhotoIndex((prev) => (prev - 1 + photos.length) % photos.length)
   }
 
   const handleModalBackdropClick = (e) => {
@@ -41,6 +49,27 @@ const GraduatesPageContent = ({ title, subtitle, description, photos }) => {
       handleCloseModal()
     }
   }
+
+  // Handle keyboard navigation
+  useEffect(() => {
+    const handleKeyPress = (e) => {
+      if (e.key === 'Escape') {
+        handleCloseModal()
+      } else if (e.key === 'ArrowRight') {
+        handleNextPhoto()
+      } else if (e.key === 'ArrowLeft') {
+        handlePrevPhoto()
+      }
+    }
+
+    if (selectedPhotoIndex !== null) {
+      window.addEventListener('keydown', handleKeyPress)
+    }
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyPress)
+    }
+  }, [selectedPhotoIndex, photos.length])
 
   return (
     <section className="graduates-page">
@@ -60,12 +89,12 @@ const GraduatesPageContent = ({ title, subtitle, description, photos }) => {
               <div
                 key={index}
                 className="graduates-page__photo-item"
-                onClick={() => handlePhotoClick(photo)}
+                onClick={() => handlePhotoClick(index)}
                 role="button"
                 tabIndex={0}
                 onKeyDown={(e) => {
                   if (e.key === 'Enter' || e.key === ' ') {
-                    handlePhotoClick(photo)
+                    handlePhotoClick(index)
                   }
                 }}
               >
@@ -87,19 +116,50 @@ const GraduatesPageContent = ({ title, subtitle, description, photos }) => {
       </div>
 
       {/* Modal for full-size photo */}
-      {selectedPhoto && (
+      {selectedPhotoIndex !== null && (
         <div className="graduates-modal" onClick={handleModalBackdropClick}>
           <div className="graduates-modal__content">
             <button
               className="graduates-modal__close"
               onClick={handleCloseModal}
               aria-label="Close photo modal"
+              title="Close (Esc)"
             >
               ✕
             </button>
+
+            {/* Navigation arrows */}
+            {photos.length > 1 && (
+              <>
+                <button
+                  className="graduates-modal__nav graduates-modal__nav--prev"
+                  onClick={handlePrevPhoto}
+                  aria-label="Previous photo"
+                  title="Previous (← arrow)"
+                >
+                  ‹
+                </button>
+                <button
+                  className="graduates-modal__nav graduates-modal__nav--next"
+                  onClick={handleNextPhoto}
+                  aria-label="Next photo"
+                  title="Next (→ arrow)"
+                >
+                  ›
+                </button>
+              </>
+            )}
+
+            {/* Photo counter */}
+            {photos.length > 1 && (
+              <div className="graduates-modal__counter">
+                {selectedPhotoIndex + 1} / {photos.length}
+              </div>
+            )}
+
             <img
-              src={selectedPhoto.imageUrl}
-              alt={selectedPhoto.alt || 'Graduation photo'}
+              src={photos[selectedPhotoIndex].imageUrl}
+              alt={photos[selectedPhotoIndex].alt || 'Graduation photo'}
               className="graduates-modal__image"
             />
           </div>
