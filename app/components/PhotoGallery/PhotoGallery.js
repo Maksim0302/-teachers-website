@@ -1,126 +1,129 @@
 'use client'
 
-import React, { useState, useRef, useEffect } from 'react'
-import Image from 'next/image'
-import { useLocale, useTranslations } from 'next-intl'
-import PhotoGalleryLightbox from './PhotoGalleryLightbox'
+import React, { useState, useEffect } from 'react'
+import { useTranslations } from 'next-intl'
 import './PhotoGallery.scss'
 
 const PhotoGallery = ({ content }) => {
   const t = useTranslations('PhotoGallery')
-  const locale = useLocale()
-  const [lightboxOpen, setLightboxOpen] = useState(false)
-  const [selectedPhotoIndex, setSelectedPhotoIndex] = useState(0)
-  const [photos, setPhotos] = useState([])
-  const [isImageLoaded, setIsImageLoaded] = useState({})
-
-  // Use content passed from server
-  useEffect(() => {
-    if (content?.photos) {
-      setPhotos(content.photos)
-    }
-  }, [content])
+  const [selectedPhoto, setSelectedPhoto] = useState(null)
 
   const title = content?.title || t('title')
   const subtitle = content?.subtitle || ''
+  const photos = content?.photos || []
 
-  const handlePhotoClick = (index) => {
-    setSelectedPhotoIndex(index)
-    setLightboxOpen(true)
+  // Debug logging
+  if (!title) {
+    console.warn('PhotoGallery: Missing title', {
+      title,
+      subtitle,
+      photos: photos?.length || 0,
+    })
   }
 
-  const handleCloseLightbox = () => {
-    setLightboxOpen(false)
+  // Manage body overflow when modal is open
+  useEffect(() => {
+    if (selectedPhoto) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = ''
+    }
+
+    return () => {
+      document.body.style.overflow = ''
+    }
+  }, [selectedPhoto])
+
+  const handlePhotoClick = (photo) => {
+    setSelectedPhoto(photo)
   }
 
-  const handlePrevPhoto = () => {
-    setSelectedPhotoIndex((prevIndex) =>
-      prevIndex === 0 ? photos.length - 1 : prevIndex - 1
-    )
+  const handleCloseModal = () => {
+    setSelectedPhoto(null)
   }
 
-  const handleNextPhoto = () => {
-    setSelectedPhotoIndex((prevIndex) =>
-      prevIndex === photos.length - 1 ? 0 : prevIndex + 1
-    )
+  const handleModalBackdropClick = (e) => {
+    if (e.target === e.currentTarget) {
+      handleCloseModal()
+    }
   }
 
-  const handleImageLoad = (photoId) => {
-    setIsImageLoaded((prev) => ({
-      ...prev,
-      [photoId]: true,
-    }))
-  }
+  // Handle keyboard navigation
+  useEffect(() => {
+    const handleKeyPress = (e) => {
+      if (e.key === 'Escape') {
+        handleCloseModal()
+      }
+    }
+
+    if (selectedPhoto) {
+      window.addEventListener('keydown', handleKeyPress)
+    }
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyPress)
+    }
+  }, [selectedPhoto])
 
   return (
     <>
       <section className="photo-gallery">
-        <div className="container photo-gallery__container">
-          {/* Title */}
+        <div className="container">
           <div className="photo-gallery__header">
             <h1 className="photo-gallery__title">{title}</h1>
             {subtitle && <p className="photo-gallery__subtitle">{subtitle}</p>}
           </div>
 
-          {/* Photos Grid */}
           {photos && photos.length > 0 ? (
-            <div className="photo-gallery__grid">
+            <div className="photo-gallery__gallery">
               {photos.map((photo, index) => (
                 <div
-                  key={photo.id}
-                  className="photo-gallery__item"
-                  onClick={() => handlePhotoClick(index)}
+                  key={photo.id || index}
+                  className="photo-gallery__photo-item"
+                  onClick={() => handlePhotoClick(photo)}
                   role="button"
                   tabIndex={0}
-                  onKeyPress={(e) => {
+                  onKeyDown={(e) => {
                     if (e.key === 'Enter' || e.key === ' ') {
-                      handlePhotoClick(index)
+                      handlePhotoClick(photo)
                     }
                   }}
                 >
-                  <div className="photo-gallery__image-wrapper">
-                    <Image
-                      src={photo.imageUrl}
-                      alt={photo.alt || `Photo ${index + 1}`}
-                      fill
-                      className={`photo-gallery__image ${
-                        isImageLoaded[photo.id]
-                          ? 'photo-gallery__image--loaded'
-                          : ''
-                      }`}
-                      onLoad={() => handleImageLoad(photo.id)}
-                      sizes="(max-width: 480px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
-                      quality={75}
-                    />
-                    <div className="photo-gallery__overlay">
-                      <div className="photo-gallery__zoom-icon">🔍</div>
-                    </div>
-                  </div>
-                  {photo.caption && (
-                    <div className="photo-gallery__caption">
-                      <p>{photo.caption}</p>
-                    </div>
-                  )}
+                  <img
+                    src={photo.imageUrl}
+                    alt={photo.alt || `Photo ${index + 1}`}
+                    className="photo-gallery__photo"
+                  />
                 </div>
               ))}
             </div>
           ) : (
-            <div className="photo-gallery__empty">
-              <p className="photo-gallery__empty-text">{t('noPhotos')}</p>
-            </div>
+            <p style={{ textAlign: 'center', color: '#999' }}>
+              {t('noPhotos')}
+            </p>
           )}
         </div>
       </section>
 
-      {/* Lightbox Modal */}
-      {lightboxOpen && photos.length > 0 && (
-        <PhotoGalleryLightbox
-          photos={photos}
-          selectedPhotoIndex={selectedPhotoIndex}
-          onClose={handleCloseLightbox}
-          onPrevPhoto={handlePrevPhoto}
-          onNextPhoto={handleNextPhoto}
-        />
+      {/* Modal for full-size photo */}
+      {selectedPhoto && (
+        <div className="photo-gallery-modal" onClick={handleModalBackdropClick}>
+          <div className="photo-gallery-modal__content">
+            <button
+              className="photo-gallery-modal__close"
+              onClick={handleCloseModal}
+              aria-label="Close photo modal"
+              title="Close (Esc)"
+            >
+              ✕
+            </button>
+            <img
+              src={selectedPhoto.imageUrlFull}
+              alt={selectedPhoto.alt || 'Photo'}
+              className="photo-gallery-modal__image"
+            />
+          </div>
+        </div>
       )}
     </>
   )

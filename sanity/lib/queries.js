@@ -417,38 +417,38 @@ export async function getPhotoGalleryData() {
     return null
   }
 }
-
 export function mapPhotoGalleryData(data, locale) {
   if (!data?.photos?.length) return null
 
   const photos = data.photos
     .map((photo, index) => {
-      const imageBuilder = photo.image ? urlFor(photo.image) : null
-      if (!imageBuilder) return null
+      if (!photo.image) return null
 
       return {
         id: `photo-${index}`,
         image: photo.image,
-        imageUrl: imageBuilder
-          .width(800)
-          .height(600)
+
+        // Изображение для галереи
+        imageUrl: urlFor(photo.image)
+          .width(1600)
           .fit('max')
-          .quality(90)
+          .auto('format')
+          .quality(100)
           .url(),
-        // For lightbox, we need the full-resolution image
+
+        // Полноразмерное изображение
         imageUrlFull: urlFor(photo.image)
-          .width(1920)
-          .height(1440)
+          .width(3000)
           .fit('max')
-          .quality(95)
+          .auto('format')
+          .quality(100)
           .url(),
+
         alt: getLocalizedValue(photo.alt, locale),
         caption: getLocalizedValue(photo.caption, locale),
       }
     })
     .filter(Boolean)
-
-  if (!photos.length) return null
 
   return {
     title: getLocalizedValue(data.title, locale),
