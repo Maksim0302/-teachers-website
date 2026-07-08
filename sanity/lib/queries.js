@@ -52,6 +52,15 @@ export const HOME_PAGE_QUERY = `{
       title,
       youtubeUrl
     }
+  },
+  "photoGallery": *[_type == "photoGallery"][0]{
+    title,
+    subtitle,
+    photos[]{
+      image,
+      alt,
+      caption
+    }
   }
 }`
 
@@ -194,6 +203,7 @@ export function mapHomePageData(data, locale) {
     advancedTraining: mapAdvancedTrainingData(data.advancedTraining, locale),
     eventsSchool: mapEventsSchoolData(data.eventsSchool, locale),
     videoGallery: mapVideoGalleryData(data.videoGallery, locale),
+    photoGallery: mapPhotoGalleryData(data.photoGallery, locale),
   }
 }
 
@@ -384,5 +394,65 @@ export function mapVideoGalleryData(data, locale) {
     title: getLocalizedValue(data.title, locale),
     subtitle: getLocalizedValue(data.subtitle, locale),
     videos,
+  }
+}
+
+export const PHOTO_GALLERY_QUERY = `*[_type == "photoGallery"][0]{
+  title,
+  subtitle,
+  photos[]{
+    image,
+    alt,
+    caption
+  }
+}`
+
+export async function getPhotoGalleryData() {
+  if (!client) return null
+
+  try {
+    return await client.fetch(PHOTO_GALLERY_QUERY)
+  } catch (error) {
+    console.error('Failed to fetch photo gallery data from Sanity:', error)
+    return null
+  }
+}
+
+export function mapPhotoGalleryData(data, locale) {
+  if (!data?.photos?.length) return null
+
+  const photos = data.photos
+    .map((photo, index) => {
+      const imageBuilder = photo.image ? urlFor(photo.image) : null
+      if (!imageBuilder) return null
+
+      return {
+        id: `photo-${index}`,
+        image: photo.image,
+        imageUrl: imageBuilder
+          .width(800)
+          .height(600)
+          .fit('max')
+          .quality(90)
+          .url(),
+        // For lightbox, we need the full-resolution image
+        imageUrlFull: urlFor(photo.image)
+          .width(1920)
+          .height(1440)
+          .fit('max')
+          .quality(95)
+          .url(),
+        alt: getLocalizedValue(photo.alt, locale),
+        caption: getLocalizedValue(photo.caption, locale),
+      }
+    })
+    .filter(Boolean)
+
+  if (!photos.length) return null
+
+  return {
+    title: getLocalizedValue(data.title, locale),
+    subtitle: getLocalizedValue(data.subtitle, locale),
+    photos,
   }
 }

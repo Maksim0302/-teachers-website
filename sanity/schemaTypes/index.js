@@ -6,6 +6,7 @@ import hero from './hero'
 import localeString from './localeString'
 import localeText from './localeText'
 import menuNavigation from './menuNavigation'
+import photoGallery from './photoGallery'
 import videoGallery from './videoGallery'
 
 export const schemaTypes = [
@@ -17,5 +18,6 @@ export const schemaTypes = [
   eventsSchool,
   menuNavigation,
   graduate,
+  photoGallery,
   videoGallery,
 ]

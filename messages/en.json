@@ -227,5 +227,10 @@
     "button": "More Videos",
     "watchOnYoutube": "Watch on YouTube",
     "noVideos": "No videos available"
+  },
+  "PhotoGallery": {
+    "title": "Photo Gallery",
+    "subtitle": "Browse our collection of photos",
+    "noPhotos": "No photos available"
   }
 }
