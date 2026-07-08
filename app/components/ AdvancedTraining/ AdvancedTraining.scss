@@ -45,9 +45,7 @@
 
     transition: background 0.2s ease;
 
-    &:hover {
-      background: rgba(20, 184, 166, 0.06);
-    }
+    background: rgba(20, 184, 166, 0.06);
   }
 
   &__item-icon {

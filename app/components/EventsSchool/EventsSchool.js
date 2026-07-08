@@ -74,10 +74,7 @@ const EventsSchool = ({ content }) => {
                     className="events-school__item-link"
                     aria-label={content.button}
                   >
-                    <span
-                      className="events-school__item-link-icon"
-                      aria-hidden="true"
-                    />
+                    {content.button}
                   </Link>
                 </div>
               </article>

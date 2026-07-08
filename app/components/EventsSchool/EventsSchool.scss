@@ -83,7 +83,7 @@
     align-items: stretch;
 
     &:hover {
-      transform: translateY(-4px);
+      // transform: translateY(-4px);
       box-shadow: 0 16px 40px rgba(36, 49, 62, 0.14);
     }
     &__divider {
@@ -165,8 +165,8 @@
     transition: all 0.8s ease;
 
     &:hover {
-      background: #14b8a6;
-      transform: scale(1.05);
+      transform: translateY(-2px);
+      box-shadow: 0 16px 40px rgba(20, 184, 166, 0.35);
     }
   }
   &__item-link-icon {
