@@ -456,3 +456,63 @@ export function mapPhotoGalleryData(data, locale) {
     photos,
   }
 }
+
+// ============== NORMATIVE BASE DATA ==============
+
+export const NORMATIVE_BASE_QUERY = `*[_type == "normativeBase"][0]{
+  title,
+  subtitle,
+  documents[]{
+    title,
+    description,
+    file{
+      asset->{
+        url,
+        originalFilename
+      }
+    }
+  }
+}`
+
+export async function getNormativeBaseData() {
+  if (!client) return null
+
+  try {
+    return await client.fetch(NORMATIVE_BASE_QUERY)
+  } catch (error) {
+    console.error('Failed to fetch normative base data from Sanity:', error)
+    return null
+  }
+}
+
+export function mapNormativeBaseData(data, locale) {
+  if (!data?.documents?.length) return null
+
+  const documents = data.documents
+    .map((doc, index) => {
+      if (!doc.file?.asset?.url) return null
+
+      const fileName = doc.file.asset.originalFilename || 'document'
+      const fileExtension = fileName.split('.').pop().toLowerCase()
+      const fileUrl = doc.file.asset.url
+
+      return {
+        id: `doc-${index}`,
+        title: getLocalizedValue(doc.title, locale),
+        description: getLocalizedValue(doc.description, locale),
+        fileName,
+        fileExtension,
+        fileUrl,
+        fileType: ['pdf'].includes(fileExtension) ? 'pdf' : 'word',
+      }
+    })
+    .filter(Boolean)
+
+  if (!documents.length) return null
+
+  return {
+    title: getLocalizedValue(data.title, locale),
+    subtitle: getLocalizedValue(data.subtitle, locale),
+    documents,
+  }
+}

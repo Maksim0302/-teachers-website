@@ -232,5 +232,12 @@
     "title": "Photo Gallery",
     "subtitle": "Browse our collection of photos",
     "noPhotos": "No photos available"
+  },
+  "NormativeBase": {
+    "title": "Normative Base",
+    "subtitle": "Access regulatory and legal documents",
+    "preview": "Preview",
+    "download": "Download",
+    "noDocuments": "No documents available"
   }
 }
