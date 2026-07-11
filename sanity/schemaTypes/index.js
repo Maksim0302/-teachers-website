@@ -9,6 +9,8 @@ import menuNavigation from './menuNavigation'
 import photoGallery from './photoGallery'
 import videoGallery from './videoGallery'
 import normativeBase from './normativeBase'
+import portfolio from './portfolio'
+import usefulLinks from './usefulLinks'
 
 export const schemaTypes = [
   localeString,
@@ -22,4 +24,6 @@ export const schemaTypes = [
   photoGallery,
   videoGallery,
   normativeBase,
+  portfolio,
+  usefulLinks,
 ]

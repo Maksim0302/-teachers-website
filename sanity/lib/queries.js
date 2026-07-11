@@ -516,3 +516,118 @@ export function mapNormativeBaseData(data, locale) {
     documents,
   }
 }
+
+export const PORTFOLIO_QUERY = `*[_type == "portfolio"][0]{
+  title,
+  subtitle,
+  documents[]{
+    title,
+    description,
+    file{
+      asset->{
+        url,
+        originalFilename
+      }
+    }
+  }
+}`
+
+export async function getPortfolioData() {
+  if (!client) return null
+
+  try {
+    return await client.fetch(PORTFOLIO_QUERY)
+  } catch (error) {
+    console.error('Failed to fetch portfolio data from Sanity:', error)
+    return null
+  }
+}
+
+export function mapPortfolioData(data, locale) {
+  if (!data?.documents?.length) return null
+
+  const documents = data.documents
+    .map((doc, index) => {
+      if (!doc.file?.asset?.url) return null
+
+      const fileName = doc.file.asset.originalFilename || 'document'
+      const fileExtension = fileName.split('.').pop().toLowerCase()
+      const fileUrl = doc.file.asset.url
+
+      return {
+        id: `portfolio-doc-${index}`,
+        title: getLocalizedValue(doc.title, locale),
+        description: getLocalizedValue(doc.description, locale),
+        fileName,
+        fileExtension,
+        fileUrl,
+        fileType: ['pdf'].includes(fileExtension) ? 'pdf' : 'word',
+      }
+    })
+    .filter(Boolean)
+
+  if (!documents.length) return null
+
+  return {
+    title: getLocalizedValue(data.title, locale),
+    subtitle: getLocalizedValue(data.subtitle, locale),
+    documents,
+  }
+}
+
+export const USEFUL_LINKS_QUERY = `*[_type == "usefulLinks"][0]{
+  title,
+  subtitle,
+  files[]{
+    title,
+    description,
+    file{
+      asset->{
+        originalFilename,
+        url
+      }
+    }
+  }
+}`
+
+export async function getUsefulLinksData() {
+  if (!client) return null
+
+  try {
+    return await client.fetch(USEFUL_LINKS_QUERY)
+  } catch (error) {
+    console.error('Failed to fetch useful links data from Sanity:', error)
+    return null
+  }
+}
+
+export function mapUsefulLinksData(data, locale) {
+  if (!data?.files?.length) return null
+
+  const files = data.files
+    .map((file, index) => {
+      if (!file.file?.asset?.url) return null
+
+      const fileUrl = file.file.asset.url
+      const fileName = file.file.asset.originalFilename || ''
+      const fileExtension = fileName.split('.').pop().toLowerCase()
+
+      return {
+        id: `file-${index}`,
+        title: getLocalizedValue(file.title, locale),
+        description: getLocalizedValue(file.description, locale),
+        fileUrl,
+        fileName,
+        fileType: fileExtension === 'pdf' ? 'pdf' : 'word',
+      }
+    })
+    .filter(Boolean)
+
+  if (!files.length) return null
+
+  return {
+    title: getLocalizedValue(data.title, locale),
+    subtitle: getLocalizedValue(data.subtitle, locale),
+    documents: files,
+  }
+}

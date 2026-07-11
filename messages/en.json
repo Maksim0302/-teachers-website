@@ -239,5 +239,19 @@
     "preview": "Preview",
     "download": "Download",
     "noDocuments": "No documents available"
+  },
+  "Portfolio": {
+    "title": "My Portfolio",
+    "subtitle": "Browse my portfolio documents",
+    "preview": "Preview",
+    "download": "Download",
+    "noDocuments": "No documents available"
+  },
+  "UsefulLinks": {
+    "title": "Useful Files",
+    "subtitle": "Browse our collection of useful files",
+    "preview": "Preview",
+    "download": "Download",
+    "noFiles": "No files available"
   }
 }
