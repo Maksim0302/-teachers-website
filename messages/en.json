@@ -260,5 +260,14 @@
     "preview": "Preview",
     "download": "Download",
     "noDocuments": "No documents available"
+  },
+  "Parents": {
+    "title": "Parents Page",
+    "subtitle": "Resources and documents for parents",
+    "documents": "Documents",
+    "gallery": "Photo Gallery",
+    "preview": "Preview",
+    "download": "Download",
+    "noContent": "No content available"
   }
 }

@@ -1,0 +1,234 @@
+// Photo Gallery Styles
+
+.photo-gallery__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+
+  @media (min-width: 768px) {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 24px;
+  }
+
+  @media (min-width: 1024px) {
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 28px;
+  }
+}
+
+.photo-gallery__thumbnail {
+  position: relative;
+  aspect-ratio: 1;
+  border-radius: 12px;
+  overflow: hidden;
+  cursor: pointer;
+  background: #f0f0f0;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+
+  &:hover {
+    border-color: #10b981;
+    box-shadow: 0 4px 16px rgba(16, 185, 129, 0.15);
+    transform: scale(1.02);
+
+    .photo-gallery__image {
+      transform: scale(1.05);
+    }
+  }
+
+  &:focus {
+    outline: 2px solid #10b981;
+    outline-offset: -2px;
+  }
+}
+
+.photo-gallery__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+  display: block;
+}
+
+// Lightbox Modal
+.photo-gallery__modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  backdrop-filter: blur(4px);
+  animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    backdrop-filter: blur(0px);
+  }
+  to {
+    opacity: 1;
+    backdrop-filter: blur(4px);
+  }
+}
+
+.photo-gallery__modal-content {
+  position: relative;
+  width: 90vw;
+  height: 90vh;
+  max-width: 1200px;
+  max-height: 800px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: zoomIn 0.3s ease;
+}
+
+@keyframes zoomIn {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.photo-gallery__main-image {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  overflow: hidden;
+
+  img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    width: auto;
+    height: auto;
+  }
+}
+
+.photo-gallery__close {
+  position: absolute;
+  top: -50px;
+  right: 0;
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 32px;
+  cursor: pointer;
+  padding: 8px 12px;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:hover {
+    transform: rotate(90deg);
+  }
+
+  &:focus {
+    outline: 2px solid white;
+    outline-offset: 2px;
+  }
+
+  @media (max-width: 640px) {
+    top: 12px;
+    right: 12px;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    font-size: 24px;
+  }
+}
+
+.photo-gallery__arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  border: none;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  font-size: 24px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  z-index: 1001;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-50%) scale(1.1);
+  }
+
+  &:focus {
+    outline: 2px solid white;
+    outline-offset: 2px;
+  }
+
+  @media (max-width: 768px) {
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
+  }
+}
+
+.photo-gallery__arrow--prev {
+  left: -70px;
+
+  @media (max-width: 768px) {
+    left: 12px;
+  }
+}
+
+.photo-gallery__arrow--next {
+  right: -70px;
+
+  @media (max-width: 768px) {
+    right: 12px;
+  }
+}
+
+.photo-gallery__counter {
+  position: absolute;
+  bottom: -50px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: white;
+  font-size: 14px;
+  font-weight: 600;
+  background: rgba(0, 0, 0, 0.5);
+  padding: 8px 16px;
+  border-radius: 20px;
+
+  @media (max-width: 640px) {
+    bottom: 12px;
+    background: rgba(0, 0, 0, 0.7);
+    font-size: 12px;
+  }
+}
+
+// Keyboard accessibility
+@media (prefers-reduced-motion: reduce) {
+  .photo-gallery__modal,
+  .photo-gallery__modal-content,
+  .photo-gallery__thumbnail {
+    animation: none;
+    transition: none;
+  }
+}

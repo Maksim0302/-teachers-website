@@ -12,6 +12,7 @@ import normativeBase from './normativeBase'
 import portfolio from './portfolio'
 import usefulLinks from './usefulLinks'
 import nush from './nush'
+import parents from './parents'
 
 export const schemaTypes = [
   localeString,
@@ -28,4 +29,5 @@ export const schemaTypes = [
   portfolio,
   usefulLinks,
   nush,
+  parents,
 ]

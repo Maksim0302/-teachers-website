@@ -688,3 +688,92 @@ export function mapNushData(data, locale) {
     documents,
   }
 }
+
+// ============== PARENTS PAGE DATA ==============
+
+export const PARENTS_QUERY = `*[_type == "parents"][0]{
+  title,
+  subtitle,
+  documents[]{
+    title,
+    description,
+    file{
+      asset->{
+        originalFilename,
+        url
+      }
+    }
+  },
+  gallery[]{
+    image{
+      asset->{
+        url
+      }
+    },
+    alt
+  }
+}`
+
+export async function getParentsData() {
+  if (!client) return null
+
+  try {
+    return await client.fetch(PARENTS_QUERY)
+  } catch (error) {
+    console.error('Failed to fetch parents page data from Sanity:', error)
+    return null
+  }
+}
+
+export function mapParentsData(data, locale) {
+  if (!data) return null
+
+  // Map documents
+  const documents =
+    data.documents && data.documents.length > 0
+      ? data.documents
+          .map((doc, index) => {
+            if (!doc.file?.asset?.url) return null
+
+            const fileUrl = doc.file.asset.url
+            const fileName = doc.file.asset.originalFilename || 'document'
+            const fileExtension = fileName.split('.').pop().toLowerCase()
+
+            return {
+              id: `parent-doc-${index}`,
+              title: getLocalizedValue(doc.title, locale),
+              description: getLocalizedValue(doc.description, locale),
+              fileUrl,
+              fileName,
+              fileType: fileExtension === 'pdf' ? 'pdf' : 'word',
+            }
+          })
+          .filter(Boolean)
+      : []
+
+  // Map gallery
+  const gallery =
+    data.gallery && data.gallery.length > 0
+      ? data.gallery
+          .map((item, index) => {
+            if (!item.image?.asset?.url) return null
+
+            return {
+              id: `gallery-${index}`,
+              imageUrl: item.image.asset.url,
+              alt: getLocalizedValue(item.alt, locale),
+            }
+          })
+          .filter(Boolean)
+      : []
+
+  // If we have no content, return null
+  if (documents.length === 0 && gallery.length === 0) return null
+
+  return {
+    title: getLocalizedValue(data.title, locale),
+    subtitle: getLocalizedValue(data.subtitle, locale),
+    documents,
+    gallery,
+  }
+}
