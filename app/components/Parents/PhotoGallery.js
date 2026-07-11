@@ -1,12 +1,25 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Image from 'next/image'
 import './PhotoGallery.scss'
 
 export default function PhotoGallery({ images }) {
   const [selectedIndex, setSelectedIndex] = useState(null)
   const isOpen = selectedIndex !== null
+
+  // Manage body overflow when modal is open
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = ''
+    }
+
+    return () => {
+      document.body.style.overflow = ''
+    }
+  }, [isOpen])
 
   const handleNext = () => {
     setSelectedIndex((prev) => (prev + 1) % images.length)
