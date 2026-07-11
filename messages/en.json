@@ -253,5 +253,12 @@
     "preview": "Preview",
     "download": "Download",
     "noFiles": "No files available"
+  },
+  "Nush": {
+    "title": "NUŠ Documents",
+    "subtitle": "Nova Ukrainska Shkola (New Ukrainian School) resources",
+    "preview": "Preview",
+    "download": "Download",
+    "noDocuments": "No documents available"
   }
 }

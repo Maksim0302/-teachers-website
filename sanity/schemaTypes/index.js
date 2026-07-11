@@ -11,6 +11,7 @@ import videoGallery from './videoGallery'
 import normativeBase from './normativeBase'
 import portfolio from './portfolio'
 import usefulLinks from './usefulLinks'
+import nush from './nush'
 
 export const schemaTypes = [
   localeString,
@@ -26,4 +27,5 @@ export const schemaTypes = [
   normativeBase,
   portfolio,
   usefulLinks,
+  nush,
 ]

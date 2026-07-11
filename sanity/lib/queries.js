@@ -631,3 +631,60 @@ export function mapUsefulLinksData(data, locale) {
     documents: files,
   }
 }
+
+export const NUSH_QUERY = `*[_type == "nush"][0]{
+  title,
+  subtitle,
+  documents[]{
+    title,
+    description,
+    file{
+      asset->{
+        originalFilename,
+        url
+      }
+    }
+  }
+}`
+
+export async function getNushData() {
+  if (!client) return null
+
+  try {
+    return await client.fetch(NUSH_QUERY)
+  } catch (error) {
+    console.error('Failed to fetch NUŠ data from Sanity:', error)
+    return null
+  }
+}
+
+export function mapNushData(data, locale) {
+  if (!data?.documents?.length) return null
+
+  const documents = data.documents
+    .map((doc, index) => {
+      if (!doc.file?.asset?.url) return null
+
+      const fileUrl = doc.file.asset.url
+      const fileName = doc.file.asset.originalFilename || ''
+      const fileExtension = fileName.split('.').pop().toLowerCase()
+
+      return {
+        id: `doc-${index}`,
+        title: getLocalizedValue(doc.title, locale),
+        description: getLocalizedValue(doc.description, locale),
+        fileUrl,
+        fileName,
+        fileType: fileExtension === 'pdf' ? 'pdf' : 'word',
+      }
+    })
+    .filter(Boolean)
+
+  if (!documents.length) return null
+
+  return {
+    title: getLocalizedValue(data.title, locale),
+    subtitle: getLocalizedValue(data.subtitle, locale),
+    documents,
+  }
+}
