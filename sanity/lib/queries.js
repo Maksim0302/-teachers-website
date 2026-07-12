@@ -866,3 +866,98 @@ export function mapLegoData(data, locale) {
     gallery,
   }
 }
+
+// ============== BZHD DATA ==============
+
+export const BZHD_QUERY = `*[_type == "bzhd"][0]{
+  title,
+  subtitle,
+  documents[]{
+    title,
+    description,
+    file{
+      asset->{
+        originalFilename,
+        url
+      }
+    }
+  },
+  photos[]{
+    image,
+    alt,
+    caption
+  }
+}`
+
+export async function getBzhdData() {
+  if (!client) return null
+
+  try {
+    return await client.fetch(BZHD_QUERY)
+  } catch (error) {
+    console.error('Failed to fetch BZHD data from Sanity:', error)
+    return null
+  }
+}
+
+export function mapBzhdData(data, locale) {
+  if (!data) return null
+
+  // Process documents
+  const documents = data.documents
+    ? data.documents
+        .map((doc, index) => {
+          if (!doc.file?.asset?.url) return null
+
+          const fileName = doc.file.asset.originalFilename || 'document'
+          const fileExtension = fileName.split('.').pop().toLowerCase()
+          const fileUrl = doc.file.asset.url
+
+          return {
+            id: `bzhd-doc-${index}`,
+            title: getLocalizedValue(doc.title, locale),
+            description: getLocalizedValue(doc.description, locale),
+            fileName,
+            fileExtension,
+            fileUrl,
+            fileType: ['pdf'].includes(fileExtension) ? 'pdf' : 'word',
+          }
+        })
+        .filter(Boolean)
+    : []
+
+  // Process photos
+  const photos = data.photos
+    ? data.photos
+        .map((photo, index) => {
+          if (!photo.image) return null
+
+          return {
+            id: `bzhd-photo-${index}`,
+            image: photo.image,
+            imageUrl: urlFor(photo.image)
+              .width(1600)
+              .fit('max')
+              .auto('format')
+              .quality(100)
+              .url(),
+            imageUrlFull: urlFor(photo.image)
+              .width(3000)
+              .fit('max')
+              .auto('format')
+              .quality(100)
+              .url(),
+            alt: getLocalizedValue(photo.alt, locale),
+            caption: getLocalizedValue(photo.caption, locale),
+          }
+        })
+        .filter(Boolean)
+    : []
+
+  return {
+    title: getLocalizedValue(data.title, locale),
+    subtitle: getLocalizedValue(data.subtitle, locale),
+    documents,
+    photos,
+  }
+}

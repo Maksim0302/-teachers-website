@@ -278,5 +278,14 @@
     "preview": "Preview",
     "download": "Download",
     "noContent": "No content available"
+  },
+  "BZHD": {
+    "title": "Safety & Health",
+    "subtitle": "Safety and health resources",
+    "documentsTitle": "Documents",
+    "galleryTitle": "Photo Gallery",
+    "preview": "Preview",
+    "download": "Download",
+    "noContent": "No content available"
   }
 }

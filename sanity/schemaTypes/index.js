@@ -14,6 +14,7 @@ import usefulLinks from './usefulLinks'
 import nush from './nush'
 import parents from './parents'
 import lego from './lego'
+import bzhd from './bzhd'
 
 export const schemaTypes = [
   localeString,
@@ -32,4 +33,5 @@ export const schemaTypes = [
   nush,
   parents,
   lego,
+  bzhd,
 ]
