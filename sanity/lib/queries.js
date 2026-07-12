@@ -335,6 +335,88 @@ export function mapGraduateData(data, locale) {
   }
 }
 
+// ============== STUDENT SUBJECTS DATA ==============
+
+export const STUDENT_SUBJECTS_ALL_QUERY = `*[_type == "studentSubject"] | order(title.en asc) {
+  slug,
+  title,
+  subtitle,
+  description,
+  photos[]{
+    image,
+    alt
+  }
+}`
+
+export const STUDENT_SUBJECT_BY_SLUG_QUERY = `*[_type == "studentSubject" && slug.current == $slug][0] {
+  slug,
+  title,
+  subtitle,
+  description,
+  photos[]{
+    image,
+    alt
+  }
+}`
+
+export async function getStudentSubjectsData() {
+  if (!client) return null
+
+  try {
+    return await client.fetch(STUDENT_SUBJECTS_ALL_QUERY)
+  } catch (error) {
+    console.error('Failed to fetch student subjects data from Sanity:', error)
+    return null
+  }
+}
+
+export async function getStudentSubjectBySlug(slug) {
+  if (!client) return null
+
+  try {
+    return await client.fetch(STUDENT_SUBJECT_BY_SLUG_QUERY, { slug })
+  } catch (error) {
+    console.error(`Failed to fetch student subject ${slug} from Sanity:`, error)
+    return null
+  }
+}
+
+export function mapStudentSubjectData(data, locale) {
+  if (!data) return null
+
+  const photos = (data.photos || [])
+    .map((photo) => {
+      if (!photo.image) return null
+
+      const imageBuilder = urlFor(photo.image)
+      const imageUrl = imageBuilder
+        ? imageBuilder.width(1800).fit('max').auto('format').quality(100).url()
+        : null
+
+      if (!imageUrl) return null
+
+      return {
+        imageUrl,
+        alt: getLocalizedValue(photo.alt, locale),
+      }
+    })
+    .filter(Boolean)
+
+  const title = getLocalizedValue(data.title, locale)
+  const subtitle = getLocalizedValue(data.subtitle, locale)
+
+  // Don't require photos, but require at least a title
+  if (!title) return null
+
+  return {
+    slug: data.slug?.current || '',
+    title,
+    subtitle,
+    description: getLocalizedValue(data.description, locale),
+    photos,
+  }
+}
+
 // ============== VIDEO GALLERY DATA ==============
 
 export const VIDEO_GALLERY_QUERY = `*[_type == "videoGallery"][0] {
