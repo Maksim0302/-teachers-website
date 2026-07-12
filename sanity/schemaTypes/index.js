@@ -13,6 +13,7 @@ import portfolio from './portfolio'
 import usefulLinks from './usefulLinks'
 import nush from './nush'
 import parents from './parents'
+import lego from './lego'
 
 export const schemaTypes = [
   localeString,
@@ -30,4 +31,5 @@ export const schemaTypes = [
   usefulLinks,
   nush,
   parents,
+  lego,
 ]

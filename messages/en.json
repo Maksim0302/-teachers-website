@@ -269,5 +269,14 @@
     "preview": "Preview",
     "download": "Download",
     "noContent": "No content available"
+  },
+  "Lego": {
+    "title": "LEGO Construction",
+    "subtitle": "LEGO building and construction resources",
+    "documents": "Documents",
+    "gallery": "Photo Gallery",
+    "preview": "Preview",
+    "download": "Download",
+    "noContent": "No content available"
   }
 }
