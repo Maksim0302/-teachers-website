@@ -15,6 +15,7 @@ A complete, production-ready **БЖД (Safety & Health)** page has been successf
 ## 🎯 What Was Created
 
 ### 1. **Sanity CMS Schema** (`sanity/schemaTypes/bzhd.js`)
+
 - Document type: `bzhd`
 - Multilingual support (EN, RU, UK) using `localeString` and `localeText`
 - Fields:
@@ -30,6 +31,7 @@ A complete, production-ready **БЖД (Safety & Health)** page has been successf
     - Caption (optional, multilingual)
 
 ### 2. **Frontend Route** (`app/[locale]/bzhd/page.js`)
+
 - Server component using App Router
 - Dynamic data fetching from Sanity using GROQ queries
 - Supports all three locales: `/en/bzhd`, `/ru/bzhd`, `/uk/bzhd`
@@ -38,6 +40,7 @@ A complete, production-ready **БЖД (Safety & Health)** page has been successf
 ### 3. **React Components**
 
 #### Main Component (`app/components/BZHD/BZHD.js`)
+
 - Client component with state management
 - Manages lightbox open/close state
 - Renders documents and photo gallery sections
@@ -45,6 +48,7 @@ A complete, production-ready **БЖД (Safety & Health)** page has been successf
 - Shows empty state when no content available
 
 #### DocumentCard Component (`app/components/BZHD/DocumentCard.js`)
+
 - Displays individual document
 - Shows file icon (📄 PDF or 📘 Word)
 - Document title, description, file metadata
@@ -53,6 +57,7 @@ A complete, production-ready **БЖД (Safety & Health)** page has been successf
 - Integrated file type detection and handling
 
 #### Lightbox Component (`app/components/BZHD/Lightbox.js`)
+
 - Full-screen modal for image viewing
 - Navigation:
   - Previous/Next buttons (clickable)
@@ -64,6 +69,7 @@ A complete, production-ready **БЖД (Safety & Health)** page has been successf
 - Auto-manages body overflow for scrolling
 
 ### 4. **Styling** (`app/components/BZHD/BZHD.scss`)
+
 - **500+ lines** of comprehensive SCSS
 - Responsive breakpoints: Desktop, Tablet (768px), Mobile (480px)
 - Features:
@@ -77,35 +83,40 @@ A complete, production-ready **БЖД (Safety & Health)** page has been successf
   - Touch-friendly mobile interface
 
 ### 5. **Data Management** (`sanity/lib/queries.js`)
+
 **Added functions:**
+
 - `BZHD_QUERY`: GROQ query for Sanity data
 - `getBzhdData()`: Async function fetching from Sanity
 - `mapBzhdData()`: Data transformation/mapping function
 
 **Data Processing:**
+
 - File URL extraction and asset handling
 - File type detection (PDF vs Word)
 - Image URL optimization (1600px for gallery, 3000px for lightbox)
 - Localized value extraction for all languages
 
 ### 6. **Translations**
+
 Updated three message files with complete BZHD translations:
 
-| Key | English | Russian | Ukrainian |
-|-----|---------|---------|-----------|
-| title | "Safety & Health" | "БЖД" | "БЖД" |
-| subtitle | "Safety and health resources" | "Ресурсы по безопасности и охране здоровья" | "Ресурси з безпеки та охорони здоров'я" |
-| documentsTitle | "Documents" | "Документы" | "Документи" |
-| galleryTitle | "Photo Gallery" | "Фотогалерея" | "Фотогалерея" |
-| preview | "Preview" | "Просмотр" | "Переглянути" |
-| download | "Download" | "Скачать" | "Завантажити" |
-| noContent | "No content available" | "Контент недоступен" | "Контент недоступний" |
+| Key            | English                       | Russian                                     | Ukrainian                               |
+| -------------- | ----------------------------- | ------------------------------------------- | --------------------------------------- |
+| title          | "Safety & Health"             | "БЖД"                                       | "БЖД"                                   |
+| subtitle       | "Safety and health resources" | "Ресурсы по безопасности и охране здоровья" | "Ресурси з безпеки та охорони здоров'я" |
+| documentsTitle | "Documents"                   | "Документы"                                 | "Документи"                             |
+| galleryTitle   | "Photo Gallery"               | "Фотогалерея"                               | "Фотогалерея"                           |
+| preview        | "Preview"                     | "Просмотр"                                  | "Переглянути"                           |
+| download       | "Download"                    | "Скачать"                                   | "Завантажити"                           |
+| noContent      | "No content available"        | "Контент недоступен"                        | "Контент недоступний"                   |
 
 ---
 
 ## 🔧 Technical Implementation Details
 
 ### Architecture
+
 ```
 Next.js App Router (Dynamic Page)
        ↓
@@ -119,6 +130,7 @@ SCSS Styling (Responsive)
 ```
 
 ### File Structure
+
 ```
 app/
 ├── [locale]/
@@ -145,6 +157,7 @@ messages/
 ```
 
 ### Build Verification
+
 ```
 ✓ Compilation: Successful (14.0s)
 ✓ TypeScript: All types correct
@@ -158,6 +171,7 @@ messages/
 ## ✨ Key Features
 
 ### Document Management
+
 ✅ **Automatic file type detection** - Distinguishes PDF from Word documents
 ✅ **Preview capability** - PDFs open in browser preview mode
 ✅ **Smart download** - Downloads files to user's default location
@@ -165,6 +179,7 @@ messages/
 ✅ **Optional descriptions** - Provides context for each document
 
 ### Photo Gallery
+
 ✅ **Responsive grid layout** - Adapts from 3 columns to 1 column
 ✅ **Lazy loading** - Images load only when needed
 ✅ **Hover effects** - Image zoom on desktop hover
@@ -172,6 +187,7 @@ messages/
 ✅ **High-quality images** - Auto-optimized for web display
 
 ### Lightbox Modal
+
 ✅ **Full-screen viewing** - Distraction-free image viewing
 ✅ **Keyboard navigation** - Arrow keys to navigate, Escape to close
 ✅ **Touch-friendly** - Works perfectly on mobile devices
@@ -180,6 +196,7 @@ messages/
 ✅ **Smooth animations** - Professional fade-in effects
 
 ### Accessibility
+
 ✅ **Alt text required** - All images have descriptive alt text
 ✅ **Keyboard navigation** - Full keyboard support for lightbox
 ✅ **ARIA labels** - Proper semantic HTML for screen readers
@@ -187,6 +204,7 @@ messages/
 ✅ **Color contrast** - Meets accessibility standards
 
 ### Performance
+
 ✅ **Image optimization** - Multiple resolutions for different use cases
 ✅ **Lazy loading** - Images load on demand
 ✅ **CSS optimization** - Minimal stylesheet size
@@ -224,6 +242,7 @@ messages/
 ### For Developers
 
 #### Adding More Content Types
+
 1. Follow the same pattern as BZHD
 2. Create schema in `sanity/schemaTypes/`
 3. Add GROQ query in `sanity/lib/queries.js`
@@ -231,11 +250,13 @@ messages/
 5. Add page route in `app/[locale]/page-name/`
 
 #### Modifying Styles
+
 - Edit `app/components/BZHD/BZHD.scss`
 - Breakpoints: 768px (tablet), 480px (mobile)
 - Use SCSS variables for consistency
 
 #### Customizing Lightbox
+
 - Modify `app/components/BZHD/Lightbox.js`
 - Update keyboard shortcuts if needed
 - Customize thumbnail display size
@@ -244,24 +265,25 @@ messages/
 
 ## 📊 Implementation Statistics
 
-| Metric | Value |
-|--------|-------|
-| Total files created | 6 |
-| Total files modified | 4 |
-| Lines of code (SCSS) | 500+ |
-| Lines of code (JS) | 200+ |
-| Supported languages | 3 |
-| Build time | 14.0 seconds |
-| Page rendering | Dynamic (Server-side) |
-| Mobile breakpoints | 2 |
-| Keyboard shortcuts | 3 |
-| File formats supported | 3 (PDF, DOC, DOCX) |
+| Metric                 | Value                 |
+| ---------------------- | --------------------- |
+| Total files created    | 6                     |
+| Total files modified   | 4                     |
+| Lines of code (SCSS)   | 500+                  |
+| Lines of code (JS)     | 200+                  |
+| Supported languages    | 3                     |
+| Build time             | 14.0 seconds          |
+| Page rendering         | Dynamic (Server-side) |
+| Mobile breakpoints     | 2                     |
+| Keyboard shortcuts     | 3                     |
+| File formats supported | 3 (PDF, DOC, DOCX)    |
 
 ---
 
 ## 📋 Files Summary
 
 ### Created Files (6)
+
 1. ✅ `sanity/schemaTypes/bzhd.js` - 89 lines
 2. ✅ `app/[locale]/bzhd/page.js` - 17 lines
 3. ✅ `app/components/BZHD/BZHD.js` - 94 lines
@@ -270,6 +292,7 @@ messages/
 6. ✅ `app/components/BZHD/BZHD.scss` - 519 lines
 
 ### Modified Files (4)
+
 1. ✅ `sanity/schemaTypes/index.js` - Added import + export
 2. ✅ `sanity/lib/queries.js` - Added BZHD queries + mapping
 3. ✅ `messages/en.json` - Added BZHD translations
@@ -306,6 +329,7 @@ messages/
 ## 🎓 Design Patterns Used
 
 ### Following Project Conventions
+
 ✅ **Sanity Schema Structure** - Uses existing `localeString` and `localeText` types
 ✅ **GROQ Query Pattern** - Matches other queries in `queries.js`
 ✅ **Component Architecture** - Follows Portfolio/PhotoGallery pattern
@@ -314,6 +338,7 @@ messages/
 ✅ **Route Structure** - Follows `[locale]` dynamic segment pattern
 
 ### React Best Practices
+
 ✅ **Server/Client Components** - Server for data fetching, Client for interactivity
 ✅ **State Management** - Minimal state for lightbox
 ✅ **Performance** - Lazy loading, optimized images
@@ -334,17 +359,20 @@ messages/
 ## 🚀 Deployment Notes
 
 ### Environment Variables Needed
+
 - Already configured in project
 - Uses existing Sanity project ID and dataset
 - No additional configuration required
 
 ### Build Optimization
+
 - Dynamic route (no pre-rendering)
 - Data fetched on request from Sanity
 - Images optimized by Sanity
 - CSS compiled and minified
 
 ### Performance Targets
+
 - First Contentful Paint: < 1.5s
 - Largest Contentful Paint: < 2.5s
 - Cumulative Layout Shift: < 0.1
@@ -354,14 +382,14 @@ messages/
 
 ## 📞 Troubleshooting Quick Reference
 
-| Issue | Solution |
-|-------|----------|
+| Issue                  | Solution                                                 |
+| ---------------------- | -------------------------------------------------------- |
 | "No content available" | Check if BZHD document exists in Sanity and is published |
-| Images not showing | Verify image upload in Sanity, check CORS settings |
-| Files not downloading | Check file size, ensure file format is PDF/DOC/DOCX |
-| Lightbox not working | Clear browser cache, check JavaScript enabled |
-| Styling broken | Verify SCSS compiled, check CSS file loaded |
-| Translation missing | Add text to all 3 message files, rebuild |
+| Images not showing     | Verify image upload in Sanity, check CORS settings       |
+| Files not downloading  | Check file size, ensure file format is PDF/DOC/DOCX      |
+| Lightbox not working   | Clear browser cache, check JavaScript enabled            |
+| Styling broken         | Verify SCSS compiled, check CSS file loaded              |
+| Translation missing    | Add text to all 3 message files, rebuild                 |
 
 ---
 
@@ -377,4 +405,4 @@ The БЖД page is fully functional, tested, documented, and ready for productio
 
 ---
 
-*For additional information, see `BZHD_IMPLEMENTATION.md` for detailed admin usage guide.*
+_For additional information, see `BZHD_IMPLEMENTATION.md` for detailed admin usage guide._
