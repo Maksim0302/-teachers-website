@@ -2,50 +2,48 @@
 
 import React, { useState } from 'react'
 import { useTranslations } from 'next-intl'
+import PhotoGallery from '../Lego/PhotoGallery'
 import './BZHD.scss'
-import DocumentCard from './DocumentCard'
-import Lightbox from './Lightbox'
 
-const BZHD = ({ content }) => {
+export default function BZHD({ content }) {
   const t = useTranslations('BZHD')
-  const [lightboxOpen, setLightboxOpen] = useState(false)
-  const [currentPhotoIndex, setCurrentPhotoIndex] = useState(0)
 
-  const title = content?.title || t('title')
-  const subtitle = content?.subtitle || ''
-  const documents = content?.documents || []
-  const photos = content?.photos || []
-
-  // Debug logging
-  if (!title) {
-    console.warn('BZHD: Missing title', {
-      title,
-      subtitle,
-      documents: documents?.length || 0,
-      photos: photos?.length || 0,
-    })
+  if (!content) {
+    return (
+      <div className="bzhd">
+        <div className="bzhd__container">
+          <p className="bzhd__no-content">{t('noContent')}</p>
+        </div>
+      </div>
+    )
   }
 
-  const openLightbox = (index) => {
-    setCurrentPhotoIndex(index)
-    setLightboxOpen(true)
+  const { title, subtitle, documents, photos } = content
+
+  const getFileIcon = (fileType) => {
+    return fileType === 'pdf' ? '📄' : '📘'
   }
 
-  const closeLightbox = () => {
-    setLightboxOpen(false)
+  const getFileTypeLabel = (fileType) => {
+    return fileType === 'pdf' ? 'PDF' : 'Word'
   }
 
-  const goToPrevious = () => {
-    setCurrentPhotoIndex((prev) => (prev === 0 ? photos.length - 1 : prev - 1))
+  const handlePreview = (fileUrl) => {
+    window.open(fileUrl, '_blank', 'noopener,noreferrer')
   }
 
-  const goToNext = () => {
-    setCurrentPhotoIndex((prev) => (prev === photos.length - 1 ? 0 : prev + 1))
+  const handleDownload = (fileUrl, fileName) => {
+    const link = document.createElement('a')
+    link.href = fileUrl
+    link.download = fileName || 'document'
+    document.body.appendChild(link)
+    link.click()
+    document.body.removeChild(link)
   }
 
   return (
-    <section className="bzhd">
-      <div className="container">
+    <div className="bzhd">
+      <div className="bzhd__container">
         {/* Header Section */}
         <div className="bzhd__header">
           <h1 className="bzhd__title">{title}</h1>
@@ -54,67 +52,68 @@ const BZHD = ({ content }) => {
 
         {/* Documents Section */}
         {documents && documents.length > 0 && (
-          <div className="bzhd__documents-section">
+          <div className="bzhd__documents">
             <h2 className="bzhd__section-title">{t('documentsTitle')}</h2>
-            <div className="bzhd__documents-list">
+            <div className="bzhd__documents-grid">
               {documents.map((doc) => (
-                <DocumentCard key={doc.id} document={doc} t={t} />
-              ))}
-            </div>
-          </div>
-        )}
+                <div key={doc.id} className="bzhd__document">
+                  <div className="bzhd__document-content">
+                    <div className="bzhd__document-header">
+                      <span className="bzhd__file-icon">
+                        {getFileIcon(doc.fileType)}
+                      </span>
+                      <div className="bzhd__document-info">
+                        <h3 className="bzhd__document-title">{doc.title}</h3>
+                        <p className="bzhd__file-info">
+                          {doc.fileName} • {getFileTypeLabel(doc.fileType)}
+                        </p>
+                      </div>
+                    </div>
+                    {doc.description && (
+                      <p className="bzhd__document-description">
+                        {doc.description}
+                      </p>
+                    )}
+                  </div>
 
-        {/* Photo Gallery Section */}
-        {photos && photos.length > 0 && (
-          <div className="bzhd__gallery-section">
-            <h2 className="bzhd__section-title">{t('galleryTitle')}</h2>
-            <div className="bzhd__gallery-grid">
-              {photos.map((photo, index) => (
-                <div
-                  key={photo.id}
-                  className="bzhd__gallery-item"
-                  onClick={() => openLightbox(index)}
-                  role="button"
-                  tabIndex={0}
-                  onKeyPress={(e) => {
-                    if (e.key === 'Enter') openLightbox(index)
-                  }}
-                >
-                  <img
-                    src={photo.imageUrl}
-                    alt={photo.alt}
-                    className="bzhd__gallery-image"
-                    loading="lazy"
-                  />
-                  {photo.caption && (
-                    <div className="bzhd__gallery-caption">{photo.caption}</div>
-                  )}
+                  <div className="bzhd__document-buttons">
+                    {doc.fileType === 'pdf' && (
+                      <button
+                        className="bzhd__button bzhd__button--preview"
+                        onClick={() => handlePreview(doc.fileUrl)}
+                        title={t('preview')}
+                      >
+                        {t('preview')}
+                      </button>
+                    )}
+                    <button
+                      className="bzhd__button bzhd__button--download"
+                      onClick={() => handleDownload(doc.fileUrl, doc.fileName)}
+                      title={t('download')}
+                    >
+                      {t('download')}
+                    </button>
+                  </div>
                 </div>
               ))}
             </div>
           </div>
         )}
 
-        {/* Empty State */}
-        {documents.length === 0 && photos.length === 0 && (
-          <p style={{ textAlign: 'center', color: '#999', marginTop: '40px' }}>
-            {t('noContent')}
-          </p>
+        {/* Gallery Section */}
+        {photos && photos.length > 0 && (
+          <div className="bzhd__gallery-section">
+            <h2 className="bzhd__section-title">{t('galleryTitle')}</h2>
+            <PhotoGallery images={photos} />
+          </div>
         )}
-      </div>
 
-      {/* Lightbox Component */}
-      {lightboxOpen && photos.length > 0 && (
-        <Lightbox
-          photos={photos}
-          currentIndex={currentPhotoIndex}
-          onClose={closeLightbox}
-          onPrevious={goToPrevious}
-          onNext={goToNext}
-        />
-      )}
-    </section>
+        {/* Empty State */}
+        {(!documents || documents.length === 0) &&
+          (!photos || photos.length === 0) && (
+            <p className="bzhd__no-content">{t('noContent')}</p>
+          )}
+      </div>
+    </div>
   )
 }
-
-export default BZHD
