@@ -1,11 +1,13 @@
 # На допомогу учням (Student Subjects) - Implementation Guide
 
 ## Overview
+
 A complete, production-ready **На допомогу учням** (Student Subjects Help) page system has been implemented with full Sanity CMS integration. The page works exactly like the existing "Випускні" (Graduates) page but uses subject slugs instead of years.
 
 ## ✅ What Was Implemented
 
 ### Sanity Schema (`studentSubject`)
+
 - **Slug**: URL-friendly identifier (e.g., "matematyka", "ukrainska-mova")
 - **Title**: Subject name (multilingual - EN, RU, UK)
 - **Subtitle**: Optional subject description (multilingual)
@@ -13,6 +15,7 @@ A complete, production-ready **На допомогу учням** (Student Subje
 - **Photos**: Unlimited photo gallery with alt text
 
 ### Dynamic Routing
+
 ```
 /[locale]/students-help/[slug]
 
@@ -23,6 +26,7 @@ Examples:
 ```
 
 ### Features
+
 ✅ **Dynamic slug-based routing** - Each subject gets its own page
 ✅ **Multilingual support** - English, Russian, Ukrainian
 ✅ **Photo gallery** - Unlimited images per subject
@@ -32,6 +36,7 @@ Examples:
 ✅ **No code changes needed** - Everything through Sanity
 
 ### Build Status
+
 ```
 ✅ Build: Success
 ✅ Route: ● /[locale]/students-help/[slug] (SSG - Static Site Generation)
@@ -73,6 +78,7 @@ Examples:
 ### Slug Format Best Practices
 
 Use lowercase, hyphen-separated slugs:
+
 - ✅ "matematyka"
 - ✅ "ukrainska-mova"
 - ✅ "ya-doslidzhuyu-svit"
@@ -83,6 +89,7 @@ Use lowercase, hyphen-separated slugs:
 ## 📁 File Structure
 
 ### Sanity
+
 - `sanity/schemaTypes/studentSubject.js` - Schema definition
 - `sanity/lib/queries.js` - GROQ queries (added):
   - `STUDENT_SUBJECTS_ALL_QUERY` - Fetch all subjects
@@ -92,10 +99,12 @@ Use lowercase, hyphen-separated slugs:
   - `mapStudentSubjectData()` - Data mapping
 
 ### Next.js Routes
+
 - `app/[locale]/students-help/[slug]/page.js` - Dynamic page
 - `app/students-help/data/studentSubjectsPages.js` - Data functions
 
 ### Shared Components
+
 - Uses `app/graduates/components/GraduatesPageContent.js`
 - Same styling and layout as Graduates page
 
@@ -104,6 +113,7 @@ Use lowercase, hyphen-separated slugs:
 **Important**: The burger menu should automatically populate with subject names.
 
 ### Menu Configuration (in Sanity)
+
 The menu structure supports dynamic children. When editing Navigation Menu in Sanity, you can:
 
 1. Create main menu item: "На допомогу учням"
@@ -116,6 +126,7 @@ Or the menu can be manually maintained by adding each subject as a submenu item.
 ## 📊 Data Structure
 
 ### Database (Sanity)
+
 ```json
 {
   "_type": "studentSubject",
@@ -151,6 +162,7 @@ Or the menu can be manually maintained by adding each subject as a submenu item.
 ## 🚀 Creating Multiple Subjects
 
 ### Batch Creation
+
 1. Go to Sanity Studio
 2. Create first subject completely
 3. Use "Duplicate" function (if available) to create similar subjects
@@ -158,7 +170,9 @@ Or the menu can be manually maintained by adding each subject as a submenu item.
 5. Publish all
 
 ### Subject List Example
+
 Typical subjects to create:
+
 - matematyka (Mathematics)
 - ukrainska-mova (Ukrainian)
 - rosiyska-mova (Russian)
@@ -179,6 +193,7 @@ Typical subjects to create:
 ## 📱 Page Preview
 
 Once published, users can access:
+
 - **Desktop**: `/en/students-help/matematyka`
 - **Tablet**: Same URL, responsive layout
 - **Mobile**: Single column layout
@@ -195,7 +210,8 @@ Once published, users can access:
 ### Page not showing up
 
 **Problem**: Subject doesn't appear on menu or can't access URL  
-**Solution**: 
+**Solution**:
+
 - Check subject is **published** in Sanity
 - Verify **slug** is entered correctly (lowercase, no spaces)
 - Rebuild site or wait 10 seconds for ISR
@@ -204,6 +220,7 @@ Once published, users can access:
 
 **Problem**: Images not visible on page  
 **Solution**:
+
 - Check image is uploaded to Sanity
 - Verify alt text is added
 - Wait for page to regenerate (10s ISR)
@@ -212,6 +229,7 @@ Once published, users can access:
 
 **Problem**: Getting "Not Found" error  
 **Solution**:
+
 - Verify slug matches exactly (case-sensitive in URL)
 - Check subject exists in Sanity and is published
 - Try accessing English version: `/en/students-help/...`
@@ -220,24 +238,28 @@ Once published, users can access:
 
 **Problem**: Some languages showing empty fields  
 **Solution**:
+
 - Fill in title in all 3 languages (EN, RU, UK)
 - Click "fallback" option to use other language if needed
 
 ## 💡 Best Practices
 
 ### Subject Names
+
 - ✅ Use clear, descriptive names
 - ✅ Translate accurately to all 3 languages
 - ✅ Use subject's official name if possible
 - ✅ Keep names consistent with school curriculum
 
 ### Photos
+
 - ✅ Use high-quality images (1600+ pixels)
 - ✅ Show relevant classroom or activity photos
 - ✅ Add descriptive alt text
 - ✅ Organize photos in logical order
 
 ### Descriptions
+
 - ✅ Write brief, engaging descriptions
 - ✅ Mention key topics covered
 - ✅ Include learning outcomes if relevant
@@ -246,33 +268,38 @@ Once published, users can access:
 ## 🔗 URLs Reference
 
 ### Pattern
+
 ```
 /[locale]/students-help/[slug]
 ```
 
 ### Examples
-| Locale | Subject | URL |
-|--------|---------|-----|
-| EN | Mathematics | `/en/students-help/matematyka` |
-| RU | Математика | `/ru/students-help/matematyka` |
-| UK | Математика | `/uk/students-help/matematyka` |
-| EN | Ukrainian | `/en/students-help/ukrainska-mova` |
-| RU | Украинский | `/ru/students-help/ukrainska-mova` |
-| UK | Українська мова | `/uk/students-help/ukrainska-mova` |
+
+| Locale | Subject         | URL                                |
+| ------ | --------------- | ---------------------------------- |
+| EN     | Mathematics     | `/en/students-help/matematyka`     |
+| RU     | Математика      | `/ru/students-help/matematyka`     |
+| UK     | Математика      | `/uk/students-help/matematyka`     |
+| EN     | Ukrainian       | `/en/students-help/ukrainska-mova` |
+| RU     | Украинский      | `/ru/students-help/ukrainska-mova` |
+| UK     | Українська мова | `/uk/students-help/ukrainska-mova` |
 
 ## 🛠️ Technical Details
 
 ### ISR (Incremental Static Regeneration)
+
 - Revalidates every 10 seconds
 - Updates in background without blocking users
 - Perfect for admin content changes
 
 ### Static Generation
+
 - Pre-renders all language+subject combinations at build time
 - Fast page loads
 - SEO-friendly
 
 ### Dynamic Fallback
+
 - generateStaticParams handles all locales
 - notFound() displays 404 if subject not found
 - Graceful error handling
@@ -288,7 +315,9 @@ Once published, users can access:
 **Translate subject**: Fill all language fields
 
 ### Escalation
+
 If issues persist, check:
+
 1. Sanity connection status
 2. Schema validation in Studio
 3. Build logs for errors

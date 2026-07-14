@@ -8,7 +8,8 @@ export default {
       title: 'URL Slug',
       type: 'slug',
       validation: (Rule) => Rule.required(),
-      description: 'URL-friendly identifier (e.g., "matematyka", "ukrainska-mova")',
+      description:
+        'URL-friendly identifier (e.g., "matematyka", "ukrainska-mova")',
       options: {
         source: 'title.en',
         maxLength: 96,
