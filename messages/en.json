@@ -236,30 +236,38 @@
   "NormativeBase": {
     "title": "Normative Base",
     "subtitle": "Access regulatory and legal documents",
+    "documents": "Documents",
+    "gallery": "Photo Gallery",
     "preview": "Preview",
     "download": "Download",
-    "noDocuments": "No documents available"
+    "noContent": "No content available"
   },
   "Portfolio": {
     "title": "My Portfolio",
     "subtitle": "Browse my portfolio documents",
+    "documents": "Documents",
+    "gallery": "Photo Gallery",
     "preview": "Preview",
     "download": "Download",
-    "noDocuments": "No documents available"
+    "noContent": "No content available"
   },
   "UsefulLinks": {
     "title": "Useful Files",
     "subtitle": "Browse our collection of useful files",
+    "documents": "Documents",
+    "gallery": "Photo Gallery",
     "preview": "Preview",
     "download": "Download",
-    "noFiles": "No files available"
+    "noContent": "No content available"
   },
   "Nush": {
     "title": "NUŠ Documents",
     "subtitle": "Nova Ukrainska Shkola (New Ukrainian School) resources",
+    "documents": "Documents",
+    "gallery": "Photo Gallery",
     "preview": "Preview",
     "download": "Download",
-    "noDocuments": "No documents available"
+    "noContent": "No content available"
   },
   "Parents": {
     "title": "Parents Page",

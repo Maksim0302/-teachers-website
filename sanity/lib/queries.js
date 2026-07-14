@@ -553,6 +553,14 @@ export const NORMATIVE_BASE_QUERY = `*[_type == "normativeBase"][0]{
         originalFilename
       }
     }
+  },
+  gallery[]{
+    image{
+      asset->{
+        url
+      }
+    },
+    alt
   }
 }`
 
@@ -568,34 +576,55 @@ export async function getNormativeBaseData() {
 }
 
 export function mapNormativeBaseData(data, locale) {
-  if (!data?.documents?.length) return null
+  if (!data) return null
 
-  const documents = data.documents
-    .map((doc, index) => {
-      if (!doc.file?.asset?.url) return null
+  // Map documents
+  const documents =
+    data.documents && data.documents.length > 0
+      ? data.documents
+          .map((doc, index) => {
+            if (!doc.file?.asset?.url) return null
 
-      const fileName = doc.file.asset.originalFilename || 'document'
-      const fileExtension = fileName.split('.').pop().toLowerCase()
-      const fileUrl = doc.file.asset.url
+            const fileUrl = doc.file.asset.url
+            const fileName = doc.file.asset.originalFilename || 'document'
+            const fileExtension = fileName.split('.').pop().toLowerCase()
 
-      return {
-        id: `doc-${index}`,
-        title: getLocalizedValue(doc.title, locale),
-        description: getLocalizedValue(doc.description, locale),
-        fileName,
-        fileExtension,
-        fileUrl,
-        fileType: ['pdf'].includes(fileExtension) ? 'pdf' : 'word',
-      }
-    })
-    .filter(Boolean)
+            return {
+              id: `normative-base-doc-${index}`,
+              title: getLocalizedValue(doc.title, locale),
+              description: getLocalizedValue(doc.description, locale),
+              fileUrl,
+              fileName,
+              fileType: fileExtension === 'pdf' ? 'pdf' : 'word',
+            }
+          })
+          .filter(Boolean)
+      : []
 
-  if (!documents.length) return null
+  // Map gallery
+  const gallery =
+    data.gallery && data.gallery.length > 0
+      ? data.gallery
+          .map((item, index) => {
+            if (!item.image?.asset?.url) return null
+
+            return {
+              id: `normative-base-gallery-${index}`,
+              imageUrl: item.image.asset.url,
+              alt: getLocalizedValue(item.alt, locale),
+            }
+          })
+          .filter(Boolean)
+      : []
+
+  // If we have no content, return null
+  if (documents.length === 0 && gallery.length === 0) return null
 
   return {
     title: getLocalizedValue(data.title, locale),
     subtitle: getLocalizedValue(data.subtitle, locale),
     documents,
+    gallery,
   }
 }
 
@@ -611,6 +640,14 @@ export const PORTFOLIO_QUERY = `*[_type == "portfolio"][0]{
         originalFilename
       }
     }
+  },
+  gallery[]{
+    image{
+      asset->{
+        url
+      }
+    },
+    alt
   }
 }`
 
@@ -626,41 +663,62 @@ export async function getPortfolioData() {
 }
 
 export function mapPortfolioData(data, locale) {
-  if (!data?.documents?.length) return null
+  if (!data) return null
 
-  const documents = data.documents
-    .map((doc, index) => {
-      if (!doc.file?.asset?.url) return null
+  // Map documents
+  const documents =
+    data.documents && data.documents.length > 0
+      ? data.documents
+          .map((doc, index) => {
+            if (!doc.file?.asset?.url) return null
 
-      const fileName = doc.file.asset.originalFilename || 'document'
-      const fileExtension = fileName.split('.').pop().toLowerCase()
-      const fileUrl = doc.file.asset.url
+            const fileUrl = doc.file.asset.url
+            const fileName = doc.file.asset.originalFilename || 'document'
+            const fileExtension = fileName.split('.').pop().toLowerCase()
 
-      return {
-        id: `portfolio-doc-${index}`,
-        title: getLocalizedValue(doc.title, locale),
-        description: getLocalizedValue(doc.description, locale),
-        fileName,
-        fileExtension,
-        fileUrl,
-        fileType: ['pdf'].includes(fileExtension) ? 'pdf' : 'word',
-      }
-    })
-    .filter(Boolean)
+            return {
+              id: `portfolio-doc-${index}`,
+              title: getLocalizedValue(doc.title, locale),
+              description: getLocalizedValue(doc.description, locale),
+              fileUrl,
+              fileName,
+              fileType: fileExtension === 'pdf' ? 'pdf' : 'word',
+            }
+          })
+          .filter(Boolean)
+      : []
 
-  if (!documents.length) return null
+  // Map gallery
+  const gallery =
+    data.gallery && data.gallery.length > 0
+      ? data.gallery
+          .map((item, index) => {
+            if (!item.image?.asset?.url) return null
+
+            return {
+              id: `portfolio-gallery-${index}`,
+              imageUrl: item.image.asset.url,
+              alt: getLocalizedValue(item.alt, locale),
+            }
+          })
+          .filter(Boolean)
+      : []
+
+  // If we have no content, return null
+  if (documents.length === 0 && gallery.length === 0) return null
 
   return {
     title: getLocalizedValue(data.title, locale),
     subtitle: getLocalizedValue(data.subtitle, locale),
     documents,
+    gallery,
   }
 }
 
 export const USEFUL_LINKS_QUERY = `*[_type == "usefulLinks"][0]{
   title,
   subtitle,
-  files[]{
+  documents[]{
     title,
     description,
     file{
@@ -669,6 +727,14 @@ export const USEFUL_LINKS_QUERY = `*[_type == "usefulLinks"][0]{
         url
       }
     }
+  },
+  gallery[]{
+    image{
+      asset->{
+        url
+      }
+    },
+    alt
   }
 }`
 
@@ -684,33 +750,55 @@ export async function getUsefulLinksData() {
 }
 
 export function mapUsefulLinksData(data, locale) {
-  if (!data?.files?.length) return null
+  if (!data) return null
 
-  const files = data.files
-    .map((file, index) => {
-      if (!file.file?.asset?.url) return null
+  // Map documents
+  const documents =
+    data.documents && data.documents.length > 0
+      ? data.documents
+          .map((doc, index) => {
+            if (!doc.file?.asset?.url) return null
 
-      const fileUrl = file.file.asset.url
-      const fileName = file.file.asset.originalFilename || ''
-      const fileExtension = fileName.split('.').pop().toLowerCase()
+            const fileUrl = doc.file.asset.url
+            const fileName = doc.file.asset.originalFilename || 'document'
+            const fileExtension = fileName.split('.').pop().toLowerCase()
 
-      return {
-        id: `file-${index}`,
-        title: getLocalizedValue(file.title, locale),
-        description: getLocalizedValue(file.description, locale),
-        fileUrl,
-        fileName,
-        fileType: fileExtension === 'pdf' ? 'pdf' : 'word',
-      }
-    })
-    .filter(Boolean)
+            return {
+              id: `useful-links-doc-${index}`,
+              title: getLocalizedValue(doc.title, locale),
+              description: getLocalizedValue(doc.description, locale),
+              fileUrl,
+              fileName,
+              fileType: fileExtension === 'pdf' ? 'pdf' : 'word',
+            }
+          })
+          .filter(Boolean)
+      : []
 
-  if (!files.length) return null
+  // Map gallery
+  const gallery =
+    data.gallery && data.gallery.length > 0
+      ? data.gallery
+          .map((item, index) => {
+            if (!item.image?.asset?.url) return null
+
+            return {
+              id: `useful-links-gallery-${index}`,
+              imageUrl: item.image.asset.url,
+              alt: getLocalizedValue(item.alt, locale),
+            }
+          })
+          .filter(Boolean)
+      : []
+
+  // If we have no content, return null
+  if (documents.length === 0 && gallery.length === 0) return null
 
   return {
     title: getLocalizedValue(data.title, locale),
     subtitle: getLocalizedValue(data.subtitle, locale),
-    documents: files,
+    documents,
+    gallery,
   }
 }
 
@@ -726,6 +814,14 @@ export const NUSH_QUERY = `*[_type == "nush"][0]{
         url
       }
     }
+  },
+  gallery[]{
+    image{
+      asset->{
+        url
+      }
+    },
+    alt
   }
 }`
 
@@ -741,33 +837,55 @@ export async function getNushData() {
 }
 
 export function mapNushData(data, locale) {
-  if (!data?.documents?.length) return null
+  if (!data) return null
 
-  const documents = data.documents
-    .map((doc, index) => {
-      if (!doc.file?.asset?.url) return null
+  // Map documents
+  const documents =
+    data.documents && data.documents.length > 0
+      ? data.documents
+          .map((doc, index) => {
+            if (!doc.file?.asset?.url) return null
 
-      const fileUrl = doc.file.asset.url
-      const fileName = doc.file.asset.originalFilename || ''
-      const fileExtension = fileName.split('.').pop().toLowerCase()
+            const fileUrl = doc.file.asset.url
+            const fileName = doc.file.asset.originalFilename || 'document'
+            const fileExtension = fileName.split('.').pop().toLowerCase()
 
-      return {
-        id: `doc-${index}`,
-        title: getLocalizedValue(doc.title, locale),
-        description: getLocalizedValue(doc.description, locale),
-        fileUrl,
-        fileName,
-        fileType: fileExtension === 'pdf' ? 'pdf' : 'word',
-      }
-    })
-    .filter(Boolean)
+            return {
+              id: `nush-doc-${index}`,
+              title: getLocalizedValue(doc.title, locale),
+              description: getLocalizedValue(doc.description, locale),
+              fileUrl,
+              fileName,
+              fileType: fileExtension === 'pdf' ? 'pdf' : 'word',
+            }
+          })
+          .filter(Boolean)
+      : []
 
-  if (!documents.length) return null
+  // Map gallery
+  const gallery =
+    data.gallery && data.gallery.length > 0
+      ? data.gallery
+          .map((item, index) => {
+            if (!item.image?.asset?.url) return null
+
+            return {
+              id: `nush-gallery-${index}`,
+              imageUrl: item.image.asset.url,
+              alt: getLocalizedValue(item.alt, locale),
+            }
+          })
+          .filter(Boolean)
+      : []
+
+  // If we have no content, return null
+  if (documents.length === 0 && gallery.length === 0) return null
 
   return {
     title: getLocalizedValue(data.title, locale),
     subtitle: getLocalizedValue(data.subtitle, locale),
     documents,
+    gallery,
   }
 }
 

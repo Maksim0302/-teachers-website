@@ -15,28 +15,28 @@ export default {
       type: 'localeString',
     },
     {
-      name: 'files',
-      title: 'Useful Files',
+      name: 'documents',
+      title: 'Documents',
       type: 'array',
       of: [
         {
           type: 'object',
-          name: 'usefulFile',
+          name: 'usefulLinksDocument',
           fields: [
             {
               name: 'title',
-              title: 'File Title',
+              title: 'Document Title',
               type: 'localeString',
               validation: (Rule) => Rule.required(),
             },
             {
               name: 'description',
-              title: 'File Description (Optional)',
+              title: 'Document Description (Optional)',
               type: 'localeText',
             },
             {
               name: 'file',
-              title: 'File',
+              title: 'Document File',
               type: 'file',
               options: {
                 accept: '.pdf,.doc,.docx',
@@ -51,11 +51,39 @@ export default {
             },
             prepare({ title, fileName }) {
               return {
-                title: title || 'Untitled File',
+                title: title || 'Untitled Document',
                 subtitle: fileName || 'No file',
               }
             },
           },
+        },
+      ],
+    },
+    {
+      name: 'gallery',
+      title: 'Photo Gallery',
+      type: 'array',
+      of: [
+        {
+          type: 'object',
+          name: 'usefulLinksGalleryItem',
+          fields: [
+            {
+              name: 'image',
+              title: 'Photo',
+              type: 'image',
+              options: {
+                hotspot: true,
+              },
+              validation: (Rule) => Rule.required(),
+            },
+            {
+              name: 'alt',
+              title: 'Alt Text',
+              type: 'localeString',
+              description: 'Description for accessibility and SEO',
+            },
+          ],
         },
       ],
     },

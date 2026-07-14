@@ -1,46 +1,35 @@
 'use client'
 
-import React from 'react'
+import { useState } from 'react'
 import { useTranslations } from 'next-intl'
+import PhotoGallery from './PhotoGallery'
 import './Portfolio.scss'
 
-const Portfolio = ({ content }) => {
+export default function Portfolio({ content }) {
   const t = useTranslations('Portfolio')
 
-  const title = content?.title || t('title')
-  const subtitle = content?.subtitle || ''
-  const documents = content?.documents || []
-
-  // Debug logging
-  if (!title) {
-    console.warn('Portfolio: Missing title', {
-      title,
-      subtitle,
-      documents: documents?.length || 0,
-    })
+  if (!content) {
+    return (
+      <div className="portfolio">
+        <div className="portfolio__container">
+          <p className="portfolio__no-content">{t('noContent')}</p>
+        </div>
+      </div>
+    )
   }
 
+  const { title, subtitle, documents, gallery } = content
+
   const getFileIcon = (fileType) => {
-    if (fileType === 'pdf') {
-      return '📄'
-    }
-    return '📘'
+    return fileType === 'pdf' ? '📄' : '📘'
   }
 
   const getFileTypeLabel = (fileType) => {
-    if (fileType === 'pdf') return 'PDF'
-    return 'Word'
+    return fileType === 'pdf' ? 'PDF' : 'Word'
   }
 
-  const handlePreview = (fileUrl, fileExtension) => {
-    // PDF preview support
-    if (fileExtension === 'pdf') {
-      window.open(fileUrl, '_blank')
-      return
-    }
-
-    // For Word documents, suggest download
-    handleDownload(fileUrl, '')
+  const handlePreview = (fileUrl) => {
+    window.open(fileUrl, '_blank', 'noopener,noreferrer')
   }
 
   const handleDownload = (fileUrl, fileName) => {
@@ -53,72 +42,80 @@ const Portfolio = ({ content }) => {
   }
 
   return (
-    <section className="portfolio">
-      <div className="container">
+    <div className="portfolio">
+      <div className="portfolio__container">
+        {/* Header Section */}
         <div className="portfolio__header">
           <h1 className="portfolio__title">{title}</h1>
           {subtitle && <p className="portfolio__subtitle">{subtitle}</p>}
         </div>
 
-        {documents && documents.length > 0 ? (
-          <div className="portfolio__list">
-            {documents.map((doc, index) => (
-              <div key={doc.id || index} className="portfolio__document">
-                <div className="portfolio__document-header">
-                  <div className="portfolio__document-icon">
-                    {getFileIcon(doc.fileType)}
-                  </div>
-
-                  <div className="portfolio__document-info">
-                    <h3 className="portfolio__document-title">{doc.title}</h3>
+        {/* Documents Section */}
+        {documents && documents.length > 0 && (
+          <div className="portfolio__documents">
+            <h2 className="portfolio__section-title">{t('documents')}</h2>
+            <div className="portfolio__documents-grid">
+              {documents.map((doc) => (
+                <div key={doc.id} className="portfolio__document">
+                  <div className="portfolio__document-content">
+                    <div className="portfolio__document-header">
+                      <span className="portfolio__file-icon">
+                        {getFileIcon(doc.fileType)}
+                      </span>
+                      <div className="portfolio__document-info">
+                        <h3 className="portfolio__document-title">
+                          {doc.title}
+                        </h3>
+                        <p className="portfolio__file-info">
+                          {doc.fileName} • {getFileTypeLabel(doc.fileType)}
+                        </p>
+                      </div>
+                    </div>
                     {doc.description && (
                       <p className="portfolio__document-description">
                         {doc.description}
                       </p>
                     )}
-                    <div className="portfolio__document-meta">
-                      <span className="portfolio__file-type">
-                        {getFileTypeLabel(doc.fileType)}
-                      </span>
-                      <span className="portfolio__file-name">
-                        {doc.fileName}
-                      </span>
-                    </div>
+                  </div>
+
+                  <div className="portfolio__document-buttons">
+                    {doc.fileType === 'pdf' && (
+                      <button
+                        className="portfolio__button portfolio__button--preview"
+                        onClick={() => handlePreview(doc.fileUrl)}
+                        title={t('preview')}
+                      >
+                        {t('preview')}
+                      </button>
+                    )}
+                    <button
+                      className="portfolio__button portfolio__button--download"
+                      onClick={() => handleDownload(doc.fileUrl, doc.fileName)}
+                      title={t('download')}
+                    >
+                      {t('download')}
+                    </button>
                   </div>
                 </div>
-
-                <div className="portfolio__document-actions">
-                  {doc.fileType === 'pdf' && (
-                    <button
-                      className="portfolio__button portfolio__button--preview"
-                      onClick={() =>
-                        handlePreview(doc.fileUrl, doc.fileExtension)
-                      }
-                      title={t('preview')}
-                    >
-                      {t('preview')}
-                    </button>
-                  )}
-
-                  <button
-                    className="portfolio__button portfolio__button--download"
-                    onClick={() => handleDownload(doc.fileUrl, doc.fileName)}
-                    title={t('download')}
-                  >
-                    {t('download')}
-                  </button>
-                </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
-        ) : (
-          <p style={{ textAlign: 'center', color: '#999', marginTop: '40px' }}>
-            {t('noDocuments')}
-          </p>
         )}
+
+        {/* Gallery Section */}
+        {gallery && gallery.length > 0 && (
+          <div className="portfolio__gallery-section">
+            <h2 className="portfolio__section-title">{t('gallery')}</h2>
+            <PhotoGallery images={gallery} />
+          </div>
+        )}
+
+        {/* Empty State */}
+        {(!documents || documents.length === 0) &&
+          (!gallery || gallery.length === 0) && (
+            <p className="portfolio__no-content">{t('noContent')}</p>
+          )}
       </div>
-    </section>
+    </div>
   )
 }
-
-export default Portfolio

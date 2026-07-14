@@ -59,6 +59,34 @@ export default {
         },
       ],
     },
+    {
+      name: 'gallery',
+      title: 'Photo Gallery',
+      type: 'array',
+      of: [
+        {
+          type: 'object',
+          name: 'nushGalleryItem',
+          fields: [
+            {
+              name: 'image',
+              title: 'Photo',
+              type: 'image',
+              options: {
+                hotspot: true,
+              },
+              validation: (Rule) => Rule.required(),
+            },
+            {
+              name: 'alt',
+              title: 'Alt Text',
+              type: 'localeString',
+              description: 'Description for accessibility and SEO',
+            },
+          ],
+        },
+      ],
+    },
   ],
   preview: {
     select: {
