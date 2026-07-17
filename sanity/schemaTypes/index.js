@@ -16,6 +16,11 @@ import parents from './parents'
 import lego from './lego'
 import bzhd from './bzhd'
 import studentSubject from './studentSubject'
+import futureFirstgraders from './futureFirstgraders'
+import myAchievements from './myAchievements'
+import ourAchievements from './ourAchievements'
+import calendarThematicPlanning from './calendarThematicPlanning'
+import presentationsForLessons from './presentationsForLessons'
 
 export const schemaTypes = [
   localeString,
@@ -36,4 +41,9 @@ export const schemaTypes = [
   lego,
   bzhd,
   studentSubject,
+  futureFirstgraders,
+  myAchievements,
+  ourAchievements,
+  calendarThematicPlanning,
+  presentationsForLessons,
 ]

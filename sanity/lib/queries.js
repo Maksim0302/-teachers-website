@@ -1161,3 +1161,448 @@ export function mapBzhdData(data, locale) {
     photos,
   }
 }
+
+// ============== FUTURE FIRSTGRADERS DATA ==============
+
+export const FUTURE_FIRSTGRADERS_QUERY = `*[_type == "futureFirstgraders"][0]{
+  title,
+  subtitle,
+  documents[]{
+    title,
+    description,
+    file{
+      asset->{
+        originalFilename,
+        url
+      }
+    }
+  },
+  gallery[]{
+    image{
+      asset->{
+        url
+      }
+    },
+    alt
+  }
+}`
+
+export async function getFutureFirstgradersData() {
+  if (!client) return null
+
+  try {
+    return await client.fetch(FUTURE_FIRSTGRADERS_QUERY)
+  } catch (error) {
+    console.error(
+      'Failed to fetch Future Firstgraders page data from Sanity:',
+      error
+    )
+    return null
+  }
+}
+
+export function mapFutureFirstgradersData(data, locale) {
+  if (!data) return null
+
+  const documents =
+    data.documents && data.documents.length > 0
+      ? data.documents
+          .map((doc, index) => {
+            if (!doc.file?.asset?.url) return null
+
+            const fileUrl = doc.file.asset.url
+            const fileName = doc.file.asset.originalFilename || 'document'
+            const fileExtension = fileName.split('.').pop().toLowerCase()
+
+            return {
+              id: `future-firstgraders-doc-${index}`,
+              title: getLocalizedValue(doc.title, locale),
+              description: getLocalizedValue(doc.description, locale),
+              fileUrl,
+              fileName,
+              fileType: fileExtension === 'pdf' ? 'pdf' : 'word',
+            }
+          })
+          .filter(Boolean)
+      : []
+
+  const gallery =
+    data.gallery && data.gallery.length > 0
+      ? data.gallery
+          .map((item, index) => {
+            if (!item.image?.asset?.url) return null
+
+            return {
+              id: `future-firstgraders-gallery-${index}`,
+              imageUrl: item.image.asset.url,
+              alt: getLocalizedValue(item.alt, locale),
+            }
+          })
+          .filter(Boolean)
+      : []
+
+  if (documents.length === 0 && gallery.length === 0) return null
+
+  return {
+    title: getLocalizedValue(data.title, locale),
+    subtitle: getLocalizedValue(data.subtitle, locale),
+    documents,
+    gallery,
+  }
+}
+
+// ============== MY ACHIEVEMENTS DATA ==============
+
+export const MY_ACHIEVEMENTS_QUERY = `*[_type == "myAchievements"][0]{
+  title,
+  subtitle,
+  documents[]{
+    title,
+    description,
+    file{
+      asset->{
+        originalFilename,
+        url
+      }
+    }
+  },
+  gallery[]{
+    image{
+      asset->{
+        url
+      }
+    },
+    alt
+  }
+}`
+
+export async function getMyAchievementsData() {
+  if (!client) return null
+
+  try {
+    return await client.fetch(MY_ACHIEVEMENTS_QUERY)
+  } catch (error) {
+    console.error(
+      'Failed to fetch My Achievements page data from Sanity:',
+      error
+    )
+    return null
+  }
+}
+
+export function mapMyAchievementsData(data, locale) {
+  if (!data) return null
+
+  const documents =
+    data.documents && data.documents.length > 0
+      ? data.documents
+          .map((doc, index) => {
+            if (!doc.file?.asset?.url) return null
+
+            const fileUrl = doc.file.asset.url
+            const fileName = doc.file.asset.originalFilename || 'document'
+            const fileExtension = fileName.split('.').pop().toLowerCase()
+
+            return {
+              id: `my-achievements-doc-${index}`,
+              title: getLocalizedValue(doc.title, locale),
+              description: getLocalizedValue(doc.description, locale),
+              fileUrl,
+              fileName,
+              fileType: fileExtension === 'pdf' ? 'pdf' : 'word',
+            }
+          })
+          .filter(Boolean)
+      : []
+
+  const gallery =
+    data.gallery && data.gallery.length > 0
+      ? data.gallery
+          .map((item, index) => {
+            if (!item.image?.asset?.url) return null
+
+            return {
+              id: `my-achievements-gallery-${index}`,
+              imageUrl: item.image.asset.url,
+              alt: getLocalizedValue(item.alt, locale),
+            }
+          })
+          .filter(Boolean)
+      : []
+
+  if (documents.length === 0 && gallery.length === 0) return null
+
+  return {
+    title: getLocalizedValue(data.title, locale),
+    subtitle: getLocalizedValue(data.subtitle, locale),
+    documents,
+    gallery,
+  }
+}
+
+// ============== OUR ACHIEVEMENTS DATA ==============
+
+export const OUR_ACHIEVEMENTS_QUERY = `*[_type == "ourAchievements"][0]{
+  title,
+  subtitle,
+  documents[]{
+    title,
+    description,
+    file{
+      asset->{
+        originalFilename,
+        url
+      }
+    }
+  },
+  gallery[]{
+    image{
+      asset->{
+        url
+      }
+    },
+    alt
+  }
+}`
+
+export async function getOurAchievementsData() {
+  if (!client) return null
+
+  try {
+    return await client.fetch(OUR_ACHIEVEMENTS_QUERY)
+  } catch (error) {
+    console.error(
+      'Failed to fetch Our Achievements page data from Sanity:',
+      error
+    )
+    return null
+  }
+}
+
+export function mapOurAchievementsData(data, locale) {
+  if (!data) return null
+
+  const documents =
+    data.documents && data.documents.length > 0
+      ? data.documents
+          .map((doc, index) => {
+            if (!doc.file?.asset?.url) return null
+
+            const fileUrl = doc.file.asset.url
+            const fileName = doc.file.asset.originalFilename || 'document'
+            const fileExtension = fileName.split('.').pop().toLowerCase()
+
+            return {
+              id: `our-achievements-doc-${index}`,
+              title: getLocalizedValue(doc.title, locale),
+              description: getLocalizedValue(doc.description, locale),
+              fileUrl,
+              fileName,
+              fileType: fileExtension === 'pdf' ? 'pdf' : 'word',
+            }
+          })
+          .filter(Boolean)
+      : []
+
+  const gallery =
+    data.gallery && data.gallery.length > 0
+      ? data.gallery
+          .map((item, index) => {
+            if (!item.image?.asset?.url) return null
+
+            return {
+              id: `our-achievements-gallery-${index}`,
+              imageUrl: item.image.asset.url,
+              alt: getLocalizedValue(item.alt, locale),
+            }
+          })
+          .filter(Boolean)
+      : []
+
+  if (documents.length === 0 && gallery.length === 0) return null
+
+  return {
+    title: getLocalizedValue(data.title, locale),
+    subtitle: getLocalizedValue(data.subtitle, locale),
+    documents,
+    gallery,
+  }
+}
+
+// ============== CALENDAR THEMATIC PLANNING DATA ==============
+
+export const CALENDAR_THEMATIC_PLANNING_QUERY = `*[_type == "calendarThematicPlanning"][0]{
+  title,
+  subtitle,
+  documents[]{
+    title,
+    description,
+    file{
+      asset->{
+        originalFilename,
+        url
+      }
+    }
+  },
+  gallery[]{
+    image{
+      asset->{
+        url
+      }
+    },
+    alt
+  }
+}`
+
+export async function getCalendarThematicPlanningData() {
+  if (!client) return null
+
+  try {
+    return await client.fetch(CALENDAR_THEMATIC_PLANNING_QUERY)
+  } catch (error) {
+    console.error(
+      'Failed to fetch Calendar Thematic Planning page data from Sanity:',
+      error
+    )
+    return null
+  }
+}
+
+export function mapCalendarThematicPlanningData(data, locale) {
+  if (!data) return null
+
+  const documents =
+    data.documents && data.documents.length > 0
+      ? data.documents
+          .map((doc, index) => {
+            if (!doc.file?.asset?.url) return null
+
+            const fileUrl = doc.file.asset.url
+            const fileName = doc.file.asset.originalFilename || 'document'
+            const fileExtension = fileName.split('.').pop().toLowerCase()
+
+            return {
+              id: `calendar-planning-doc-${index}`,
+              title: getLocalizedValue(doc.title, locale),
+              description: getLocalizedValue(doc.description, locale),
+              fileUrl,
+              fileName,
+              fileType: fileExtension === 'pdf' ? 'pdf' : 'word',
+            }
+          })
+          .filter(Boolean)
+      : []
+
+  const gallery =
+    data.gallery && data.gallery.length > 0
+      ? data.gallery
+          .map((item, index) => {
+            if (!item.image?.asset?.url) return null
+
+            return {
+              id: `calendar-planning-gallery-${index}`,
+              imageUrl: item.image.asset.url,
+              alt: getLocalizedValue(item.alt, locale),
+            }
+          })
+          .filter(Boolean)
+      : []
+
+  if (documents.length === 0 && gallery.length === 0) return null
+
+  return {
+    title: getLocalizedValue(data.title, locale),
+    subtitle: getLocalizedValue(data.subtitle, locale),
+    documents,
+    gallery,
+  }
+}
+
+// ============== PRESENTATIONS FOR LESSONS DATA ==============
+
+export const PRESENTATIONS_FOR_LESSONS_QUERY = `*[_type == "presentationsForLessons"][0]{
+  title,
+  subtitle,
+  documents[]{
+    title,
+    description,
+    file{
+      asset->{
+        originalFilename,
+        url
+      }
+    }
+  },
+  gallery[]{
+    image{
+      asset->{
+        url
+      }
+    },
+    alt
+  }
+}`
+
+export async function getPresentationsForLessonsData() {
+  if (!client) return null
+
+  try {
+    return await client.fetch(PRESENTATIONS_FOR_LESSONS_QUERY)
+  } catch (error) {
+    console.error(
+      'Failed to fetch Presentations for Lessons page data from Sanity:',
+      error
+    )
+    return null
+  }
+}
+
+export function mapPresentationsForLessonsData(data, locale) {
+  if (!data) return null
+
+  const documents =
+    data.documents && data.documents.length > 0
+      ? data.documents
+          .map((doc, index) => {
+            if (!doc.file?.asset?.url) return null
+
+            const fileUrl = doc.file.asset.url
+            const fileName = doc.file.asset.originalFilename || 'document'
+            const fileExtension = fileName.split('.').pop().toLowerCase()
+
+            return {
+              id: `presentations-lessons-doc-${index}`,
+              title: getLocalizedValue(doc.title, locale),
+              description: getLocalizedValue(doc.description, locale),
+              fileUrl,
+              fileName,
+              fileType: fileExtension === 'pdf' ? 'pdf' : 'word',
+            }
+          })
+          .filter(Boolean)
+      : []
+
+  const gallery =
+    data.gallery && data.gallery.length > 0
+      ? data.gallery
+          .map((item, index) => {
+            if (!item.image?.asset?.url) return null
+
+            return {
+              id: `presentations-lessons-gallery-${index}`,
+              imageUrl: item.image.asset.url,
+              alt: getLocalizedValue(item.alt, locale),
+            }
+          })
+          .filter(Boolean)
+      : []
+
+  if (documents.length === 0 && gallery.length === 0) return null
+
+  return {
+    title: getLocalizedValue(data.title, locale),
+    subtitle: getLocalizedValue(data.subtitle, locale),
+    documents,
+    gallery,
+  }
+}

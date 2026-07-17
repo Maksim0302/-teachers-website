@@ -295,5 +295,50 @@
     "preview": "Preview",
     "download": "Download",
     "noContent": "No content available"
+  },
+  "FutureFirstgraders": {
+    "title": "Future First Graders",
+    "subtitle": "Resources for children preparing for school",
+    "documents": "Documents",
+    "gallery": "Photo Gallery",
+    "preview": "Preview",
+    "download": "Download",
+    "noContent": "No content available"
+  },
+  "MyAchievements": {
+    "title": "My Achievements",
+    "subtitle": "Showcase of student accomplishments",
+    "documents": "Documents",
+    "gallery": "Photo Gallery",
+    "preview": "Preview",
+    "download": "Download",
+    "noContent": "No content available"
+  },
+  "OurAchievements": {
+    "title": "Our Achievements",
+    "subtitle": "School and class accomplishments",
+    "documents": "Documents",
+    "gallery": "Photo Gallery",
+    "preview": "Preview",
+    "download": "Download",
+    "noContent": "No content available"
+  },
+  "CalendarThematicPlanning": {
+    "title": "Calendar & Thematic Planning",
+    "subtitle": "Calendar and thematic planning resources",
+    "documents": "Documents",
+    "gallery": "Photo Gallery",
+    "preview": "Preview",
+    "download": "Download",
+    "noContent": "No content available"
+  },
+  "PresentationsForLessons": {
+    "title": "Presentations for Lessons",
+    "subtitle": "Educational presentations and materials",
+    "documents": "Documents",
+    "gallery": "Photo Gallery",
+    "preview": "Preview",
+    "download": "Download",
+    "noContent": "No content available"
   }
 }

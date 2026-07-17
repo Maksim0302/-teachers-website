@@ -301,5 +301,50 @@
     "preview": "Просмотр",
     "download": "Скачать",
     "noContent": "Контент недоступен"
+  },
+  "FutureFirstgraders": {
+    "title": "Будущие первоклассники",
+    "subtitle": "Ресурсы для детей, готовящихся к школе",
+    "documents": "Документы",
+    "gallery": "Фотогалерея",
+    "preview": "Просмотр",
+    "download": "Скачать",
+    "noContent": "Контент недоступен"
+  },
+  "MyAchievements": {
+    "title": "Мои достижения",
+    "subtitle": "Демонстрация достижений учащихся",
+    "documents": "Документы",
+    "gallery": "Фотогалерея",
+    "preview": "Просмотр",
+    "download": "Скачать",
+    "noContent": "Контент недоступен"
+  },
+  "OurAchievements": {
+    "title": "Наши достижения",
+    "subtitle": "Достижения школы и класса",
+    "documents": "Документы",
+    "gallery": "Фотогалерея",
+    "preview": "Просмотр",
+    "download": "Скачать",
+    "noContent": "Контент недоступен"
+  },
+  "CalendarThematicPlanning": {
+    "title": "Календарно-тематическое планирование",
+    "subtitle": "Ресурсы календарно-тематического планирования",
+    "documents": "Документы",
+    "gallery": "Фотогалерея",
+    "preview": "Просмотр",
+    "download": "Скачать",
+    "noContent": "Контент недоступен"
+  },
+  "PresentationsForLessons": {
+    "title": "Презентации для уроков",
+    "subtitle": "Образовательные презентации и материалы",
+    "documents": "Документы",
+    "gallery": "Фотогалерея",
+    "preview": "Просмотр",
+    "download": "Скачать",
+    "noContent": "Контент недоступен"
   }
 }
