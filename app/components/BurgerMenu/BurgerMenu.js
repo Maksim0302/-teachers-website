@@ -128,7 +128,7 @@ const BurgerMenu = () => {
       </button>
 
       {/* Само меню навигации */}
-      <nav 
+      <nav
         ref={menuRef}
         className={`burger__menu ${isMenuOpen ? 'burger__menu--open' : ''}`}
       >
