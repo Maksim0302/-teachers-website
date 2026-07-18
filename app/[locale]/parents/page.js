@@ -1,9 +1,10 @@
 import { getParentsData, mapParentsData } from '@/sanity/lib/queries'
 import Parents from '@/app/components/Parents/Parents'
+import { createContentMetadata } from '@/app/lib/seo'
 
-export const metadata = {
-  title: 'Батьківська сторінка | Educational Portal',
-  description: 'Resources and documents for parents',
+export async function generateMetadata({ params }) {
+  const { locale } = await params
+  return createContentMetadata({ locale, path: 'parents', content: mapParentsData(await getParentsData(), locale), fallbackTitle: 'Батьківська сторінка', fallbackDescription: 'Resources and documents for parents', keywords: ['для батьків'] })
 }
 
 export default async function ParentsPage({ params }) {
@@ -12,9 +13,5 @@ export default async function ParentsPage({ params }) {
   const parentsData = await getParentsData()
   const content = mapParentsData(parentsData, locale)
 
-  return (
-    <div>
-      <Parents content={content} />
-    </div>
-  )
+  return <Parents content={content} />
 }

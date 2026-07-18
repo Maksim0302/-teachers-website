@@ -3,10 +3,11 @@ import {
   mapPresentationsForLessonsData,
 } from '@/sanity/lib/queries'
 import PresentationsForLessons from '@/app/components/PresentationsForLessons/PresentationsForLessons'
+import { createContentMetadata } from '@/app/lib/seo'
 
-export const metadata = {
-  title: 'Презентації до уроків та виховних заходів | Educational Portal',
-  description: 'Presentations for lessons and educational events',
+export async function generateMetadata({ params }) {
+  const { locale } = await params
+  return createContentMetadata({ locale, path: 'presentations-for-lessons', content: mapPresentationsForLessonsData(await getPresentationsForLessonsData(), locale), fallbackTitle: 'Презентації до уроків та виховних заходів', fallbackDescription: 'Presentations for lessons and educational events', keywords: ['презентації', 'уроки'] })
 }
 
 export default async function PresentationsForLessonsPage({ params }) {
@@ -15,9 +16,5 @@ export default async function PresentationsForLessonsPage({ params }) {
   const data = await getPresentationsForLessonsData()
   const content = mapPresentationsForLessonsData(data, locale)
 
-  return (
-    <div>
-      <PresentationsForLessons content={content} />
-    </div>
-  )
+  return <PresentationsForLessons content={content} />
 }

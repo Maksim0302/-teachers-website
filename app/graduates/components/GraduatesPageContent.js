@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useState, useEffect } from 'react'
+import Image from 'next/image'
 import './GraduatesPageContent.scss'
 
 const GraduatesPageContent = ({ title, subtitle, description, photos }) => {
@@ -86,24 +87,22 @@ const GraduatesPageContent = ({ title, subtitle, description, photos }) => {
         {photos && photos.length > 0 && (
           <div className="graduates-page__gallery">
             {photos.map((photo, index) => (
-              <div
+              <button
+                type="button"
                 key={index}
                 className="graduates-page__photo-item"
                 onClick={() => handlePhotoClick(index)}
-                role="button"
-                tabIndex={0}
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter' || e.key === ' ') {
-                    handlePhotoClick(index)
-                  }
-                }}
+                aria-label={`${photo.alt || `Graduation photo ${index + 1}`}: open full size`}
               >
-                <img
+                <Image
                   src={photo.imageUrl}
                   alt={photo.alt || `Graduation photo ${index + 1}`}
                   className="graduates-page__photo"
+                  width={1800}
+                  height={1200}
+                  sizes="(max-width: 768px) 100vw, 33vw"
                 />
-              </div>
+              </button>
             ))}
           </div>
         )}
@@ -157,10 +156,13 @@ const GraduatesPageContent = ({ title, subtitle, description, photos }) => {
               </div>
             )}
 
-            <img
+            <Image
               src={photos[selectedPhotoIndex].imageUrl}
               alt={photos[selectedPhotoIndex].alt || 'Graduation photo'}
               className="graduates-modal__image"
+              width={1800}
+              height={1200}
+              sizes="100vw"
             />
           </div>
         </div>

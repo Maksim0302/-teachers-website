@@ -4,7 +4,7 @@ import React from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { FaYoutube, FaFacebookF, FaInstagram } from 'react-icons/fa'
-import { useTranslations } from 'next-intl'
+import { useLocale, useTranslations } from 'next-intl'
 import './Footer.scss'
 
 const sections = [
@@ -25,13 +25,14 @@ const sections = [
 
 const Footer = () => {
   const t = useTranslations('Footer')
+  const locale = useLocale()
 
   return (
     <footer className="footer" id="contact">
       <div className="container">
         <div className="footer__content">
           <div className="footer__column footer__column--brand">
-            <Link href="/" className="footer__logo">
+            <Link href={`/${locale}`} className="footer__logo">
               <Image
                 src="/img/logo/logo_new.png"
                 width={70}
@@ -86,7 +87,7 @@ const Footer = () => {
             <ul className="footer__links">
               {sections.map((section) => (
                 <li key={section.href}>
-                  <Link href={section.href}>{t(section.labelKey)}</Link>
+                  <Link href={section.href.startsWith('#') ? `/${locale}${section.href}` : `/${locale}${section.href}`}>{t(section.labelKey)}</Link>
                 </li>
               ))}
             </ul>

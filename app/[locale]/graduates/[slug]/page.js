@@ -4,6 +4,8 @@ import {
   getAllGraduateYears,
   getGraduatePage,
 } from '../../../graduates/data/graduatesPages'
+import { createPageMetadata } from '@/app/lib/seo'
+import { BreadcrumbStructuredData, StructuredData } from '@/app/components/Seo/StructuredData'
 
 // Use ISR (Incremental Static Regeneration) - revalidate every 10 seconds
 export const revalidate = 10
@@ -39,10 +41,7 @@ export async function generateMetadata({ params }) {
       return { title: 'Not Found' }
     }
 
-    return {
-      title: `${page.title} | Graduates`,
-      description: page.subtitle || `Graduation ${slug}`,
-    }
+    return createPageMetadata({ locale, path: `graduates/${slug}`, title: page.title, description: page.description || page.subtitle || `Graduation ${slug}`, keywords: ['випускники', 'шкільне життя'] })
   } catch (error) {
     console.error(
       'Failed to generate metadata for localized graduates page:',
@@ -69,12 +68,16 @@ export default async function LocalizedGraduatePage({ params }) {
     }
 
     return (
-      <GraduatesPageContent
+      <>
+        <BreadcrumbStructuredData locale={locale} items={[{ name: 'Home', path: '' }, { name: 'Graduates', path: 'graduates' }, { name: page.title, path: `graduates/${slug}` }]} />
+        <StructuredData data={{ '@context': 'https://schema.org', '@type': 'CreativeWork', headline: page.title, description: page.description || page.subtitle, inLanguage: locale }} />
+        <GraduatesPageContent
         title={page.title}
         subtitle={page.subtitle}
         description={page.description}
         photos={page.photos}
-      />
+        />
+      </>
     )
   } catch (error) {
     console.error('Error loading localized graduates page:', error)

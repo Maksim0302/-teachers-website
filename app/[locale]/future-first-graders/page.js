@@ -3,10 +3,11 @@ import {
   mapFutureFirstgradersData,
 } from '@/sanity/lib/queries'
 import FutureFirstgraders from '@/app/components/FutureFirstgraders/FutureFirstgraders'
+import { createContentMetadata } from '@/app/lib/seo'
 
-export const metadata = {
-  title: 'Майбутні першокласники | Educational Portal',
-  description: 'Resources for future first graders',
+export async function generateMetadata({ params }) {
+  const { locale } = await params
+  return createContentMetadata({ locale, path: 'future-first-graders', content: mapFutureFirstgradersData(await getFutureFirstgradersData(), locale), fallbackTitle: 'Майбутні першокласники', fallbackDescription: 'Resources for future first graders', keywords: ['першокласники'] })
 }
 
 export default async function FutureFirstgradersPage({ params }) {
@@ -15,9 +16,5 @@ export default async function FutureFirstgradersPage({ params }) {
   const data = await getFutureFirstgradersData()
   const content = mapFutureFirstgradersData(data, locale)
 
-  return (
-    <div>
-      <FutureFirstgraders content={content} />
-    </div>
-  )
+  return <FutureFirstgraders content={content} />
 }

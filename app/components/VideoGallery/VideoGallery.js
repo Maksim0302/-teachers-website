@@ -59,6 +59,7 @@ const VideoGallery = ({ content }) => {
                     height="100%"
                     src={`https://www.youtube.com/embed/${video.youtubeId}?rel=0`}
                     title={video.title}
+                    loading="lazy"
                     frameBorder="0"
                     allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                     allowFullScreen

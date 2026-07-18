@@ -121,6 +121,7 @@ const BurgerMenu = () => {
         onClick={handleToggleBurger}
         aria-label="Toggle navigation"
         aria-expanded={isMenuOpen}
+        aria-controls="site-navigation"
       >
         <span />
         <span />
@@ -130,7 +131,9 @@ const BurgerMenu = () => {
       {/* Само меню навигации */}
       <nav
         ref={menuRef}
+        id="site-navigation"
         className={`burger__menu ${isMenuOpen ? 'burger__menu--open' : ''}`}
+        aria-label="Site navigation"
       >
         {/* Содержимое меню */}
         {isLoading ? (
@@ -150,16 +153,17 @@ const BurgerMenu = () => {
                     }`}
                     onClick={() => toggleAccordion(item.id)}
                     aria-expanded={expandedId === item.id}
+                    aria-controls={`submenu-${item.id}`}
                   >
                     {item.label}
                     <span className="burger__accordion-icon" />
                   </button>
                   {expandedId === item.id && (
-                    <div className="burger__submenu">
+                    <div className="burger__submenu" id={`submenu-${item.id}`}>
                       {item.children.map((child) => (
                         <Link
                           key={child.id}
-                          href={child.href}
+                          href={`/${locale}${child.href}`}
                           className="burger__submenu-link"
                           onClick={handleLinkClick}
                         >
@@ -172,7 +176,7 @@ const BurgerMenu = () => {
               ) : (
                 // Простая ссылка без подменю
                 <Link
-                  href={item.href}
+                  href={`/${locale}${item.href}`}
                   className="burger__accordion-trigger burger__accordion-trigger--link"
                   onClick={handleLinkClick}
                 >

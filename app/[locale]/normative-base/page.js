@@ -3,11 +3,11 @@ import {
   mapNormativeBaseData,
 } from '@/sanity/lib/queries'
 import NormativeBase from '@/app/components/NormativeBase/NormativeBase'
+import { createContentMetadata } from '@/app/lib/seo'
 
-export const metadata = {
-  title: 'Normative Base | Educational Portal',
-  description:
-    'Access normative and regulatory documents for our educational institution',
+export async function generateMetadata({ params }) {
+  const { locale } = await params
+  return createContentMetadata({ locale, path: 'normative-base', content: mapNormativeBaseData(await getNormativeBaseData(), locale), fallbackTitle: 'Normative Base', fallbackDescription: 'Access normative and regulatory documents for our educational institution', keywords: ['нормативна база', 'документи'] })
 }
 
 export default async function NormativeBasePage({ params }) {
@@ -17,9 +17,5 @@ export default async function NormativeBasePage({ params }) {
   const normativeBaseData = await getNormativeBaseData()
   const content = mapNormativeBaseData(normativeBaseData, locale)
 
-  return (
-    <div>
-      <NormativeBase content={content} />
-    </div>
-  )
+  return <NormativeBase content={content} />
 }

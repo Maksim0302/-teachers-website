@@ -1,9 +1,10 @@
 import { getLegoData, mapLegoData } from '@/sanity/lib/queries'
 import Lego from '@/app/components/Lego/Lego'
+import { createContentMetadata } from '@/app/lib/seo'
 
-export const metadata = {
-  title: 'LEGO - конструювання | Educational Portal',
-  description: 'LEGO construction and learning resources',
+export async function generateMetadata({ params }) {
+  const { locale } = await params
+  return createContentMetadata({ locale, path: 'lego', content: mapLegoData(await getLegoData(), locale), fallbackTitle: 'LEGO - конструювання', fallbackDescription: 'LEGO construction and learning resources', keywords: ['LEGO', 'конструювання'] })
 }
 
 export default async function LegoPage({ params }) {
@@ -12,9 +13,5 @@ export default async function LegoPage({ params }) {
   const legoData = await getLegoData()
   const content = mapLegoData(legoData, locale)
 
-  return (
-    <div>
-      <Lego content={content} />
-    </div>
-  )
+  return <Lego content={content} />
 }

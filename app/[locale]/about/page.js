@@ -1,5 +1,7 @@
 import React from 'react'
 import AboutPageContent from '../../about/components/AboutPageContent'
+import { createPageMetadata } from '../../lib/seo'
+import { BreadcrumbStructuredData, StructuredData } from '../../components/Seo/StructuredData'
 
 async function getTeacherData(locale) {
   // Динамічно завантажуємо переводи
@@ -39,10 +41,14 @@ export async function generateMetadata({ params }) {
     ru: `Подробная информация о педагоге ${teacherData.fullName}`,
   }
 
-  return {
+  return createPageMetadata({
+    locale,
+    path: 'about',
     title: titles[locale] || titles.uk,
     description: descriptions[locale] || descriptions.uk,
-  }
+    keywords: ['вчитель', 'педагог', teacherData.fullName],
+    image: '/img/about/1.jpg',
+  })
 }
 
 export default async function AboutPage({ params }) {
@@ -51,10 +57,14 @@ export default async function AboutPage({ params }) {
   const labels = await getLabels(locale)
 
   return (
-    <AboutPageContent
+    <>
+      <BreadcrumbStructuredData locale={locale} items={[{ name: 'Home', path: '' }, { name: teacherData.fullName, path: 'about' }]} />
+      <StructuredData data={{ '@context': 'https://schema.org', '@type': 'Person', name: teacherData.fullName, jobTitle: teacherData.title, email: teacherData.email, image: '/img/about/1.jpg' }} />
+      <AboutPageContent
       teacherData={teacherData}
       locale={locale}
       labels={labels}
-    />
+      />
+    </>
   )
 }

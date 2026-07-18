@@ -33,7 +33,7 @@ const Header = forwardRef((props, ref) => {
     <header ref={ref} className={`header${isHome ? '' : ' header--no-nav'}`}>
       <div className="container header__container">
         <div className="header__content">
-          <Link href={homePath} className="logo">
+          <Link href={homePath} className="logo" aria-label={t('logoAlt')}>
             <Image
               src="/img/logo/logo_new.png"
               width={70}
@@ -44,13 +44,13 @@ const Header = forwardRef((props, ref) => {
 
           {isHome && (
             <div className="navigation">
-              <nav className="navigation__menu">
+              <nav className="navigation__menu" aria-label="Primary navigation">
                 {navItems.map((item) => {
                   const label = t(`nav.${item.key}`)
                   const href = item.id === null ? homePath : `#${item.id}`
 
                   return (
-                    <Link key={item.key} href={href}>
+                    <Link key={item.key} href={href} aria-current={item.id === null && isHome ? 'page' : undefined}>
                       {label}
                     </Link>
                   )

@@ -1,9 +1,10 @@
 import { getNushData, mapNushData } from '@/sanity/lib/queries'
 import Nush from '@/app/components/Nush/Nush'
+import { createContentMetadata } from '@/app/lib/seo'
 
-export const metadata = {
-  title: 'НУШ | Educational Portal',
-  description: 'Nova Ukrainska Shkola (NUŠ) documents',
+export async function generateMetadata({ params }) {
+  const { locale } = await params
+  return createContentMetadata({ locale, path: 'nush', content: mapNushData(await getNushData(), locale), fallbackTitle: 'НУШ', fallbackDescription: 'Nova Ukrainska Shkola documents', keywords: ['НУШ', 'документи'] })
 }
 
 export default async function NushPage({ params }) {
@@ -13,9 +14,5 @@ export default async function NushPage({ params }) {
   const nushData = await getNushData()
   const content = mapNushData(nushData, locale)
 
-  return (
-    <div>
-      <Nush content={content} />
-    </div>
-  )
+  return <Nush content={content} />
 }

@@ -3,10 +3,11 @@ import {
   mapCalendarThematicPlanningData,
 } from '@/sanity/lib/queries'
 import CalendarThematicPlanning from '@/app/components/CalendarThematicPlanning/CalendarThematicPlanning'
+import { createContentMetadata } from '@/app/lib/seo'
 
-export const metadata = {
-  title: 'Календарно-тематичне планування | Educational Portal',
-  description: 'Calendar and thematic planning resources',
+export async function generateMetadata({ params }) {
+  const { locale } = await params
+  return createContentMetadata({ locale, path: 'calendar-thematic-planning', content: mapCalendarThematicPlanningData(await getCalendarThematicPlanningData(), locale), fallbackTitle: 'Календарно-тематичне планування', fallbackDescription: 'Calendar and thematic planning resources', keywords: ['календарне планування'] })
 }
 
 export default async function CalendarThematicPlanningPage({ params }) {
@@ -15,9 +16,5 @@ export default async function CalendarThematicPlanningPage({ params }) {
   const data = await getCalendarThematicPlanningData()
   const content = mapCalendarThematicPlanningData(data, locale)
 
-  return (
-    <div>
-      <CalendarThematicPlanning content={content} />
-    </div>
-  )
+  return <CalendarThematicPlanning content={content} />
 }

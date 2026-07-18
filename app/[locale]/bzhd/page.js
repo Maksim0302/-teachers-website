@@ -1,9 +1,10 @@
 import { getBzhdData, mapBzhdData } from '@/sanity/lib/queries'
 import BZHD from '@/app/components/BZHD/BZHD'
+import { createContentMetadata } from '@/app/lib/seo'
 
-export const metadata = {
-  title: 'БЖД | Educational Portal',
-  description: 'Safety and Health resources',
+export async function generateMetadata({ params }) {
+  const { locale } = await params
+  return createContentMetadata({ locale, path: 'bzhd', content: mapBzhdData(await getBzhdData(), locale), fallbackTitle: 'БЖД', fallbackDescription: 'Safety and health resources', keywords: ['безпека життєдіяльності'] })
 }
 
 export default async function BZHDPage({ params }) {
@@ -13,9 +14,5 @@ export default async function BZHDPage({ params }) {
   const bzhdData = await getBzhdData()
   const content = mapBzhdData(bzhdData, locale)
 
-  return (
-    <div>
-      <BZHD content={content} />
-    </div>
-  )
+  return <BZHD content={content} />
 }

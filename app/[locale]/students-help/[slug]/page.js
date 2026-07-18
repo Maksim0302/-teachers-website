@@ -4,6 +4,8 @@ import {
   getAllStudentSubjectSlugs,
   getStudentSubjectPage,
 } from '../../../students-help/data/studentSubjectsPages'
+import { createPageMetadata } from '@/app/lib/seo'
+import { BreadcrumbStructuredData, StructuredData } from '@/app/components/Seo/StructuredData'
 
 // Use ISR (Incremental Static Regeneration) - revalidate every 10 seconds
 export const revalidate = 10
@@ -39,10 +41,7 @@ export async function generateMetadata({ params }) {
       return { title: 'Not Found' }
     }
 
-    return {
-      title: `${page.title} | На допомогу учням`,
-      description: page.subtitle || `Subject ${slug}`,
-    }
+    return createPageMetadata({ locale, path: `students-help/${slug}`, title: page.title, description: page.description || page.subtitle || `Subject ${slug}`, keywords: ['матеріали для учнів', 'навчання'] })
   } catch (error) {
     console.error(
       'Failed to generate metadata for localized student subject page:',
@@ -69,12 +68,16 @@ export default async function LocalizedStudentSubjectPage({ params }) {
     }
 
     return (
-      <GraduatesPageContent
+      <>
+        <BreadcrumbStructuredData locale={locale} items={[{ name: 'Home', path: '' }, { name: 'Students help', path: 'students-help' }, { name: page.title, path: `students-help/${slug}` }]} />
+        <StructuredData data={{ '@context': 'https://schema.org', '@type': 'Article', headline: page.title, description: page.description || page.subtitle, inLanguage: locale }} />
+        <GraduatesPageContent
         title={page.title}
         subtitle={page.subtitle}
         description={page.description}
         photos={page.photos}
-      />
+        />
+      </>
     )
   } catch (error) {
     console.error('Error loading localized student subject page:', error)

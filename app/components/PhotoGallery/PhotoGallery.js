@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react'
 import { useTranslations } from 'next-intl'
+import Image from 'next/image'
 import './PhotoGallery.scss'
 
 const PhotoGallery = ({ content }) => {
@@ -89,24 +90,22 @@ const PhotoGallery = ({ content }) => {
           {photos && photos.length > 0 ? (
             <div className="photo-gallery__gallery">
               {photos.map((photo, index) => (
-                <div
+                <button
+                  type="button"
                   key={photo.id || index}
                   className="photo-gallery__photo-item"
                   onClick={() => handlePhotoClick(index)}
-                  role="button"
-                  tabIndex={0}
-                  onKeyDown={(e) => {
-                    if (e.key === 'Enter' || e.key === ' ') {
-                      handlePhotoClick(index)
-                    }
-                  }}
+                  aria-label={`${photo.alt || `Photo ${index + 1}`}: open full size`}
                 >
-                  <img
+                  <Image
                     src={photo.imageUrl}
                     alt={photo.alt || `Photo ${index + 1}`}
                     className="photo-gallery__photo"
+                    width={1600}
+                    height={1067}
+                    sizes="(max-width: 768px) 100vw, 33vw"
                   />
-                </div>
+                </button>
               ))}
             </div>
           ) : (
@@ -159,10 +158,13 @@ const PhotoGallery = ({ content }) => {
               </div>
             )}
 
-            <img
+            <Image
               src={photos[selectedPhotoIndex].imageUrlFull}
               alt={photos[selectedPhotoIndex].alt || 'Photo'}
               className="photo-gallery-modal__image"
+              width={3000}
+              height={2000}
+              sizes="100vw"
             />
           </div>
         </div>

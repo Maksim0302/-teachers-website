@@ -1,9 +1,10 @@
 import { getPhotoGalleryData, mapPhotoGalleryData } from '@/sanity/lib/queries'
 import PhotoGallery from '@/app/components/PhotoGallery/PhotoGallery'
+import { createContentMetadata } from '@/app/lib/seo'
 
-export const metadata = {
-  title: 'Photo Gallery',
-  description: 'Browse our photo gallery',
+export async function generateMetadata({ params }) {
+  const { locale } = await params
+  return createContentMetadata({ locale, path: 'photo-gallery', content: mapPhotoGalleryData(await getPhotoGalleryData(), locale), fallbackTitle: 'Photo Gallery', fallbackDescription: 'Browse our photo gallery', keywords: ['фотогалерея'] })
 }
 
 export default async function PhotoGalleryPage({ params }) {
