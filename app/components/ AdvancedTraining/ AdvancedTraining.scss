@@ -173,6 +173,11 @@
 
     &__image {
       max-width: 100%;
+      box-shadow: none;
+      overflow: auto;
+      img {
+        object-fit: contain;
+      }
     }
 
     &__link {
