@@ -8,8 +8,8 @@ import './Footer.scss'
 
 const sections = [
   { label: 'Home', href: '#home' },
-  { label: 'About', href: '#about' },
-  { label: 'News', href: '#news' },
+  { label: 'About', href: '/about' },
+  { label: 'Photo Gallery', href: '/photo-gallery' },
   { label: 'Gallery', href: '#gallery' },
   { label: 'Articles', href: '#articles' },
   { label: 'Contact', href: '#contact' },
@@ -48,7 +48,7 @@ const Footer = () => {
               </a>
 
               <a
-                href="https://facebook.com"
+                href="https://www.facebook.com/share/19DLzW7d6C/?mibextid=wwXIfr"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Facebook"
@@ -72,7 +72,9 @@ const Footer = () => {
 
             <div className="footer__info">
               <span className="footer__label">Email</span>
-              <a href="mailto:teacher@example.com">teacher@example.com</a>
+              <a href="mailto:teacher@example.com">
+                bilykira19770329@gmail.com
+              </a>
             </div>
 
             <div className="footer__info">
