@@ -9,10 +9,10 @@ import LangSwitcher from '../LangSwitcher/LangSwitcher'
 import './Header.scss'
 
 const navItems = [
-  { key: 'home', id: null },
-  { key: 'about', id: 'about' },
-  { key: 'services', id: 'services' },
-  { key: 'blog', id: 'blog' },
+  { key: 'about-me', id: 'about-me' },
+  // { key: 'home', id: null },
+  { key: 'school-events', id: 'school-events' },
+  { key: 'video-gallery', id: 'video-gallery' },
   { key: 'contact', id: 'contact' },
 ]
 

@@ -9,7 +9,7 @@ const Hero = ({ content }) => {
   if (!content) return null
 
   return (
-    <div className="hero">
+    <div className="hero" id="about-me">
       <div className="container">
         <div className="hero__content">
           <div className="hero__content__items">

@@ -3,9 +3,9 @@
     "logoAlt": "Logo",
     "nav": {
       "home": "Home",
-      "about": "About",
-      "services": "Services",
-      "blog": "Blog",
+      "about-me": "About Me",
+      "school-events": "School Events",
+      "video-gallery": "Video Gallery",
       "contact": "Contact"
     }
   },
@@ -340,5 +340,8 @@
     "preview": "Preview",
     "download": "Download",
     "noContent": "No content available"
+  },
+  "BackToHome": {
+    "label": "Back to Home"
   }
 }

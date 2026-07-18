@@ -3,9 +3,9 @@
     "logoAlt": "Логотип",
     "nav": {
       "home": "Главная",
-      "about": "О нас",
-      "services": "Услуги",
-      "blog": "Блог",
+      "about-me": "О себе",
+      "school-events": "Школьные события",
+      "video-gallery": "Видеогалерея",
       "contact": "Контакты"
     }
   },
@@ -346,5 +346,8 @@
     "preview": "Просмотр",
     "download": "Скачать",
     "noContent": "Контент недоступен"
+  },
+  "BackToHome": {
+    "label": "Вернуться на главную"
   }
 }

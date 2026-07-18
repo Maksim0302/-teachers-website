@@ -418,7 +418,6 @@ export function mapStudentSubjectData(data, locale) {
 }
 
 // ============== VIDEO GALLERY DATA ==============
-
 export const VIDEO_GALLERY_QUERY = `*[_type == "videoGallery"][0] {
   title,
   subtitle,
@@ -442,13 +441,20 @@ export async function getVideoGalleryData() {
 function extractYoutubeId(url) {
   if (!url) return null
 
-  // Handle youtu.be format
-  let videoId = url.match(/youtu\.be\/([^?]+)/)
-  if (videoId) return videoId[1]
+  const patterns = [
+    /(?:youtube\.com\/watch\?v=)([^?&/]+)/,
+    /(?:youtube\.com\/shorts\/)([^?&/]+)/,
+    /(?:youtube\.com\/embed\/)([^?&/]+)/,
+    /(?:youtu\.be\/)([^?&/]+)/,
+  ]
 
-  // Handle youtube.com format
-  videoId = url.match(/[?&]v=([^&]+)/)
-  if (videoId) return videoId[1]
+  for (const pattern of patterns) {
+    const match = url.match(pattern)
+
+    if (match?.[1]) {
+      return match[1]
+    }
+  }
 
   return null
 }
@@ -458,14 +464,19 @@ export function mapVideoGalleryData(data, locale) {
 
   const videos = (data.videos || [])
     .map((video) => {
-      const videoId = extractYoutubeId(video.youtubeUrl)
-      if (!videoId) return null
+      const youtubeId = extractYoutubeId(video.youtubeUrl)
+
+      if (!youtubeId) {
+        console.warn('Invalid YouTube URL:', video.youtubeUrl)
+        return null
+      }
 
       return {
-        id: videoId,
+        id: youtubeId,
         title: getLocalizedValue(video.title, locale),
         youtubeUrl: video.youtubeUrl,
-        youtubeId: videoId,
+        youtubeId,
+        embedUrl: `https://www.youtube.com/embed/${youtubeId}`,
       }
     })
     .filter(Boolean)

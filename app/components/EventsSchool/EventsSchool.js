@@ -15,7 +15,7 @@ const EventsSchool = ({ content }) => {
     categories.find((category) => category.id === activeTabId) ?? categories[0]
 
   return (
-    <section className="events-school">
+    <section className="events-school" id="school-events">
       <div className="container">
         <div className="events-school__content">
           <div className="events-school__title">

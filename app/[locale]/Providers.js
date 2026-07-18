@@ -5,6 +5,7 @@ import { LanguageProvider } from '../context/LanguageContext'
 import { SelectedImageProvider } from '../context/SelectedImageContext'
 import { LinksProvider } from '../context/LinksContext'
 import Header from '../components/Header/Header'
+import BackToHome from '../components/BackToHome/BackToHome'
 import Footer from '../components/Footer/Footer'
 import LocaleSaver from '../components/LocaleSaver/LocaleSaver'
 import { useHeaderHeight } from '../hooks/useHeaderHeight'
@@ -24,6 +25,7 @@ export default function Providers({ children, locale, messages, timeZone }) {
           <LinksProvider>
             <div className="site-layout">
               <Header ref={headerRef} />
+              <BackToHome />
               <main>{children}</main>
               <Footer />
             </div>

@@ -64,7 +64,7 @@
 @media (max-width: 1024px) {
   .header {
     &__content {
-      padding: 10px 15px;
+      padding: 10px 0px;
     }
   }
 
@@ -90,7 +90,7 @@
   }
 
   .header__content {
-    padding: 10px 15px;
+    padding: 10px 0px;
   }
 
   .header__actions {
@@ -108,7 +108,7 @@
 ========================= */
 @media (max-width: 480px) {
   .header__content {
-    padding: 8px 10px;
+    padding: 8px 0px;
   }
 
   .logo img {

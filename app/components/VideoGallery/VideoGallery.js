@@ -33,7 +33,7 @@ const VideoGallery = ({ content }) => {
   }
 
   return (
-    <section className="video-gallery">
+    <section className="video-gallery" id="video-gallery">
       <div className="container video-gallery__container">
         {/* Title */}
         <div>

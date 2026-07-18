@@ -32,17 +32,19 @@ export default {
             {
               name: 'youtubeUrl',
               title: 'YouTube Video URL',
-              type: 'string',
+              type: 'url',
               description:
-                'Full YouTube URL (e.g., https://www.youtube.com/watch?v=dQw4w9WgXcQ)',
+                'Supports YouTube videos, Shorts, and youtu.be links.',
               validation: (Rule) =>
                 Rule.required().custom((value) => {
                   if (!value) return true
+
                   const youtubeRegex =
-                    /^(https?:\/\/)?(www\.)?(youtube|youtu|youtube-nocookie)\.(com|be)\/|^https:\/\/youtu\.be\//
+                    /^https?:\/\/(?:www\.)?(?:youtube\.com\/(?:watch\?v=|shorts\/|embed\/)|youtu\.be\/)[A-Za-z0-9_-]+(?:[?&].*)?$/
+
                   return youtubeRegex.test(value)
                     ? true
-                    : 'Please provide a valid YouTube URL'
+                    : 'Please enter a valid YouTube, Shorts, or youtu.be URL.'
                 }),
             },
           ],
