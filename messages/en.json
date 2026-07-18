@@ -343,5 +343,34 @@
   },
   "BackToHome": {
     "label": "Back to Home"
+  },
+  "Footer": {
+    "logoAlt": "Educational Portal Logo",
+    "siteTitle": "Teacher's Personal Website",
+    "description": "A personal website of a primary school teacher featuring educational materials, teaching resources, photo galleries, achievements, useful resources, and information about professional activities.",
+    "contactHeading": "Contact",
+    "emailLabel": "Email",
+    "addressLabel": "School Address",
+    "pagesHeading": "Pages",
+    "schoolAddress": "Ukraine, Mykolaiv region, Mykolaiv district, Krasnopillia village, Shkilna str., 1",
+    "copyright": "© 2026 Educational Portal. All rights reserved.",
+    "pages": {
+      "home": "Home",
+      "about": "About",
+      "photoGallery": "Photo Gallery",
+      "videoGallery": "Video Gallery",
+      "normativeBase": "Normative Base",
+      "portfolio": "Portfolio",
+      "usefulLinks": "Useful links",
+      "nush": "NUSH",
+      "parents": "Parents Page",
+      "lego": "LEGO construction",
+      "bzhd": "BZHD",
+      "futureFirstGraders": "Future first-graders",
+      "myAchievements": "My Achievements",
+      "ourAchievements": "Our achievements",
+      "calendarThematicPlanning": "Calendar and Thematic Planning",
+      "presentationsForLessons": "Presentations for lessons and educational events"
+    }
   }
 }

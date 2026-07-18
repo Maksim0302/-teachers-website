@@ -35,7 +35,7 @@ const Header = forwardRef((props, ref) => {
         <div className="header__content">
           <Link href={homePath} className="logo">
             <Image
-              src="/img/logo/logo.jpg"
+              src="/img/logo/logo_new.png"
               width={70}
               height={70}
               alt={t('logoAlt')}

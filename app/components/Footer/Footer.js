@@ -4,18 +4,28 @@ import React from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { FaYoutube, FaFacebookF, FaInstagram } from 'react-icons/fa'
+import { useTranslations } from 'next-intl'
 import './Footer.scss'
 
 const sections = [
-  { label: 'Home', href: '#home' },
-  { label: 'About', href: '/about' },
-  { label: 'Photo Gallery', href: '/photo-gallery' },
-  { label: 'Gallery', href: '#gallery' },
-  { label: 'Articles', href: '#articles' },
-  { label: 'Contact', href: '#contact' },
+  { labelKey: 'pages.home', href: '#home' },
+  { labelKey: 'pages.about', href: '/about' },
+  { labelKey: 'pages.photoGallery', href: '/photo-gallery' },
+  { labelKey: 'pages.videoGallery', href: '/video-gallery' },
+  { labelKey: 'pages.normativeBase', href: '/normative-base' },
+  { labelKey: 'pages.portfolio', href: '/portfolio' },
+  { labelKey: 'pages.usefulLinks', href: '/useful-links' },
+  { labelKey: 'pages.nush', href: '/nush' },
+  { labelKey: 'pages.parents', href: '/parents' },
+
+  { labelKey: 'pages.futureFirstGraders', href: '/future-first-graders' },
+  { labelKey: 'pages.myAchievements', href: '/my-achievements' },
+  { labelKey: 'pages.ourAchievements', href: '/our-achievements' },
 ]
 
 const Footer = () => {
+  const t = useTranslations('Footer')
+
   return (
     <footer className="footer" id="contact">
       <div className="container">
@@ -23,19 +33,15 @@ const Footer = () => {
           <div className="footer__column footer__column--brand">
             <Link href="/" className="footer__logo">
               <Image
-                src="/img/logo/logo.jpg"
+                src="/img/logo/logo_new.png"
                 width={70}
                 height={70}
-                alt="Educational Portal Logo"
+                alt={t('logoAlt')}
               />
-              <span>Educational Portal</span>
+              <span>{t('siteTitle')}</span>
             </Link>
 
-            <p className="footer__description">
-              A modern educational platform for students, parents, and
-              colleagues. Stay informed with the latest news, articles, and
-              educational resources.
-            </p>
+            <p className="footer__description">{t('description')}</p>
 
             <div className="footer__socials">
               <a
@@ -55,41 +61,32 @@ const Footer = () => {
               >
                 <FaFacebookF />
               </a>
-
-              <a
-                href="https://instagram.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Instagram"
-              >
-                <FaInstagram />
-              </a>
             </div>
           </div>
 
           <div className="footer__column">
-            <h3>Contact</h3>
+            <h3>{t('contactHeading')}</h3>
 
             <div className="footer__info">
-              <span className="footer__label">Email</span>
+              <span className="footer__label">{t('emailLabel')}</span>
               <a href="mailto:teacher@example.com">
                 bilykira19770329@gmail.com
               </a>
             </div>
 
             <div className="footer__info">
-              <span className="footer__label">School Address</span>
-              <p>123 Education Street, School City</p>
+              <span className="footer__label">{t('addressLabel')}</span>
+              <p>{t('schoolAddress')}</p>
             </div>
           </div>
 
           <div className="footer__column">
-            <h3>Sections</h3>
+            <h3>{t('pagesHeading')}</h3>
 
             <ul className="footer__links">
               {sections.map((section) => (
                 <li key={section.href}>
-                  <Link href={section.href}>{section.label}</Link>
+                  <Link href={section.href}>{t(section.labelKey)}</Link>
                 </li>
               ))}
             </ul>
@@ -97,7 +94,7 @@ const Footer = () => {
         </div>
 
         <div className="footer__bottom">
-          <p>© 2026 Educational Portal. All rights reserved.</p>
+          <p>{t('copyright')}</p>
         </div>
       </div>
     </footer>
