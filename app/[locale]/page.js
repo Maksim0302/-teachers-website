@@ -1,3 +1,5 @@
+export const revalidate = 60
+
 import Hero from '../components/Hero/Hero'
 import AssessmentMethodology from '../components/AssessmentMethodology/AssessmentMethodology'
 import EventsSchool from '../components/EventsSchool/EventsSchool'
@@ -11,9 +13,18 @@ export async function generateMetadata({ params }) {
   const data = await getHomePageData()
   const content = mapHomePageData(data, locale)
   const title = content.hero?.title || 'Educational Portal'
-  const description = content.hero?.description || content.hero?.subtitle || 'Educational resources and teaching materials'
+  const description =
+    content.hero?.description ||
+    content.hero?.subtitle ||
+    'Educational resources and teaching materials'
 
-  return createPageMetadata({ locale, title, description, keywords: ['освіта', 'методичні матеріали'], image: content.hero?.imageUrl })
+  return createPageMetadata({
+    locale,
+    title,
+    description,
+    keywords: ['освіта', 'методичні матеріали'],
+    image: content.hero?.imageUrl,
+  })
 }
 
 export default async function Home({ params }) {
