@@ -10,9 +10,9 @@ export default function NotFound() {
         <div className="page-error__logo">
           <Link href="/" className="logo">
             <Image
-              src="/public/img/logo/logo_new.png"
-              width={100}
-              height={80}
+              src="/img/logo/logo_new.png"
+              width={90}
+              height={90}
               alt="logo"
             />
           </Link>
