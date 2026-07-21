@@ -4,8 +4,21 @@ import { siteUrl, locales } from '../lib/seo'
 
 export const metadata = {
   metadataBase: siteUrl,
-  title: { default: 'Iryna Bilyk - Teacher', template: '%s | Iryna Bilyk - Teacher' },
-  robots: { index: true, follow: true },
+
+  title: {
+    default: 'Iryna Bilyk - Teacher',
+    template: '%s | Iryna Bilyk - Teacher',
+  },
+
+  robots: {
+    index: true,
+    follow: true,
+  },
+
+  verification: {
+    google: 'pgnIJp98x4AINyr8BSJs-18x6LIYAVmplyPwSAZoIOQ',
+  },
+
   icons: {
     icon: '/favicon.ico',
     apple: '/img/logo/logo_new.png',
