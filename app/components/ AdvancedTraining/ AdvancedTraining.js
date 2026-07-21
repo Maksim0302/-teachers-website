@@ -3,6 +3,7 @@
 import React from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
+import { useLocale } from 'next-intl'
 import './ AdvancedTraining.scss'
 
 const icons = [
@@ -65,6 +66,7 @@ const icons = [
 ]
 
 const AdvancedTraining = ({ content }) => {
+  const locale = useLocale()
   if (!content) return null
 
   return (
@@ -112,7 +114,10 @@ const AdvancedTraining = ({ content }) => {
         </div>
 
         {/* CTA BUTTON */}
-        <Link href={content.link} className="advanced-training__link">
+        <Link
+          href={content.link?.startsWith('/') ? `/${locale}${content.link}` : content.link}
+          className="advanced-training__link"
+        >
           {content.button}
         </Link>
       </div>

@@ -1,7 +1,10 @@
-const configuredUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://example.com'
+import { defaultLocale, locales } from './locales'
 
-export const siteUrl = new URL(configuredUrl)
-export const locales = ['uk', 'ru', 'en']
+const configuredUrl =
+  process.env.NEXT_PUBLIC_SITE_URL || 'https://bilyk-ira-teachers.vercel.app'
+
+export const siteUrl = new URL(configuredUrl.endsWith('/') ? configuredUrl : `${configuredUrl}/`)
+export { locales }
 
 const openGraphLocales = { uk: 'uk_UA', ru: 'ru_RU', en: 'en_US' }
 
@@ -16,7 +19,7 @@ export function createAlternates(locale, path = '') {
     languages: Object.fromEntries(
       locales.map((language) => [language, localizedPath(language, path)])
     ),
-    'x-default': localizedPath('en', path),
+    'x-default': localizedPath(defaultLocale, path),
   }
 }
 
@@ -35,8 +38,8 @@ export function createPageMetadata({ locale, path = '', title, description, keyw
       url: canonical,
       title,
       description,
-      siteName: 'Educational Portal',
-      images: [{ url: imageUrl, width: 512, height: 512, alt: title }],
+      siteName: 'Iryna Bilyk - Teacher',
+      images: [{ url: imageUrl, alt: title }],
     },
     twitter: {
       card: 'summary_large_image',

@@ -3,9 +3,11 @@
 import { useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
+import { useLocale } from 'next-intl'
 import './EventsSchool.scss'
 
 const EventsSchool = ({ content }) => {
+  const locale = useLocale()
   const categories = content?.categories ?? []
   const [activeTabId, setActiveTabId] = useState(categories[0]?.id ?? '')
 
@@ -70,7 +72,7 @@ const EventsSchool = ({ content }) => {
                     </time>
                   </div>
                   <Link
-                    href={event.href}
+                    href={event.href?.startsWith('/') ? `/${locale}${event.href}` : event.href}
                     className="events-school__item-link"
                     aria-label={content.button}
                   >

@@ -4,9 +4,14 @@ import React from 'react'
 import './Hero.scss'
 import Image from 'next/image'
 import Link from 'next/link'
+import { useLocale } from 'next-intl'
 
 const Hero = ({ content }) => {
+  const locale = useLocale()
+
   if (!content) return null
+
+  const href = content.link?.startsWith('/') ? `/${locale}${content.link}` : content.link
 
   return (
     <div className="hero" id="about-me">
@@ -26,7 +31,7 @@ const Hero = ({ content }) => {
               <p className="hero__text__description">«{content.description}»</p>
             </div>
             <div className="hero__button">
-              <Link href={content.link} className="hero__button__link">
+              <Link href={href} className="hero__button__link">
                 {content.button}
               </Link>
             </div>

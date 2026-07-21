@@ -5,7 +5,7 @@ import enMessages from '../../../messages/en.json'
 import ruMessages from '../../../messages/ru.json'
 import ukMessages from '../../../messages/uk.json'
 import { StructuredData } from '../Seo/StructuredData'
-import { siteUrl } from '@/app/lib/seo'
+import { localizedPath, siteUrl } from '@/app/lib/seo'
 
 const inter = Cabin({ subsets: ['latin'] })
 
@@ -42,7 +42,11 @@ export default function SiteDocument({ children, locale = 'en' }) {
     name: teacher.fullName,
     jobTitle: teacher.title,
     email: teacher.email,
-    worksFor: teacher.workplace ? { '@type': 'Organization', name: teacher.workplace } : undefined,
+    image: new URL('/img/about/1.jpg', siteUrl).toString(),
+    url: new URL(localizedPath(locale, 'about'), siteUrl).toString(),
+    worksFor: teacher.workplace
+      ? { '@id': `${siteUrl}#organization`, '@type': 'EducationalOrganization', name: teacher.workplace }
+      : undefined,
   }
 
   return (
@@ -51,8 +55,19 @@ export default function SiteDocument({ children, locale = 'en' }) {
         <StructuredData data={{
           '@context': 'https://schema.org',
           '@graph': [
-            { '@type': 'WebSite', name: 'Educational Portal', url: siteUrl.toString(), inLanguage: locale },
-            { '@type': 'Organization', name: teacher?.workplace || 'Educational Portal', url: siteUrl.toString() },
+            {
+              '@id': `${siteUrl}#website`,
+              '@type': 'WebSite',
+              name: 'Iryna Bilyk - Teacher',
+              url: siteUrl.toString(),
+              inLanguage: locale,
+            },
+            {
+              '@id': `${siteUrl}#organization`,
+              '@type': 'EducationalOrganization',
+              name: teacher?.workplace || 'Iryna Bilyk - Teacher',
+              url: siteUrl.toString(),
+            },
             person,
           ].filter(Boolean),
         }} />

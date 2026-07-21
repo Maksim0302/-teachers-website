@@ -2,12 +2,13 @@ import { getAllGraduateYears } from '@/app/graduates/data/graduatesPages'
 import { getAllStudentSubjectSlugs } from '@/app/students-help/data/studentSubjectsPages'
 import { locales, localizedPath, siteUrl } from './lib/seo'
 
+export const revalidate = 3600
+
 const staticPaths = ['', 'about', 'parents', 'my-achievements', 'calendar-thematic-planning', 'photo-gallery', 'normative-base', 'future-first-graders', 'nush', 'video-gallery', 'presentations-for-lessons', 'portfolio', 'our-achievements', 'useful-links', 'lego', 'bzhd']
 
 const entry = (path) => ({
   url: new URL(path, siteUrl).toString(),
-  lastModified: new Date(),
-  changeFrequency: 'weekly',
+  changeFrequency: 'monthly',
   priority: path.split('/').filter(Boolean).length === 1 ? 1 : 0.7,
 })
 

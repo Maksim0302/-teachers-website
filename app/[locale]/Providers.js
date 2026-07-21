@@ -3,7 +3,6 @@
 import { NextIntlClientProvider } from 'next-intl'
 import { LanguageProvider } from '../context/LanguageContext'
 import { SelectedImageProvider } from '../context/SelectedImageContext'
-import { LinksProvider } from '../context/LinksContext'
 import Header from '../components/Header/Header'
 import BackToHome from '../components/BackToHome/BackToHome'
 import Footer from '../components/Footer/Footer'
@@ -22,14 +21,12 @@ export default function Providers({ children, locale, messages, timeZone }) {
       <LocaleSaver locale={locale} />
       <LanguageProvider>
         <SelectedImageProvider>
-          <LinksProvider>
-            <div className="site-layout">
-              <Header ref={headerRef} />
-              <BackToHome />
-              <main>{children}</main>
-              <Footer />
-            </div>
-          </LinksProvider>
+          <div className="site-layout">
+            <Header ref={headerRef} />
+            <BackToHome />
+            <main>{children}</main>
+            <Footer />
+          </div>
         </SelectedImageProvider>
       </LanguageProvider>
     </NextIntlClientProvider>
