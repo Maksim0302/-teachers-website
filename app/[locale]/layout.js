@@ -1,28 +1,21 @@
 import '../globals.scss'
 import SiteDocument from '../components/SiteDocument/SiteDocument'
-import { siteUrl, locales } from '../lib/seo'
+import { locales } from '../lib/seo'
+import { getSeoTranslation } from '../lib/seoTranslations'
 
-export const metadata = {
-  metadataBase: siteUrl,
+export async function generateMetadata({ params }) {
+  const { locale } = await params
+  const seo = getSeoTranslation(locale)
 
-  title: {
-    default: 'Iryna Bilyk - Teacher',
-    template: '%s | Iryna Bilyk - Teacher',
-  },
-
-  robots: {
-    index: true,
-    follow: true,
-  },
-
-  verification: {
-    google: 'pgnIJp98x4AINyr8BSJs-18x6LIYAVmplyPwSAZoIOQ',
-  },
-
-  icons: {
-    icon: '/favicon.ico',
-    apple: '/img/logo/logo_new.png',
-  },
+  return {
+    title: { default: seo.title, template: `%s | ${seo.siteName}` },
+    description: seo.description,
+    applicationName: seo.applicationName,
+    keywords: seo.keywords,
+    openGraph: { siteName: seo.siteName, locale: { uk: 'uk_UA', ru: 'ru_RU', en: 'en_US' }[locale] || 'uk_UA' },
+    twitter: { card: 'summary_large_image' },
+    robots: { index: true, follow: true },
+  }
 }
 
 export function generateStaticParams() {

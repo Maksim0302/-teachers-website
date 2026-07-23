@@ -10,6 +10,11 @@ const entry = (path) => ({
   url: new URL(path, siteUrl).toString(),
   changeFrequency: 'monthly',
   priority: path.split('/').filter(Boolean).length === 1 ? 1 : 0.7,
+  alternates: {
+    languages: Object.fromEntries(
+      locales.map((locale) => [locale, new URL(path.replace(/^\/(uk|en|ru)(?=\/|$)/, `/${locale}`), siteUrl).toString()])
+    ),
+  },
 })
 
 export default async function sitemap() {

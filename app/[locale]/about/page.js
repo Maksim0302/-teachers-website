@@ -1,7 +1,7 @@
 import React from 'react'
 import AboutPageContent from '../../about/components/AboutPageContent'
-import { createPageMetadata, siteUrl } from '../../lib/seo'
-import { BreadcrumbStructuredData, StructuredData } from '../../components/Seo/StructuredData'
+import { createPageMetadata } from '../../lib/seo'
+import { BreadcrumbStructuredData } from '../../components/Seo/StructuredData'
 
 async function getTeacherData(locale) {
   // Динамічно завантажуємо переводи
@@ -59,7 +59,6 @@ export default async function AboutPage({ params }) {
   return (
     <>
       <BreadcrumbStructuredData locale={locale} items={[{ name: 'Home', path: '' }, { name: teacherData.fullName, path: 'about' }]} />
-      <StructuredData data={{ '@context': 'https://schema.org', '@type': 'Person', name: teacherData.fullName, jobTitle: teacherData.title, email: teacherData.email, image: new URL('/img/about/1.jpg', siteUrl).toString() }} />
       <AboutPageContent
       teacherData={teacherData}
       locale={locale}
