@@ -1,3 +1,3 @@
 export const locales = ['uk', 'ru', 'en']
 
-export const defaultLocale = 'en'
+export const defaultLocale = 'uk'
